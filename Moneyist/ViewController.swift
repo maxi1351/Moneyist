@@ -7,14 +7,45 @@
 
 import UIKit
 
-class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+// Extends UIViewController class to enable
+// easy software keyboard hiding
+extension UIViewController {
+    func hideKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
     
-    // Comment
-    // Comment 3
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+class ViewController: UIViewController {
+    
+    @IBOutlet weak var usernameField: UITextField!
+    
+    @IBOutlet weak var passwordField: UITextField!
+    
+    @IBAction func forgotPassButtonClick(_ sender: Any) {
+        // TODO
+    }
+    
+    @IBAction func signInButtonClick(_ sender: Any) {
+        // TODO
+    }
+    
+    @IBAction func SignUpButtonClick(_ sender: Any) {
+        performSegue(withIdentifier: "ToSignUpVC", sender: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.hideKeyboard()
+        // Do any additional setup after loading the view.
+        
+        print("Loading Complete.")
+    }
 }
 

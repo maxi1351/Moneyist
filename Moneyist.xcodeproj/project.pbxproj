@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		54016104260BCAA600405351 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54016103260BCAA600405351 /* SignUpViewController.swift */; };
 		5410F4462608C8EB00C00F57 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5410F4452608C8EB00C00F57 /* AppDelegate.swift */; };
 		5410F4482608C8EB00C00F57 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5410F4472608C8EB00C00F57 /* SceneDelegate.swift */; };
 		5410F44A2608C8EB00C00F57 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5410F4492608C8EB00C00F57 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		54016103260BCAA600405351 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5410F4422608C8EB00C00F57 /* Moneyist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moneyist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5410F4452608C8EB00C00F57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5410F4472608C8EB00C00F57 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				5410F4532608C8EC00C00F57 /* LaunchScreen.storyboard */,
 				5410F4562608C8EC00C00F57 /* Info.plist */,
 				5410F44E2608C8EB00C00F57 /* Moneyist.xcdatamodeld */,
+				54016103260BCAA600405351 /* SignUpViewController.swift */,
 			);
 			path = Moneyist;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */,
 				5410F4462608C8EB00C00F57 /* AppDelegate.swift in Sources */,
 				5410F4482608C8EB00C00F57 /* SceneDelegate.swift in Sources */,
+				54016104260BCAA600405351 /* SignUpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
