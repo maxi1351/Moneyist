@@ -34,6 +34,7 @@ class ViewController: UIViewController {
     
     @IBAction func signInButtonClick(_ sender: Any) {
         // TODO
+        performSegue(withIdentifier: "ToDashboard", sender: nil)
     }
     
     @IBAction func SignUpButtonClick(_ sender: Any) {

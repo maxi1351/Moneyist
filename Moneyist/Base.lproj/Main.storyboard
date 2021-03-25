@@ -74,11 +74,12 @@
                         <outlet property="passwordField" destination="HsE-7g-HCb" id="ngO-d3-rQE"/>
                         <outlet property="usernameField" destination="cDh-j8-k6q" id="pvQ-Ef-kdy"/>
                         <segue destination="4R6-N0-5kb" kind="show" identifier="ToSignUpVC" id="ykw-uE-zT9"/>
+                        <segue destination="fUL-9e-EOi" kind="presentation" identifier="ToDashboard" modalPresentationStyle="fullScreen" id="PPx-za-JrO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R60-7h-cnm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1214.4927536231885" y="107.8125"/>
+            <point key="canvasLocation" x="-1271" y="108"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="Hxu-w5-HHE">
@@ -149,15 +150,19 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZR-21-V6f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-278.26086956521743" y="107.8125"/>
+            <point key="canvasLocation" x="-146" y="535"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Boot Navigation Controller-->
         <scene sceneID="5LA-4k-VEb">
             <objects>
-                <navigationController id="oaH-ia-Q6y" sceneMemberID="viewController">
+                <navigationController title="Boot Navigation Controller" id="oaH-ia-Q6y" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1du-88-PeG">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.55997004530000005" blue="0.054172117380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="52i-Xr-fkl" kind="relationship" relationship="rootViewController" id="Azj-ie-vgE"/>
@@ -167,8 +172,182 @@
             </objects>
             <point key="canvasLocation" x="-2242" y="108"/>
         </scene>
+        <!--BudgetVC-->
+        <scene sceneID="weH-6J-bn7">
+            <objects>
+                <viewController title="BudgetVC" id="dU5-8Q-08e" customClass="BudgetViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Als-VS-rLk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Budget!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuJ-ik-fyH">
+                                <rect key="frame" x="186" y="284" width="61" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="oyL-WF-vcG"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Budget" image="doc.text" catalog="system" id="s8A-8k-fIu"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QwM-OE-wfL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1384" y="333"/>
+        </scene>
+        <!--CalendarVC-->
+        <scene sceneID="QcP-kH-rmv">
+            <objects>
+                <viewController title="CalendarVC" id="Zah-TV-4bh" customClass="CalendarViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kkG-tk-bSJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calendar!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ni9-DJ-d96">
+                                <rect key="frame" x="170" y="448" width="74" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="85Q-KM-v44"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar" catalog="system" id="OGo-Ah-QsI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="isb-wa-rxG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2583" y="224"/>
+        </scene>
+        <!--SavingSpaceVC-->
+        <scene sceneID="1WG-CR-4OV">
+            <objects>
+                <viewController title="SavingSpaceVC" id="hiz-U1-yNa" customClass="SavingSpaceViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fNl-A4-THS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Saving Space!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yH0-A3-Z1v">
+                                <rect key="frame" x="205" y="210" width="108" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cHn-Za-Yqi"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Saving Space" image="dollarsign.circle.fill" catalog="system" id="d3Q-k7-zz3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3fd-j6-fUJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3428" y="-249"/>
+        </scene>
+        <!--TransactionsVC-->
+        <scene sceneID="vN0-JL-0lg">
+            <objects>
+                <viewController title="TransactionsVC" id="s0D-M1-JW7" customClass="TransactionsViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9mG-nW-JtY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Home! / Transactions!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iO0-Cc-0S8">
+                                <rect key="frame" x="186" y="299" width="166" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="oom-Os-4k5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Transactions" image="house.fill" catalog="system" id="dHD-7P-Eov"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Lo-fV-Hns" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1949" y="-1169"/>
+        </scene>
+        <!--ChartVC-->
+        <scene sceneID="fx3-9A-eFG">
+            <objects>
+                <viewController title="ChartVC" id="m1d-RP-Vbu" customClass="ChartViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5Ae-Ud-e2n">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chart!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1JH-wE-6ML">
+                                <rect key="frame" x="201" y="355" width="48" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="qaq-Sm-ebe"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Chart" image="chart.bar.xaxis" catalog="system" id="2ZM-RM-t3L"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ey1-kT-JWI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2980" y="-913"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="t8l-B8-XAn">
+            <objects>
+                <tabBarController id="kyc-LO-QaD" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="d32-Jw-RRs"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KsG-c7-fle">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="s0D-M1-JW7" kind="relationship" relationship="viewControllers" id="M0h-o9-OjF"/>
+                        <segue destination="hiz-U1-yNa" kind="relationship" relationship="viewControllers" id="1GR-gX-DYw"/>
+                        <segue destination="m1d-RP-Vbu" kind="relationship" relationship="viewControllers" id="FIw-HO-Upc"/>
+                        <segue destination="Zah-TV-4bh" kind="relationship" relationship="viewControllers" id="qLO-vV-xZj"/>
+                        <segue destination="dU5-8Q-08e" kind="relationship" relationship="viewControllers" id="rvr-C3-dma"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fZe-6C-XQk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="801" y="-394"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="3uZ-dB-a6c">
+            <objects>
+                <navigationController id="fUL-9e-EOi" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="gy3-Im-kU1"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MbB-T4-Z34">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.55997004530000005" blue="0.054172117380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="kyc-LO-QaD" kind="relationship" relationship="rootViewController" id="PK1-8H-MgA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8sA-Ra-6Bt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-372" y="-394"/>
+        </scene>
     </scenes>
+    <color key="tintColor" systemColor="systemGreenColor"/>
     <resources>
+        <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="chart.bar.xaxis" catalog="system" width="128" height="98"/>
+        <image name="doc.text" catalog="system" width="115" height="128"/>
+        <image name="dollarsign.circle.fill" catalog="system" width="32" height="32"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
