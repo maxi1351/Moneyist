@@ -71,8 +71,15 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
             .responseJSON { response in
                 //print(response)
 
-                if let value = response.value as? [String: AnyObject] {
-                   print(value)
+                print(response)
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    let result = try decoder.decode(Budget.self, from: response.data!)
+                    print(result.name!)
+                } catch {
+                    print("JSON Error")
                 }
             }
         

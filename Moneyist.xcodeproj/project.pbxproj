@@ -20,6 +20,7 @@
 		54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */; };
 		54B981A5260CC9E2006FD29B /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A4260CC9E2006FD29B /* CalendarViewController.swift */; };
 		54B981A8260CCA01006FD29B /* BudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A7260CCA01006FD29B /* BudgetViewController.swift */; };
+		54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C15F56260E7E67008C5CE9 /* Budget.swift */; };
 		54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 54DFC66F260E2FFE00AFEFF1 /* Alamofire */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceViewController.swift; sourceTree = "<group>"; };
 		54B981A4260CC9E2006FD29B /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		54B981A7260CCA01006FD29B /* BudgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewController.swift; sourceTree = "<group>"; };
+		54C15F56260E7E67008C5CE9 /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		5410F4392608C8EB00C00F57 = {
 			isa = PBXGroup;
 			children = (
+				54C15F56260E7E67008C5CE9 /* Budget.swift */,
 				5410F4442608C8EB00C00F57 /* Moneyist */,
 				5410F4432608C8EB00C00F57 /* Products */,
 			);
@@ -171,6 +174,7 @@
 				5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */,
 				54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */,
 				5410F4462608C8EB00C00F57 /* AppDelegate.swift in Sources */,
+				54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */,
 				54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */,
 				54B981A5260CC9E2006FD29B /* CalendarViewController.swift in Sources */,
 				54B981A8260CCA01006FD29B /* BudgetViewController.swift in Sources */,
