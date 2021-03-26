@@ -153,6 +153,7 @@
                         <outlet property="mobileNumberField" destination="jiW-xa-AAN" id="S5x-LJ-7QK"/>
                         <outlet property="passwordField" destination="whH-T6-XwK" id="pno-CH-9XY"/>
                         <outlet property="surnameField" destination="Ehn-K9-LGc" id="eng-NS-Cmf"/>
+                        <segue destination="fUL-9e-EOi" kind="presentation" identifier="toDashboardFromSignup" modalPresentationStyle="fullScreen" id="ZVV-QC-4iq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZR-21-V6f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -187,25 +188,46 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Budget!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuJ-ik-fyH">
-                                <rect key="frame" x="186" y="284" width="61" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NUn-6p-rAU">
-                                <rect key="frame" x="158" y="389" width="99" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NUn-6p-rAU">
+                                <rect key="frame" x="157.5" y="714" width="99" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Test Server"/>
                                 <connections>
                                     <action selector="testButtonPress:" destination="dU5-8Q-08e" eventType="touchUpInside" id="THw-HK-98f"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ape-Hv-Ti8">
+                                <rect key="frame" x="0.0" y="88" width="414" height="603"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="603" id="vHS-m3-fp9"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="theCell" id="svM-vL-ITs">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="svM-vL-ITs" id="1kF-FE-ciO">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" identifier="theCell"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="dU5-8Q-08e" id="dX9-Hj-GYj"/>
+                                    <outlet property="delegate" destination="dU5-8Q-08e" id="4oe-P6-xAj"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oyL-WF-vcG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ape-Hv-Ti8" firstAttribute="centerX" secondItem="Als-VS-rLk" secondAttribute="centerX" id="0vN-zR-A1w"/>
+                            <constraint firstItem="NUn-6p-rAU" firstAttribute="top" secondItem="Ape-Hv-Ti8" secondAttribute="bottom" constant="23" id="5Uo-pH-c10"/>
+                            <constraint firstItem="Ape-Hv-Ti8" firstAttribute="top" secondItem="oyL-WF-vcG" secondAttribute="top" id="5sq-9q-BYI"/>
+                            <constraint firstItem="Ape-Hv-Ti8" firstAttribute="centerX" secondItem="NUn-6p-rAU" secondAttribute="centerX" id="BJS-Sf-Y1m"/>
+                            <constraint firstItem="Ape-Hv-Ti8" firstAttribute="leading" secondItem="oyL-WF-vcG" secondAttribute="leading" id="GSt-un-C8g"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Budget" image="doc.text" catalog="system" id="s8A-8k-fIu"/>
                 </viewController>
@@ -357,6 +379,9 @@
             <point key="canvasLocation" x="-372" y="-394"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ZVV-QC-4iq"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemGreenColor"/>
     <resources>
         <image name="calendar" catalog="system" width="128" height="106"/>

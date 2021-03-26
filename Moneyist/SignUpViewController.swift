@@ -63,61 +63,103 @@ class SignUpViewController: UIViewController {
                 userDetails["passwordHash"] = "badvalidation"
             }
             
+            // Struct for decoding JSON data
+            struct UserData: Codable { var userId: String }
+            
             // Request the creation of a new account
             AF.request(SERVER_ADDRESS, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
                 .responseJSON { response in
-                    // Output response
-                    print(response)
+                    
+                    // Decode the JSON data using the struct created before
+                    let decoder = JSONDecoder()
+                    
+                    do {
+                        let result = try decoder.decode(UserData.self, from: response.data!)
+                        print(result.userId)
+                        
+                        // Logs in user with acquired UID
+                        self.loginUser(uid: result.userId)
+                    } catch {
+                        print("JSON Error")
+                        self.showError(title: "Sign-Up Error", message: "A JSON error has occured. Please try again.")
+                    }
+                    
                 }
+            
+            
+            
         }
     }
     
+    // Function that logs in the user with the given userID (UID)
+    func loginUser(uid: String) {
+        
+        /*
+         FILL OUT LOGIN CODE HERE ONCE SERVER TEAM IS DONE WITH THEIR WORK
+         */
+        
+        performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
+    }
+    
+    // Prepare segue to dashboard
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        
+        if (segue.identifier == "toDashboardFromSignup") {
+            
+            // If destination VC is transactions view
+            if let target = segue.destination as? TransactionsViewController {
+                print("Segue test")
+            }
+        }
+        
+    }
+    
+    // Validates all the inputs in the current view controller, returns true if valid, false if otherwise
     func validateInputs() -> Bool {
         guard !firstNameField.text!.isEmpty else {
-            showValidationError(code: 0)
+            showError(title: "Validation Error", message: "Please enter your name.")
             return false
         }
         guard !surnameField.text!.isEmpty else {
-            showValidationError(code: 1)
+            showError(title: "Validation Error", message: "Please enter your surname.")
             return false
         }
         guard !dobField.text!.isEmpty else {
-            showValidationError(code: 2)
+            showError(title: "Validation Error", message: "Please enter your date-of-birth.")
             return false
         }
         guard !emailField.text!.isEmpty else {
-            showValidationError(code: 3)
+            showError(title: "Validation Error", message: "Please enter an e-mail address.")
             return false
         }
         guard !mobileNumberField.text!.isEmpty else {
-            showValidationError(code: 4)
+            showError(title: "Validation Error", message: "Please enter a mobile number.")
             return false
         }
         guard !passwordField.text!.isEmpty else {
-            showValidationError(code: 5)
+            showError(title: "Validation Error", message: "Please enter a password.")
             return false
         }
         guard !confirmPasswordField.text!.isEmpty else {
-            showValidationError(code: 6)
+            showError(title: "Validation Error", message: "Passwords do not match.")
             return false
         }
         return true
     }
     
-    func showValidationError(code: Int) {
+    // Error handler using iOS popups
+    func showError(title: String, message: String) {
         
-        let alert = UIAlertController(title: "Incorrect Input", message: "Please try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 
-        switch code {
-        case 0:
-            self.present(alert, animated: true)
-        default:
-            self.present(alert, animated: true)
-        }
+        self.present(alert, animated: true)
     }
     
+    // Handles date input
     func showDatePicker() {
         // Set datePicker format
         datePicker.datePickerMode = .date
@@ -149,6 +191,7 @@ class SignUpViewController: UIViewController {
         
     }
     
+    // Once the user has picked a date, formatting options are chosen
     @objc func datePickerFinished(){
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd"
@@ -156,6 +199,7 @@ class SignUpViewController: UIViewController {
         self.view.endEditing(true)
     }
     
+    // User finishes using the date picker
     @objc func cancelDatePicker(){
         self.view.endEditing(true)
     }
@@ -167,15 +211,4 @@ class SignUpViewController: UIViewController {
         // Make sure the DOB text field shows a date picker and not a keyboard
         showDatePicker()
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

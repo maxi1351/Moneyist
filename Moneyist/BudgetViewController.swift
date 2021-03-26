@@ -8,7 +8,8 @@
 import UIKit
 import Alamofire
 
-class BudgetViewController: UIViewController {
+class BudgetViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
 
     // Holds budget details
     var budgetDetails = [
@@ -26,13 +27,24 @@ class BudgetViewController: UIViewController {
     // Holds user ID
     let userID = "yeheheboiii"
     
-    let SERVER_ADDRESS = "http://localhost:4000/budgets/all/yehehboi" // followed by specific route
+    let SERVER_ADDRESS = "http://localhost:4000/budgets/create/605e25e87c393603952eeb87" // followed by specific route
     
     // Button press
     @IBAction func testButtonPress(_ sender: Any) {
         getBudgets()
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "theCell", for: indexPath)
+        
+        cell.textLabel?.text = "Ehe"
+        
+        return cell
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,7 +56,7 @@ class BudgetViewController: UIViewController {
     func getBudgets() {
         
         budgetDetails = [
-            "userID" : userID,
+            "userID" : "605e25e87c393603952eeb87",
             "name" : "Earnin' that bank",
             "initialAmount" : 20000000,
             "amountAfterExpenses" : 15000000,
@@ -55,9 +67,13 @@ class BudgetViewController: UIViewController {
             "endDate" : "2021/04/01"
         ]
         
-        AF.request(SERVER_ADDRESS, method: .get, parameters: budgetDetails, encoding: JSONEncoding.default)
+        AF.request(SERVER_ADDRESS, method: .post, parameters: budgetDetails, encoding: JSONEncoding.default)
             .responseJSON { response in
-                print(response)
+                //print(response)
+
+                if let value = response.value as? [String: AnyObject] {
+                   print(value)
+                }
             }
         
     }
