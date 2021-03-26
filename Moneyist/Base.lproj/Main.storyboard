@@ -114,7 +114,7 @@
                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="whH-T6-XwK">
-                                <rect key="frame" x="88" y="410" width="239" height="34"/>
+                                <rect key="frame" x="88" y="458" width="239" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" textContentType="password"/>
@@ -129,10 +129,16 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NGS-Tt-yVu">
-                                <rect key="frame" x="88" y="458" width="239" height="34"/>
+                                <rect key="frame" x="88" y="506" width="239" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" textContentType="password"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mobile Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jiW-xa-AAN">
+                                <rect key="frame" x="88" y="407" width="239" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Syj-4c-1Ri"/>
@@ -144,13 +150,14 @@
                         <outlet property="dobField" destination="REH-xO-T1M" id="w0y-nS-hEY"/>
                         <outlet property="emailField" destination="nrZ-ja-aYb" id="NSq-D3-Blf"/>
                         <outlet property="firstNameField" destination="xS8-WR-0Tl" id="brB-DK-Qpy"/>
+                        <outlet property="mobileNumberField" destination="jiW-xa-AAN" id="S5x-LJ-7QK"/>
                         <outlet property="passwordField" destination="whH-T6-XwK" id="pno-CH-9XY"/>
                         <outlet property="surnameField" destination="Ehn-K9-LGc" id="eng-NS-Cmf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MZR-21-V6f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-146" y="535"/>
+            <point key="canvasLocation" x="-146.37681159420291" y="534.375"/>
         </scene>
         <!--Boot Navigation Controller-->
         <scene sceneID="5LA-4k-VEb">
@@ -187,6 +194,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NUn-6p-rAU">
+                                <rect key="frame" x="158" y="389" width="99" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Test Server"/>
+                                <connections>
+                                    <action selector="testButtonPress:" destination="dU5-8Q-08e" eventType="touchUpInside" id="THw-HK-98f"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oyL-WF-vcG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -195,7 +211,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QwM-OE-wfL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1384" y="333"/>
+            <point key="canvasLocation" x="1382.608695652174" y="332.8125"/>
         </scene>
         <!--CalendarVC-->
         <scene sceneID="QcP-kH-rmv">
@@ -346,7 +362,7 @@
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="chart.bar.xaxis" catalog="system" width="128" height="98"/>
         <image name="doc.text" catalog="system" width="115" height="128"/>
-        <image name="dollarsign.circle.fill" catalog="system" width="32" height="32"/>
+        <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

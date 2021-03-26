@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,7 @@
 		54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */; };
 		54B981A5260CC9E2006FD29B /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A4260CC9E2006FD29B /* CalendarViewController.swift */; };
 		54B981A8260CCA01006FD29B /* BudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A7260CCA01006FD29B /* BudgetViewController.swift */; };
+		54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 54DFC66F260E2FFE00AFEFF1 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +106,9 @@
 			dependencies = (
 			);
 			name = Moneyist;
+			packageProductDependencies = (
+				54DFC66F260E2FFE00AFEFF1 /* Alamofire */,
+			);
 			productName = Moneyist;
 			productReference = 5410F4422608C8EB00C00F57 /* Moneyist.app */;
 			productType = "com.apple.product-type.application";
@@ -131,6 +136,9 @@
 				Base,
 			);
 			mainGroup = 5410F4392608C8EB00C00F57;
+			packageReferences = (
+				54DFC66E260E2FFE00AFEFF1 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 5410F4432608C8EB00C00F57 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -369,6 +377,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		54DFC66E260E2FFE00AFEFF1 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		54DFC66F260E2FFE00AFEFF1 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54DFC66E260E2FFE00AFEFF1 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		5410F44E2608C8EB00C00F57 /* Moneyist.xcdatamodeld */ = {
