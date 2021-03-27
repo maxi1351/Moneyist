@@ -15,6 +15,7 @@
 		5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5410F44E2608C8EB00C00F57 /* Moneyist.xcdatamodeld */; };
 		5410F4522608C8EC00C00F57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5410F4512608C8EC00C00F57 /* Assets.xcassets */; };
 		5410F4552608C8EC00C00F57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5410F4532608C8EC00C00F57 /* LaunchScreen.storyboard */; };
+		544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */; };
 		54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819B260CC95B006FD29B /* TransactionsViewController.swift */; };
 		54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819E260CC992006FD29B /* ChartViewController.swift */; };
 		54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */; };
@@ -35,6 +36,7 @@
 		5410F4512608C8EC00C00F57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5410F4542608C8EC00C00F57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5410F4562608C8EC00C00F57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCreationViewController.swift; sourceTree = "<group>"; };
 		54B9819B260CC95B006FD29B /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		54B9819E260CC992006FD29B /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceViewController.swift; sourceTree = "<group>"; };
@@ -58,7 +60,6 @@
 		5410F4392608C8EB00C00F57 = {
 			isa = PBXGroup;
 			children = (
-				54C15F56260E7E67008C5CE9 /* Budget.swift */,
 				5410F4442608C8EB00C00F57 /* Moneyist */,
 				5410F4432608C8EB00C00F57 /* Products */,
 			);
@@ -75,6 +76,7 @@
 		5410F4442608C8EB00C00F57 /* Moneyist */ = {
 			isa = PBXGroup;
 			children = (
+				54C15F56260E7E67008C5CE9 /* Budget.swift */,
 				5410F4452608C8EB00C00F57 /* AppDelegate.swift */,
 				5410F4472608C8EB00C00F57 /* SceneDelegate.swift */,
 				5410F4492608C8EB00C00F57 /* ViewController.swift */,
@@ -89,6 +91,7 @@
 				5410F4562608C8EC00C00F57 /* Info.plist */,
 				5410F44E2608C8EB00C00F57 /* Moneyist.xcdatamodeld */,
 				54016103260BCAA600405351 /* SignUpViewController.swift */,
+				544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */,
 			);
 			path = Moneyist;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 				54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */,
 				5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */,
 				54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */,
+				544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */,
 				5410F4462608C8EB00C00F57 /* AppDelegate.swift in Sources */,
 				54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */,
 				54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */,

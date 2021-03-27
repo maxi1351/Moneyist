@@ -10,7 +10,7 @@ import Alamofire
 
 class BudgetViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-
+    
     // Holds budget details
     var budgetDetails = [
         "userID" : "",
@@ -27,11 +27,16 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
     // Holds user ID
     let userID = "yeheheboiii"
     
-    let SERVER_ADDRESS = "http://localhost:4000/budgets/create/605e25e87c393603952eeb87" // followed by specific route
+    let SERVER_ADDRESS = "http://localhost:4000/budget/605f4d2df724a8024adfd849" // followed by specific route
     
-    // Button press
+    // Test button press
     @IBAction func testButtonPress(_ sender: Any) {
         getBudgets()
+    }
+    
+    // Add budget button press
+    @IBAction func addButtonPress(_ sender: Any) {
+        performSegue(withIdentifier: "toBudgetCreation", sender: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,9 +44,10 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "theCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "theCell", for: indexPath)
         
         cell.textLabel?.text = "Ehe"
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 20.0)
         
         return cell
     }
@@ -56,8 +62,8 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
     func getBudgets() {
         
         budgetDetails = [
-            "userID" : "605e25e87c393603952eeb87",
-            "name" : "Earnin' that bank",
+            "userID" : "605f4d2df724a8024adfd849",
+            "name" : "Yee",
             "initialAmount" : 20000000,
             "amountAfterExpenses" : 15000000,
             "amountForNeeds" : 2000000,
@@ -66,7 +72,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
             "startDate" : "2021/03/01",
             "endDate" : "2021/04/01"
         ]
-        
+
         AF.request(SERVER_ADDRESS, method: .post, parameters: budgetDetails, encoding: JSONEncoding.default)
             .responseJSON { response in
                 //print(response)
@@ -79,7 +85,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
                     let result = try decoder.decode(Budget.self, from: response.data!)
                     print(result.name!)
                 } catch {
-                    print("JSON Error")
+                    print(error)
                 }
             }
         

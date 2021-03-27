@@ -19,6 +19,8 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var confirmPasswordField: UITextField!
     @IBOutlet weak var mobileNumberField: UITextField!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     // Holds user details in dictionary format
     var userDetails = [
         "firstName" : "",
@@ -42,6 +44,8 @@ class SignUpViewController: UIViewController {
     }
     
     func requestCreation() {
+        
+        activityIndicator.startAnimating()
         
         // Check if inputs are valid
         if (validateInputs()) {
@@ -77,17 +81,22 @@ class SignUpViewController: UIViewController {
                         let result = try decoder.decode(UserData.self, from: response.data!)
                         print(result.userId)
                         
+                        self.activityIndicator.stopAnimating()
+                        
                         // Logs in user with acquired UID
                         self.loginUser(uid: result.userId)
                     } catch {
                         print("JSON Error")
                         self.showError(title: "Sign-Up Error", message: "A JSON error has occured. Please try again.")
+                        self.activityIndicator.stopAnimating()
                     }
                     
                 }
             
             
-            
+        }
+        else {
+            activityIndicator.stopAnimating()
         }
     }
     
@@ -207,6 +216,8 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
+        
+        activityIndicator.hidesWhenStopped = true
         
         // Make sure the DOB text field shows a date picker and not a keyboard
         showDatePicker()
