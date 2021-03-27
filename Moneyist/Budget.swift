@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Budget Struct
 struct Budget : Codable {
     public var __v: Int32
     public var _id: String

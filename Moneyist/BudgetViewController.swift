@@ -76,7 +76,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
         AF.request(SERVER_ADDRESS, method: .post, parameters: budgetDetails, encoding: JSONEncoding.default)
             .responseJSON { response in
                 //print(response)
-
+                // e
                 print(response)
                 
                 let decoder = JSONDecoder()

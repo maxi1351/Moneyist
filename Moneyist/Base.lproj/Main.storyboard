@@ -194,9 +194,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NUn-6p-rAU">
-                                <rect key="frame" x="157.5" y="714" width="99" height="36"/>
+                                <rect key="frame" x="122.5" y="714" width="169" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Test Server"/>
+                                <state key="normal" title="Test Server System"/>
                                 <connections>
                                     <action selector="testButtonPress:" destination="dU5-8Q-08e" eventType="touchUpInside" id="THw-HK-98f"/>
                                 </connections>

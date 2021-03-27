@@ -65,7 +65,7 @@ class SignUpViewController: UIViewController {
             }
             else {
                 userDetails["passwordHash"] = "badvalidation"
-            }
+            }//
             
             // Struct for decoding JSON data
             struct UserData: Codable { var userId: String }

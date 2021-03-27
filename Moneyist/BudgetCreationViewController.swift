@@ -50,7 +50,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     // When the 'Create' button is pressed
     @IBAction func createButtonPress(_ sender: Any) {
         createBudget()
-    }
+    }//
     
     
     // Request budget info from server
