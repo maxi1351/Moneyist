@@ -61,11 +61,11 @@ class SignUpViewController: UIViewController {
             
             // Password validation
             if (passwordField.text! == confirmPasswordField.text!) {
-                userDetails["passwordHash"] = "yeeeee"
+                userDetails["passwordHash"] = passwordField.text!
             }
             else {
                 userDetails["passwordHash"] = "badvalidation"
-            }//
+            }
             
             // Struct for decoding JSON data
             struct UserData: Codable { var userId: String }
@@ -106,6 +106,9 @@ class SignUpViewController: UIViewController {
         /*
          FILL OUT LOGIN CODE HERE ONCE SERVER TEAM IS DONE WITH THEIR WORK
          */
+        
+        // Set UID for rest of app
+        UserDetails.sharedInstance.setUID(id: uid)
         
         performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
     }

@@ -13,7 +13,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
     
     // Holds budget details
     var budgetDetails = [
-        "userID" : "",
+        "userID" : UserDetails.sharedInstance.getUID(),
         "name" : "",
         "initialAmount" : 0,
         "amountAfterExpenses" : 0,
@@ -24,10 +24,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
         "endDate" : ""
     ] as [String : Any]
     
-    // Holds user ID
-    let userID = "yeheheboiii"
-    
-    let SERVER_ADDRESS = "http://localhost:4000/budget/605f4d2df724a8024adfd849" // followed by specific route
+    let SERVER_ADDRESS = "http://localhost:4000/budget/all/" + UserDetails.sharedInstance.getUID()
     
     // Test button press
     @IBAction func testButtonPress(_ sender: Any) {
@@ -62,31 +59,32 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
     func getBudgets() {
         
         budgetDetails = [
-            "userID" : "605f4d2df724a8024adfd849",
-            "name" : "Yee",
-            "initialAmount" : 20000000,
-            "amountAfterExpenses" : 15000000,
+            "userID" : UserDetails.sharedInstance.getUID(),
+            "name" : "AnotherOne",
+            "initialAmount" : 50000,
+            "amountAfterExpenses" : 50000,
             "amountForNeeds" : 2000000,
             "amountForWants" : 500000,
             "savingsAndDebts" : 86000000,
-            "startDate" : "2021/03/01",
-            "endDate" : "2021/04/01"
+            "startDate" : "2021/03/29",
+            "endDate" : "2021/03/29"
         ]
 
-        AF.request(SERVER_ADDRESS, method: .post, parameters: budgetDetails, encoding: JSONEncoding.default)
+        let parameter = ["userID" : UserDetails.sharedInstance.getUID()]
+        
+        AF.request(SERVER_ADDRESS, parameters: parameter, encoding: URLEncoding.default)
             .responseJSON { response in
-                //print(response)
-                // e
+                
                 print(response)
                 
-                let decoder = JSONDecoder()
+                /*let decoder = JSONDecoder()
                 
                 do {
                     let result = try decoder.decode(Budget.self, from: response.data!)
                     print(result.name!)
                 } catch {
                     print(error)
-                }
+                }*/
             }
         
     }

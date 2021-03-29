@@ -23,7 +23,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     
     // Holds budget details
     var budgetDetails = [
-        "userID" : "",
+        "userID" : UserDetails.sharedInstance.getUID(),
         "name" : "",
         "initialAmount" : 0,
         "amountAfterExpenses" : 0,
@@ -34,13 +34,13 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         "endDate" : ""
     ] as [String : Any]
     
-    // Holds user ID
-    let userID = "yeheheboiii"
-    let SERVER_ADDRESS = "http://localhost:4000/budget/605f4d2df724a8024adfd849" // followed by specific route
+    // Server request is dependent on User ID
+    let SERVER_ADDRESS = "http://localhost:4000/budget/" + UserDetails.sharedInstance.getUID()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
+        print(UserDetails.sharedInstance.getUID())
         
         // Set the date pickers to be shown instead of a traditional keyboard
         showDatePicker()
@@ -50,14 +50,14 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     // When the 'Create' button is pressed
     @IBAction func createButtonPress(_ sender: Any) {
         createBudget()
-    }//
+    }
     
     
     // Request budget info from server
     func createBudget() {
         
         budgetDetails = [
-            "userID" : userID,
+            "userID" : UserDetails.sharedInstance.getUID(),
             "name" : budgetNameField.text!,
             "initialAmount" : Int(initialAmountField.text!)!,
             "amountAfterExpenses" : Int(amountAfterExpensesField.text!)!,
@@ -93,11 +93,35 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
                 do {
                     let result = try decoder.decode(Budget.self, from: response.data!)
                     print(result.name!)
+                    self.finishCreation()
                 } catch {
                     print(error)
                 }
             }
         
+    }
+    
+    func finishCreation() {
+        print("Created!") // Debug
+        
+        
+        // Show confirmation popup
+        let alert = UIAlertController(title: "Success!", message: "Your new budget has been created successfully!", preferredStyle: .alert)
+        
+        // Controls what happens after the user presses OK
+        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                UIAlertAction in
+                NSLog("OK Pressed")
+            
+            // Go back to budget screen
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        alert.addAction(okAction)
+        	
+        self.present(alert, animated: true)
+        
+       
     }
     
     // Start date picker functions

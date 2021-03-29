@@ -9,6 +9,11 @@ import UIKit
 
 class TransactionsViewController: UIViewController {
 
+    
+    @IBAction func addButtonPress(_ sender: Any) {
+        performSegue(withIdentifier: "toAddTransaction", sender: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
