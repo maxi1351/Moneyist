@@ -56,15 +56,15 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
         cell.textLabel?.text = budgetList[indexPath.row].name
         
         // Used for date formatting
-        let dateFormatterGet = DateFormatter()
+        /*let dateFormatterGet = DateFormatter()
         dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = "MMM dd,yyyy"
         
-        let tempDate = dateFormatterGet.date(from: budgetList[indexPath.row].endDate)
+        let tempDate = dateFormatterGet.date(from: budgetList[indexPath.row].endDate)*/
         
-        cell.detailTextLabel?.text = dateFormatterPrint.string(from: tempDate!)
+        cell.detailTextLabel?.text = budgetList[indexPath.row].endDate
         cell.textLabel?.font = UIFont.systemFont(ofSize: 20.0)
         
         return cell
