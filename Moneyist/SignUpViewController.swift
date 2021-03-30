@@ -28,7 +28,8 @@ class SignUpViewController: UIViewController {
         "dateOfBirth" : "",
         "email" : "",
         "mobileNumber" : "",
-        "passwordHash" : ""
+        "password" : "",
+        "confirmPassword" : ""
     ]
     
     // Standard server address (with given route, in this case 'user/register')
@@ -48,7 +49,7 @@ class SignUpViewController: UIViewController {
         activityIndicator.startAnimating()
         
         // Check if inputs are valid
-        if (validateInputs()) {
+        if (true) {
             // Get user details from input
             userDetails = [
                 "firstName" : firstNameField.text!,
@@ -56,19 +57,40 @@ class SignUpViewController: UIViewController {
                 "dateOfBirth" : dobField.text!,
                 "email" : emailField.text!,
                 "mobileNumber" : mobileNumberField.text!,
-                "passwordHash" : ""
-            ]
+                "password" : passwordField.text!,
+                "confirmPassword" : confirmPasswordField.text!
+                ]
+            
+            // DEBUG
+            /*userDetails = [
+                "firstName" : "Jin",
+                "surname" : "Kazama",
+                "dateOfBirth" : "1975/06/25",
+                "email" : "jin@tekken.jp",
+                "mobileNumber" : "36657384512",
+                "password" : passwordField.text!,
+                "confirmPassword" : confirmPasswordField.text!
+                ]*/
             
             // Password validation
-            if (passwordField.text! == confirmPasswordField.text!) {
+            /*if (passwordField.text! == confirmPasswordField.text!) {
                 userDetails["passwordHash"] = passwordField.text!
             }
             else {
                 userDetails["passwordHash"] = "badvalidation"
-            }
+            }*/
             
             // Struct for decoding JSON data
             struct UserData: Codable { var userId: String }
+            
+            struct ErrorSet: Codable {
+                //var location: String;
+                var msg: String;
+                var param: String;
+                var value: String
+            }
+            
+            // TODO Fix errors/validation
             
             // Request the creation of a new account
             AF.request(SERVER_ADDRESS, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
@@ -76,6 +98,8 @@ class SignUpViewController: UIViewController {
                     
                     // Decode the JSON data using the struct created before
                     let decoder = JSONDecoder()
+                    
+                    print(response)
                     
                     do {
                         let result = try decoder.decode(UserData.self, from: response.data!)
@@ -86,8 +110,17 @@ class SignUpViewController: UIViewController {
                         // Logs in user with acquired UID
                         self.loginUser(uid: result.userId)
                     } catch {
-                        print("JSON Error")
-                        self.showError(title: "Sign-Up Error", message: "A JSON error has occured. Please try again.")
+                        print("Attempting to show errors...")
+                        
+                        do {
+                            let result = try decoder.decode(ErrorSet.self, from: response.data!)
+                            
+                            self.showError(title: "Sign-Up Error", message: result.msg)
+                        } catch {
+                            print(error)
+                        }
+                        
+                        
                         self.activityIndicator.stopAnimating()
                     }
                     

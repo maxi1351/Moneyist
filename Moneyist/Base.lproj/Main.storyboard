@@ -24,7 +24,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HsE-7g-HCb">
                                 <rect key="frame" x="101" y="259" width="213" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1pL-md-avk">
                                 <rect key="frame" x="206" y="301" width="108" height="28"/>
@@ -68,6 +68,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dEX-sH-eOz">
+                                <rect key="frame" x="150" y="479" width="115" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="18"/>
+                                <state key="normal" title="AUTO LOGIN"/>
+                                <connections>
+                                    <action selector="autoLoginDebugPress:" destination="52i-Xr-fkl" eventType="touchUpInside" id="YHP-C9-B13"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Q8i-dY-ANV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -76,10 +84,13 @@
                             <constraint firstItem="cDh-j8-k6q" firstAttribute="top" secondItem="SvR-Tj-sDj" secondAttribute="bottom" constant="23" id="4K6-jj-DPI"/>
                             <constraint firstItem="cDh-j8-k6q" firstAttribute="leading" secondItem="Q8i-dY-ANV" secondAttribute="leading" constant="101" id="4Z0-xK-9So"/>
                             <constraint firstItem="VZb-2X-Y7C" firstAttribute="leading" secondItem="SRK-nK-VK3" secondAttribute="trailing" constant="8" id="Avx-5A-fjP"/>
+                            <constraint firstItem="dEX-sH-eOz" firstAttribute="leading" secondItem="Q8i-dY-ANV" secondAttribute="leading" constant="150" id="IRG-by-vBe"/>
                             <constraint firstItem="cDh-j8-k6q" firstAttribute="leading" secondItem="HsE-7g-HCb" secondAttribute="leading" id="MdJ-aU-5H2"/>
                             <constraint firstItem="SRK-nK-VK3" firstAttribute="leading" secondItem="Q8i-dY-ANV" secondAttribute="leading" constant="84" id="OvP-ff-m0r"/>
+                            <constraint firstItem="dEX-sH-eOz" firstAttribute="centerX" secondItem="7qg-P8-jMS" secondAttribute="centerX" id="QiX-SY-xlr"/>
                             <constraint firstItem="SRK-nK-VK3" firstAttribute="centerY" secondItem="VZb-2X-Y7C" secondAttribute="centerY" id="R0B-Xl-ctR"/>
                             <constraint firstItem="HsE-7g-HCb" firstAttribute="trailing" secondItem="1pL-md-avk" secondAttribute="trailing" id="bgY-wL-scW"/>
+                            <constraint firstItem="dEX-sH-eOz" firstAttribute="top" secondItem="7qg-P8-jMS" secondAttribute="bottom" constant="8" id="elj-Rp-WgT"/>
                             <constraint firstItem="HsE-7g-HCb" firstAttribute="top" secondItem="cDh-j8-k6q" secondAttribute="bottom" constant="16" id="iLb-g4-UZS"/>
                             <constraint firstItem="SvR-Tj-sDj" firstAttribute="leading" secondItem="Q8i-dY-ANV" secondAttribute="leading" constant="116" id="kJX-g1-Ucj"/>
                             <constraint firstItem="1pL-md-avk" firstAttribute="leading" secondItem="Q8i-dY-ANV" secondAttribute="leading" constant="206" id="mHo-Ma-6BF"/>
@@ -131,7 +142,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="whH-T6-XwK">
                                 <rect key="frame" x="88" y="458" width="239" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKs-jK-X5A">
                                 <rect key="frame" x="164" y="629" width="96" height="46"/>
@@ -144,7 +155,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NGS-Tt-yVu">
                                 <rect key="frame" x="88" y="506" width="239" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mobile Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jiW-xa-AAN">
                                 <rect key="frame" x="88" y="407" width="239" height="34"/>
@@ -255,12 +266,28 @@
                                     <constraint firstAttribute="height" constant="603" id="vHS-m3-fp9"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="theCell" id="svM-vL-ITs">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="theCell" textLabel="WsM-H7-sGq" detailTextLabel="yhZ-bJ-WEc" style="IBUITableViewCellStyleSubtitle" id="svM-vL-ITs">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="svM-vL-ITs" id="1kF-FE-ciO">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WsM-H7-sGq">
+                                                    <rect key="frame" x="20" y="10" width="33" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yhZ-bJ-WEc">
+                                                    <rect key="frame" x="20" y="31.5" width="44" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration" identifier="theCell"/>
                                     </tableViewCell>
@@ -292,6 +319,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Budget" image="doc.text" catalog="system" id="s8A-8k-fIu"/>
                     <connections>
+                        <outlet property="budgetTable" destination="Ape-Hv-Ti8" id="Yq4-Mr-qHH"/>
                         <segue destination="DeT-n7-rn7" kind="show" identifier="toBudgetCreation" id="6UU-1O-DfQ"/>
                     </connections>
                 </viewController>
@@ -623,7 +651,7 @@
         <!--Welcome, UID-->
         <scene sceneID="t8l-B8-XAn">
             <objects>
-                <tabBarController id="kyc-LO-QaD" sceneMemberID="viewController">
+                <tabBarController id="kyc-LO-QaD" customClass="DashboardViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="Welcome, UID" id="d32-Jw-RRs"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KsG-c7-fle">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>

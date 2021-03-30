@@ -11,6 +11,8 @@ import Alamofire
 class BudgetViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
+    @IBOutlet weak var budgetTable: UITableView!
+    
     // Holds budget details
     var budgetDetails = [
         "userID" : UserDetails.sharedInstance.getUID(),
@@ -23,6 +25,13 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
         "startDate" : "",
         "endDate" : ""
     ] as [String : Any]
+    
+    struct BudgetGet : Codable {
+        var endDate: String;
+        var name: String
+    }
+    
+    var budgetList: Array<BudgetGet> = []
     
     let SERVER_ADDRESS = "http://localhost:4000/budget/all/" + UserDetails.sharedInstance.getUID()
     
@@ -37,22 +46,53 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        
+        return budgetList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "theCell", for: indexPath)
         
-        cell.textLabel?.text = "Ehe"
+        cell.textLabel?.text = budgetList[indexPath.row].name
+        
+        // Used for date formatting
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+        
+        let tempDate = dateFormatterGet.date(from: budgetList[indexPath.row].endDate)
+        
+        cell.detailTextLabel?.text = dateFormatterPrint.string(from: tempDate!)
         cell.textLabel?.font = UIFont.systemFont(ofSize: 20.0)
         
         return cell
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: Selector(("backgroundNofification:")), name: UIApplication.willEnterForegroundNotification, object: nil);
+        
+        refresh()
+        
+    }
+    
+    // Called whenever view is viewed
+    func backgoundNofification(noftification:NSNotification){
+        refresh();
+    }
+
+    // Refreshes data in view controller
+    func refresh() {
         print(self.title! + " loaded!")
         
+        getBudgets()
+        
+        budgetTable.reloadData()
+        
+        print("Budget Count = " + String(budgetList.count))
     }
     
     // Request budget info from server
@@ -70,23 +110,57 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
             "endDate" : "2021/03/29"
         ]
 
-        let parameter = ["userID" : UserDetails.sharedInstance.getUID()]
+        //let parameter = ["userID" : UserDetails.sharedInstance.getUID()]
         
-        AF.request(SERVER_ADDRESS, parameters: parameter, encoding: URLEncoding.default)
+        //var budgetArray : Array<Budget> = []
+        
+        
+        
+        AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
             .responseJSON { response in
                 
+                
+                print("Point 1")
                 print(response)
                 
-                /*let decoder = JSONDecoder()
+                
+                let decoder = JSONDecoder()
+                
                 
                 do {
-                    let result = try decoder.decode(Budget.self, from: response.data!)
-                    print(result.name!)
+                    print("Pass 1")
+                    let result = try decoder.decode([BudgetGet].self, from: response.data!)
+                    //budgetArray = result
+                    
+                    // PUT IN TRY/CATCH!
+                    print(result[0])
+                    
+                    // Iterate over result to add all budgets to list
+                    /*for b in result {
+                        self.budgetList.append(b)
+                        print("Appended!")
+                    }*/
+                    
+                    DispatchQueue.main.async {
+                        print("main.async")
+                        
+                        self.budgetList = result
+                        
+                        for b in self.budgetList {
+                            print("ENTRY: ")
+                            print(b.name)
+                        }
+                        
+                        self.budgetTable.reloadData()
+                        
+                    }
+                    
+                    
+                    
                 } catch {
                     print(error)
-                }*/
-            }
-        
+                }
+            }.resume()
     }
     
 

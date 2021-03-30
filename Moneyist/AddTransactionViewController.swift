@@ -25,7 +25,15 @@ class AddTransactionViewController: UIViewController {
     var status = "CONFIRMED"
     
     // Standard server address (with given route, in this case 'Add Transaction')
-    let SERVER_ADDRESS = "http://localhost:4000/user/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/transaction/" + UserDetails.sharedInstance.getUID()
+    
+    var TransactionDetails = [
+        "type" : "",
+        "amount" : "",
+        "currency" : "",
+        "status" : "",
+        "date" : ""
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,14 +48,20 @@ class AddTransactionViewController: UIViewController {
     }
     
     func addTransaction() {
-        let TransactionDetails = [
-            "userID" : UserDetails.sharedInstance.getUID(),
+        TransactionDetails = [
             "type" : type,
             "amount" : amountField.text!,
             "currency" : currency,
             "status" : status,
             "date" : dateField.text!
-        ] as [String : Any]
+        ]
+        
+        print(TransactionDetails["type"]!)
+        print(TransactionDetails["amount"]!)
+        print(TransactionDetails["currency"]!)
+        print(TransactionDetails["status"]!)
+        print(TransactionDetails["date"]!)
+        print("User ID: " + UserDetails.sharedInstance.getUID())
         
         AF.request(SERVER_ADDRESS, method: .post, parameters: TransactionDetails, encoding: JSONEncoding.default)
             .responseString { response in
@@ -55,15 +69,15 @@ class AddTransactionViewController: UIViewController {
 
                 print(response)
                 
-                /*let decoder = JSONDecoder()
+                let decoder = JSONDecoder()
                 
                 do {
                     let result = try decoder.decode(Budget.self, from: response.data!)
                     print(result.name!)
-                    self.finishCreation()
+                    //self.finishCreation()
                 } catch {
                     print(error)
-                }*/
+                }
             }
     }
     

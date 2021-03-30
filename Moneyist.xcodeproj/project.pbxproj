@@ -26,6 +26,8 @@
 		54B981A8260CCA01006FD29B /* BudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A7260CCA01006FD29B /* BudgetViewController.swift */; };
 		54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C15F56260E7E67008C5CE9 /* Budget.swift */; };
 		54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 54DFC66F260E2FFE00AFEFF1 /* Alamofire */; };
+		54F6345526137A51008E612A /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345426137A51008E612A /* DashboardViewController.swift */; };
+		54F6345826137B7F008E612A /* UserJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345726137B7F008E612A /* UserJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		54B981A4260CC9E2006FD29B /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		54B981A7260CCA01006FD29B /* BudgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewController.swift; sourceTree = "<group>"; };
 		54C15F56260E7E67008C5CE9 /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
+		54F6345426137A51008E612A /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		54F6345726137B7F008E612A /* UserJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 				540D448926124F9100217594 /* User.swift */,
 				540D448C2612597F00217594 /* AddTransactionViewController.swift */,
 				540D448F26125AB800217594 /* Transaction.swift */,
+				54F6345426137A51008E612A /* DashboardViewController.swift */,
+				54F6345726137B7F008E612A /* UserJSON.swift */,
 			);
 			path = Moneyist;
 			sourceTree = "<group>";
@@ -183,6 +189,7 @@
 			files = (
 				540D448A26124F9100217594 /* User.swift in Sources */,
 				5410F44A2608C8EB00C00F57 /* ViewController.swift in Sources */,
+				54F6345826137B7F008E612A /* UserJSON.swift in Sources */,
 				54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */,
 				5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */,
 				54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */,
@@ -196,6 +203,7 @@
 				5410F4482608C8EB00C00F57 /* SceneDelegate.swift in Sources */,
 				54016104260BCAA600405351 /* SignUpViewController.swift in Sources */,
 				540D449026125AB800217594 /* Transaction.swift in Sources */,
+				54F6345526137A51008E612A /* DashboardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
