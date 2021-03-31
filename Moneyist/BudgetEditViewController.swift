@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class BudgetEditViewController: UIViewController {
 
@@ -32,8 +33,11 @@ class BudgetEditViewController: UIViewController {
         "savingsAndDebts" : 0,
     ] as [String : Any]
     
+    // Budget ID / Should be passed from previous view controller
+    var budgetID = ""
+    
     // Server request is dependent on User ID
-    let SERVER_ADDRESS = "http://localhost:4000/budget/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/budget/update/"
     
     // Converts ISO Date string to Swift Date format
     func convertISOTime(date: String) -> Date {
@@ -47,6 +51,12 @@ class BudgetEditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: Selector(("backgroundNofification:")), name: UIApplication.willEnterForegroundNotification, object: nil);
+        
+        // Get data from server
+        refresh()
+        
 
         // Virtual keyboard setup
         hideKeyboard()
@@ -74,9 +84,45 @@ class BudgetEditViewController: UIViewController {
         endDateField.text = (formatter.string(from: tempEndDate))
     }
     
+    func refresh() {
+        
+    }
     
     @IBAction func editButtonPress(_ sender: UIButton) {
-        print(initialAmountField.text!)
+        
+        budgetInfo = [
+            "name" : nameField.text!,
+            "endDate" : endDateField.text!,
+            "startDate" : startDateField.text!,
+            "initialAmount" : initialAmountField.text!,
+            "amountAfterExpenses" : amountAfterExpensesField.text!,
+            "amountForNeeds" : amountForNeedsField.text!,
+            "amountForWants" : amountForWantsField.text!,
+            "savingsAndDebts" : savingsAndDebtsField.text!
+        ]
+        
+        // Make a PATCH request with budget info
+        AF.request(SERVER_ADDRESS + budgetID, method: .patch, parameters: budgetInfo, encoding: JSONEncoding.default)
+            .responseString { response in
+                print(response)
+                
+                // Attempt to decode JSON data
+                /*let decoder = JSONDecoder()
+                
+                do {
+                    let result = try decoder.decode(Budget.self, from: response.data!)
+                    
+                    // Async function which runs after all data is pulled from server
+                    DispatchQueue.main.async {
+                        
+                        
+                    }
+                    
+                } catch {
+                    print(error)
+                }
+                */
+            }//.resume() // Used to resume app function after Async
     }
     
     func currencyPrefixConfiguration(symbol: String) {

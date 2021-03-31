@@ -72,7 +72,13 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
         
-        cell.textLabel?.text = "\(currencySymbol) \(valuesArray[indexPath.section])"
+        // Number Formatting
+        let tempNumber = valuesArray[indexPath.section]
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        let formattedNumber = numberFormatter.string(from: NSNumber(value: tempNumber))
+        
+        cell.textLabel?.text = "\(currencySymbol) \(formattedNumber ?? "ERROR")"
         cell.textLabel?.font = UIFont.systemFont(ofSize: 24.0)
         
         return cell
@@ -81,8 +87,17 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: Selector(("backgroundNofification:")), name: UIApplication.willEnterForegroundNotification, object: nil);
+        
         getBudgetDetails()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        print("Reloading data!")
+        getBudgetDetails()
     }
     
     @IBAction func editButtonPress(_ sender: UIButton) {
@@ -93,12 +108,19 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
         let destinationVC = segue.destination as! BudgetEditViewController
         
         destinationVC.budgetInfo = budgetInfo
+        destinationVC.budgetID = budgetID
     }
     
     func refreshView() {
         
+        let tempTotal = budgetInfo["initialAmount"] as! Int32
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        let formattedNumber = numberFormatter.string(from: NSNumber(value: tempTotal))
+        
         // Change values of labels etc. in the current view
-        totalAmountText.text = currencySymbol + " \(budgetInfo["initialAmount"] ?? "Formatting Error")"
+        totalAmountText.text = currencySymbol + " \(formattedNumber ?? "ERROR")"
         
         // Format the dates
         let tempStartDate = convertISOTime(date: budgetInfo["startDate"] as! String)
