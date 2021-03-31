@@ -1,16 +1,15 @@
 //
-//  BudgetCreationViewController.swift
+//  BudgetEditViewController.swift
 //  Moneyist
 //
-//  Created by Maxi Rapa on 27/03/2021.
+//  Created by Maxi Rapa on 31/03/2021.
 //
 
 import UIKit
-import Alamofire
 
-class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
+class BudgetEditViewController: UIViewController {
 
-    @IBOutlet weak var budgetNameField: UITextField!
+    @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var initialAmountField: UITextField!
     @IBOutlet weak var amountAfterExpensesField: UITextField!
     @IBOutlet weak var amountForNeedsField: UITextField!
@@ -19,137 +18,99 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var startDateField: UITextField!
     @IBOutlet weak var endDateField: UITextField!
     
-    var datePicker = UIDatePicker()
+    let datePicker = UIDatePicker()
     
-    @IBAction func debugDetailTestPress(_ sender: UIButton) {
-        performSegue(withIdentifier: "BudgetCreateToDetail", sender: nil)
-    }
-    
-    // Holds budget details
-    var budgetDetails = [
-        "userID" : UserDetails.sharedInstance.getUID(),
+    // Holds budget info
+    var budgetInfo = [
         "name" : "",
+        "endDate" : "",
+        "startDate" : "",
         "initialAmount" : 0,
         "amountAfterExpenses" : 0,
         "amountForNeeds" : 0,
         "amountForWants" : 0,
         "savingsAndDebts" : 0,
-        "startDate" : "",
-        "endDate" : ""
     ] as [String : Any]
-    
-    // Holds budget ID
-    var budgetID = "60638600a4cd6506a63059fe"
     
     // Server request is dependent on User ID
     let SERVER_ADDRESS = "http://localhost:4000/budget/" + UserDetails.sharedInstance.getUID()
     
+    // Converts ISO Date string to Swift Date format
+    func convertISOTime(date: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        
+        return formatter.date(from: date)!
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboard()
-        print(UserDetails.sharedInstance.getUID())
-        
-        // Set the date pickers to be shown instead of a traditional keyboard
+
+        // Virtual keyboard setup
+        hideKeyboard()
         showDatePicker()
         showEndDatePicker()
+        
+        currencyPrefixConfiguration(symbol: "€")
+        
+        // Set values for for fields
+        nameField.text = (budgetInfo["name"] as! String)
+        initialAmountField.text = "\(budgetInfo["initialAmount"] ?? "ERROR")"
+        amountAfterExpensesField.text = "\(budgetInfo["amountAfterExpenses"] ?? "ERROR")"
+        amountForNeedsField.text = "\(budgetInfo["amountForNeeds"] ?? "ERROR")"
+        amountForWantsField.text = "\(budgetInfo["amountForWants"] ?? "ERROR")"
+        savingsAndDebtsField.text = "\(budgetInfo["savingsAndDebts"] ?? "ERROR")"
+        
+        // Convert time format
+        let tempStartDate = convertISOTime(date: budgetInfo["startDate"] as! String)
+        let tempEndDate = convertISOTime(date: budgetInfo["endDate"] as! String)
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        
+        startDateField.text = (formatter.string(from: tempStartDate))
+        endDateField.text = (formatter.string(from: tempEndDate))
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
+    
+    @IBAction func editButtonPress(_ sender: UIButton) {
+        print(initialAmountField.text!)
+    }
+    
+    func currencyPrefixConfiguration(symbol: String) {
+        let prefix = UILabel()
+        prefix.text = " " + symbol + " "
+        prefix.sizeToFit()
+        
+        let prefix2 = UILabel()
+        prefix2.text = " " + symbol + " "
+        prefix2.sizeToFit()
+        
+        let prefix3 = UILabel()
+        prefix3.text = " " + symbol + " "
+        prefix3.sizeToFit()
+        
+        let prefix4 = UILabel()
+        prefix4.text = " " + symbol + " "
+        prefix4.sizeToFit()
 
-            if let firstVC = presentingViewController as? BudgetViewController {
-                DispatchQueue.main.async {
-                    firstVC.budgetTable.reloadData()
-                }
-            }
-        }
-    
-    // When the 'Create' button is pressed
-    @IBAction func createButtonPress(_ sender: Any) {
-        createBudget()
+        let prefix5 = UILabel()
+        prefix5.text = " " + symbol + " "
+        prefix5.sizeToFit()
+        
+        initialAmountField.leftView = prefix
+        initialAmountField.leftViewMode = .always
+        amountForWantsField.leftView = prefix2
+        amountForWantsField.leftViewMode = .always
+        amountForNeedsField.leftView = prefix3
+        amountForNeedsField.leftViewMode = .always
+        amountAfterExpensesField.leftView = prefix4
+        amountAfterExpensesField.leftViewMode = .always
+        savingsAndDebtsField.leftView = prefix5
+        savingsAndDebtsField.leftViewMode = .always
     }
-    
-    
-    
-    // Request budget info from server
-    func createBudget() {
-        
-        budgetDetails = [
-            "userID" : UserDetails.sharedInstance.getUID(),
-            "name" : budgetNameField.text!,
-            "initialAmount" : Int(initialAmountField.text!)!,
-            "amountAfterExpenses" : Int(amountAfterExpensesField.text!)!,
-            "amountForNeeds" : Int(amountForNeedsField.text!)!,
-            "amountForWants" : Int(amountForWantsField.text!)!,
-            "savingsAndDebts" : Int(savingsAndDebtsField.text!)!,
-            "startDate" : startDateField.text!,
-            "endDate" : endDateField.text!
-        ]
-        
-        struct BudgetGet : Codable {
-            var budgetId: String?
-        }
-
-        AF.request(SERVER_ADDRESS, method: .post, parameters: budgetDetails, encoding: JSONEncoding.default)
-            .responseJSON { response in
-                //print(response)
-
-                print(response)
-                
-                let decoder = JSONDecoder()
-                
-                do {
-                    let result = try decoder.decode(BudgetGet.self, from: response.data!)
-                    print(result.budgetId!)
-                    self.budgetID = result.budgetId!
-                    self.finishCreation()
-                } catch {
-                    print(error)
-                }
-            }
-        
-    }
-    
-    func finishCreation() {
-        print("Created!") // Debug
-        
-        
-        // Show confirmation popup
-        let alert = UIAlertController(title: "Success!", message: "Your new budget has been created successfully!", preferredStyle: .alert)
-        
-        // Controls what happens after the user presses OK
-        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                UIAlertAction in
-                NSLog("OK Pressed")
-            
-            
-            //self.navigationController?.popViewController(animated: true)
-            
-            // Go back to budget screen
-            //self.parent!.performSegue(withIdentifier: "BudgetToDetail", sender: nil)
-            
-            self.performSegue(withIdentifier: "unwindToBudgetVC", sender: self)
-        }
-        
-        alert.addAction(okAction)
-        	
-        self.present(alert, animated: true)
-        
-       
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        // Passes budget ID to next view
-        //let destinationVC = segue.destination as! BudgetDetailViewController
-            //destinationVC.budgetID = budgetID
-        
-        let destinationVC = segue.destination as! BudgetViewController
-        destinationVC.budgetID = budgetID
-        destinationVC.performSegue(withIdentifier: "BudgetToDetail", sender: nil)
-    }
-    
-    // Start date picker functions
     
     // Handles date input
     func showDatePicker() {
@@ -239,5 +200,16 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     @objc func cancelEndDatePicker(){
         self.view.endEditing(true)
     }
+
+    
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }

@@ -33,7 +33,7 @@ class SignUpViewController: UIViewController {
     ]
     
     // Standard server address (with given route, in this case 'user/register')
-    let SERVER_ADDRESS = "http://localhost:4000/user/register"
+    let SERVER_ADDRESS = "http://localhost:4000/user/signup"
     
     // Date picker declaration
     let datePicker = UIDatePicker()

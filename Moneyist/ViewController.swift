@@ -31,10 +31,10 @@ class ViewController: UIViewController {
     // DEBUG!
     // Skips the entry of credentials
     @IBAction func autoLoginDebugPress(_ sender: UIButton) {
-        usernameField.text = "sample25@yahoo.jp"
-        passwordField.text = "hee"
+        usernameField.text = "sample75@yahoo.no"
+        passwordField.text = "samplepass"
         
-        loginUser()
+        processUserDetails()
     }
     
     var loginDetails = [
@@ -44,11 +44,6 @@ class ViewController: UIViewController {
     
     // Standard server address (with given route, in this case 'Add Transaction')
     let SERVER_ADDRESS = "http://localhost:4000/user/login"
-    
-    
-    func autoLogin() {
-        
-    }
     
     @IBAction func forgotPassButtonClick(_ sender: Any) {
         // TODO
@@ -62,10 +57,10 @@ class ViewController: UIViewController {
         
         //performSegue(withIdentifier: "ToDashboard", sender: nil)
         
-        loginUser()
+        processUserDetails()
     }
     
-    func loginUser() {
+    func processUserDetails() {
         
         loginDetails = [
             "username" : usernameField.text!,
@@ -122,6 +117,15 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         print("Loading Complete.")
+        
+        let e = "2021-03-21T00:00:00.00Z"
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+
+        print(formatter.date(from: e))
+       
     }
 }
 

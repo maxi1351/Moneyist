@@ -16,6 +16,6 @@ struct User : Codable {
     public var email: String
     public var firstName: String
     public var mobileNumber: String
-    public var passwordHash: String
+    //public var passwordHash: String
     public var surname: String
 }
