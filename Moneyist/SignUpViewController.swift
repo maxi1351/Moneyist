@@ -29,7 +29,8 @@ class SignUpViewController: UIViewController {
         "email" : "",
         "mobileNumber" : "",
         "password" : "",
-        "confirmPassword" : ""
+        "confirmPassword" : "",
+        "currency" : ""
     ]
     
     // Standard server address (with given route, in this case 'user/register')
@@ -58,7 +59,8 @@ class SignUpViewController: UIViewController {
                 "email" : emailField.text!,
                 "mobileNumber" : mobileNumberField.text!,
                 "password" : passwordField.text!,
-                "confirmPassword" : confirmPasswordField.text!
+                "confirmPassword" : confirmPasswordField.text!,
+                "currency" : "EUR"
                 ]
             
             // DEBUG
@@ -81,7 +83,7 @@ class SignUpViewController: UIViewController {
             }*/
             
             // Struct for decoding JSON data
-            struct UserData: Codable { var userId: String }
+            struct UserData: Codable { var userId: String; }
             
             struct ErrorSet: Codable {
                 //var location: String;
@@ -115,7 +117,9 @@ class SignUpViewController: UIViewController {
                         do {
                             let result = try decoder.decode(ErrorSet.self, from: response.data!)
                             
-                            self.showError(title: "Sign-Up Error", message: result.msg)
+                            print(response)
+                            
+                            //self.showError(title: "Sign-Up Error", message: result.msg)
                         } catch {
                             print(error)
                         }
