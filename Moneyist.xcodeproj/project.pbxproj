@@ -30,6 +30,7 @@
 		54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 54DFC66F260E2FFE00AFEFF1 /* Alamofire */; };
 		54F6345526137A51008E612A /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345426137A51008E612A /* DashboardViewController.swift */; };
 		54F6345826137B7F008E612A /* UserJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345726137B7F008E612A /* UserJSON.swift */; };
+		72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		54C15F56260E7E67008C5CE9 /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		54F6345426137A51008E612A /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		54F6345726137B7F008E612A /* UserJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJSON.swift; sourceTree = "<group>"; };
+		72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				541CC4412614BB8C00C37FE7 /* BudgetDetailViewController.swift */,
 				541CC4462614E55300C37FE7 /* BudgetEditViewController.swift */,
 				54B981A4260CC9E2006FD29B /* CalendarViewController.swift */,
+				72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */,
 				54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */,
 				54B9819E260CC992006FD29B /* ChartViewController.swift */,
 				54B9819B260CC95B006FD29B /* TransactionsViewController.swift */,
@@ -197,6 +200,7 @@
 				5410F44A2608C8EB00C00F57 /* ViewController.swift in Sources */,
 				541CC4422614BB8C00C37FE7 /* BudgetDetailViewController.swift in Sources */,
 				54F6345826137B7F008E612A /* UserJSON.swift in Sources */,
+				72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */,
 				54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */,
 				5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */,
 				54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */,

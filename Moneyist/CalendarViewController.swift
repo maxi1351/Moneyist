@@ -7,14 +7,138 @@
 
 import UIKit
 
-class CalendarViewController: UIViewController {
+class CalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
+    @IBOutlet weak var monthAndYearLabel: UILabel!
+    @IBOutlet weak var calendarCollectionView: UICollectionView!
+    
+    var selectedDate = Date()
+    var totalDays = [String]()
+    let calendar = Calendar.current
+    
+    @IBAction func nextMonth(_ sender: Any) {
+        selectedDate = calendar.date(byAdding: .month, value: 1, to: selectedDate)!
+        loadCalendarMonth()
+    }
+    
+    @IBAction func previousMonth(_ sender: Any) {
+        selectedDate = calendar.date(byAdding: .month, value: -1, to: selectedDate)!
+        loadCalendarMonth()
+    }
+    
+    @IBAction func createReminderButton(_ sender: Any) {
+        performSegue(withIdentifier: "toCreateReminder", sender: nil)
+    }
+    
+    //func collectionViewLayout {}
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        totalDays.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let calendarCell = calendarCollectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCollectionViewCell
+        
+        // Set day of month for each calendar cell
+        calendarCell.dayOfMonth.text = totalDays[indexPath.item]
+        
+        return calendarCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        // --------- Remove if 0 not needed
+        var selectedDay = totalDays[indexPath.item]
+        
+        // Add 0 in front of days with one digit
+        if(Int(selectedDay) ?? 0 < 10) {
+            selectedDay = "0\(selectedDay)"
+        }
+        // ---------
+        
+        let dateSelected = selectedDateDetails(day: selectedDay)
+        print("\(dateSelected)")
+    }
+    
+    // Load the collection view
+    func loadCalendarMonth() {
+        
+        totalDays.removeAll()
+        
+        var count = 1
+        let startDay = firstDayOfMonth()
+        let startWeekdayCell = firstWeekdayOfMonth(date: startDay)
+        let daysInMonth = totalDaysInMonth()
+        
+        while(count <= 42) {
+            if(count <= startWeekdayCell || count - startWeekdayCell > daysInMonth) {
+                totalDays.append("")
+            }
+            
+            else {
+                let day = String(count - startWeekdayCell)
+                totalDays.append(day)
+            }
+            
+            count += 1
+        }
+       
+        // Show the month and year currently displayed by the calendar
+        monthAndYearLabel.text = monthAndYearLabelDetails()
+        reloadCalendar()
+    }
+    
+    // Total number of days in the month
+    func totalDaysInMonth() -> Int {
+        let days = calendar.range(of: .day, in: .month, for: selectedDate)
+        
+        return days!.count
+    }
+    
+    // Starting date of the month
+    func firstDayOfMonth() -> Date {
+        let components = calendar.dateComponents([.year, .month], from: selectedDate)
+        let firstDay = calendar.date(from: components)
+        
+        return firstDay!
+    }
+    
+    // Starting cell number of the month
+    func firstWeekdayOfMonth(date: Date) -> Int {
+        let components = calendar.dateComponents([.weekday], from: date)
+        let firstWeekday = components.weekday! - 1
+        
+        return firstWeekday
+    }
+    
+    // Month and year currently displayed by calendar
+    func monthAndYearLabelDetails() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "LLLL YYYY"
+        
+        return dateFormatter.string(from: selectedDate)
+    }
+    
+    // Date selected by user from calendar
+    func selectedDateDetails(day: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "-MM-yyyy"       // Change to format required by server
+        let selectedDateString = day + dateFormatter.string(from: selectedDate)
+        
+        return selectedDateString
+    }
+    
+    
+    func reloadCalendar() {
+        calendarCollectionView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         print(self.title! + " loaded!")
-        
-        // Do any additional setup after loading the view.
+        loadCalendarMonth()
     }
     
 
