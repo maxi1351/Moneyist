@@ -882,7 +882,6 @@
                                 </state>
                                 <connections>
                                     <action selector="createReminderButton:" destination="Zah-TV-4bh" eventType="touchUpInside" id="WHB-ej-Qea"/>
-                                    <segue destination="xrW-oo-gae" kind="show" identifier="toCreateReminder" id="Xct-JQ-Jf3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -915,11 +914,12 @@
                     <connections>
                         <outlet property="calendarCollectionView" destination="leo-7u-aM8" id="xiZ-nU-boW"/>
                         <outlet property="monthAndYearLabel" destination="OkB-IT-ZLZ" id="IqI-c8-x5R"/>
+                        <segue destination="xrW-oo-gae" kind="show" identifier="toCreateReminder" id="9ZZ-Ap-BOk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="isb-wa-rxG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2532" y="224"/>
+            <point key="canvasLocation" x="2562" y="224"/>
         </scene>
         <!--SavingSpaceVC-->
         <scene sceneID="1WG-CR-4OV">
@@ -949,23 +949,63 @@
         <!--CreateReminderVC-->
         <scene sceneID="LPC-iu-Cc7">
             <objects>
-                <viewController title="CreateReminderVC" id="xrW-oo-gae" sceneMemberID="viewController">
+                <viewController title="CreateReminderVC" id="xrW-oo-gae" customClass="CreateReminderViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gUc-13-ZiZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Reminder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HFc-o3-LGP">
-                                <rect key="frame" x="157" y="434" width="100" height="29"/>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yr2-TV-8yo">
+                                <rect key="frame" x="97" y="208" width="220" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5jx-5e-yY7">
+                                <rect key="frame" x="97" y="264" width="220" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uL9-HJ-VZY">
+                                <rect key="frame" x="97" y="323" width="220" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Time" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Np7-Sh-V7i">
+                                <rect key="frame" x="97" y="385" width="220" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create a New Reminder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ykP-yf-d8A">
+                                <rect key="frame" x="53" y="126" width="309" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EOH-KS-az7">
+                                <rect key="frame" x="167" y="706" width="81" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <state key="normal" title="Create"/>
+                                <connections>
+                                    <action selector="createButtonPress:" destination="DeT-n7-rn7" eventType="touchUpInside" id="S7V-xZ-frK"/>
+                                    <action selector="createReminderButton:" destination="xrW-oo-gae" eventType="touchUpInside" id="F4E-bx-bZb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2xR-5O-Whi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="37h-Hy-tDl"/>
+                    <connections>
+                        <outlet property="dateField" destination="uL9-HJ-VZY" id="nke-z3-05B"/>
+                        <outlet property="descriptionField" destination="yr2-TV-8yo" id="4uA-Xr-snK"/>
+                        <outlet property="timeField" destination="Np7-Sh-V7i" id="M59-4N-a9T"/>
+                        <outlet property="typeField" destination="5jx-5e-yY7" id="0V6-hA-fIz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wSU-gF-r1g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1189,8 +1229,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="PPx-za-JrO"/>
-        <segue reference="8Yn-hI-aMQ"/>
+        <segue reference="ZVV-QC-4iq"/>
+        <segue reference="wtG-35-eJo"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" systemColor="systemGreenColor"/>
     <resources>

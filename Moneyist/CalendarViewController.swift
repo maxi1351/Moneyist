@@ -16,6 +16,8 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     var totalDays = [String]()
     let calendar = Calendar.current
     
+    // MARK: - Buttons
+    
     @IBAction func nextMonth(_ sender: Any) {
         selectedDate = calendar.date(byAdding: .month, value: 1, to: selectedDate)!
         loadCalendarMonth()
@@ -26,9 +28,11 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         loadCalendarMonth()
     }
     
-    @IBAction func createReminderButton(_ sender: Any) {
+    @IBAction func createReminderButton(_ sender: UIButton) {
         performSegue(withIdentifier: "toCreateReminder", sender: nil)
     }
+    
+    // MARK: - Calendar collection view
     
     //func collectionViewLayout {}
     
@@ -89,6 +93,10 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         reloadCalendar()
     }
     
+    
+    // MARK: - Functions for getting calendar data
+    
+    
     // Total number of days in the month
     func totalDaysInMonth() -> Int {
         let days = calendar.range(of: .day, in: .month, for: selectedDate)
@@ -98,16 +106,16 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     // Starting date of the month
     func firstDayOfMonth() -> Date {
-        let components = calendar.dateComponents([.year, .month], from: selectedDate)
-        let firstDay = calendar.date(from: components)
+        let component = calendar.dateComponents([.year, .month], from: selectedDate)
+        let firstDay = calendar.date(from: component)
         
         return firstDay!
     }
     
     // Starting cell number of the month
     func firstWeekdayOfMonth(date: Date) -> Int {
-        let components = calendar.dateComponents([.weekday], from: date)
-        let firstWeekday = components.weekday! - 1
+        let component = calendar.dateComponents([.weekday], from: date)
+        let firstWeekday = component.weekday! - 1
         
         return firstWeekday
     }
@@ -133,6 +141,9 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     func reloadCalendar() {
         calendarCollectionView.reloadData()
     }
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -31,6 +31,7 @@
 		54F6345526137A51008E612A /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345426137A51008E612A /* DashboardViewController.swift */; };
 		54F6345826137B7F008E612A /* UserJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345726137B7F008E612A /* UserJSON.swift */; };
 		72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */; };
+		72DBC1EB26158A8F00F006AE /* CreateReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		54F6345426137A51008E612A /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		54F6345726137B7F008E612A /* UserJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJSON.swift; sourceTree = "<group>"; };
 		72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
+		72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReminderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				541CC4412614BB8C00C37FE7 /* BudgetDetailViewController.swift */,
 				541CC4462614E55300C37FE7 /* BudgetEditViewController.swift */,
 				54B981A4260CC9E2006FD29B /* CalendarViewController.swift */,
+				72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */,
 				72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */,
 				54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */,
 				54B9819E260CC992006FD29B /* ChartViewController.swift */,
@@ -204,6 +207,7 @@
 				54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */,
 				5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */,
 				54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */,
+				72DBC1EB26158A8F00F006AE /* CreateReminderViewController.swift in Sources */,
 				540D448D2612597F00217594 /* AddTransactionViewController.swift in Sources */,
 				544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */,
 				5410F4462608C8EB00C00F57 /* AppDelegate.swift in Sources */,
