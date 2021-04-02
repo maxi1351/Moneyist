@@ -20,6 +20,7 @@
 		5410F4552608C8EC00C00F57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5410F4532608C8EC00C00F57 /* LaunchScreen.storyboard */; };
 		541CC4422614BB8C00C37FE7 /* BudgetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541CC4412614BB8C00C37FE7 /* BudgetDetailViewController.swift */; };
 		541CC4472614E55300C37FE7 /* BudgetEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541CC4462614E55300C37FE7 /* BudgetEditViewController.swift */; };
+		541D3E9526177FA800F59EEB /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D3E9426177FA800F59EEB /* EditUserViewController.swift */; };
 		544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */; };
 		54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819B260CC95B006FD29B /* TransactionsViewController.swift */; };
 		54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819E260CC992006FD29B /* ChartViewController.swift */; };
@@ -51,6 +52,7 @@
 		5410F4562608C8EC00C00F57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		541CC4412614BB8C00C37FE7 /* BudgetDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailViewController.swift; sourceTree = "<group>"; };
 		541CC4462614E55300C37FE7 /* BudgetEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetEditViewController.swift; sourceTree = "<group>"; };
+		541D3E9426177FA800F59EEB /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
 		544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCreationViewController.swift; sourceTree = "<group>"; };
 		54B9819B260CC95B006FD29B /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		54B9819E260CC992006FD29B /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				54F6345426137A51008E612A /* DashboardViewController.swift */,
 				54F6345726137B7F008E612A /* UserJSON.swift */,
 				54B99C0226175A350006EB5B /* SettingsViewController.swift */,
+				541D3E9426177FA800F59EEB /* EditUserViewController.swift */,
 			);
 			path = Moneyist;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */,
 				54B981A5260CC9E2006FD29B /* CalendarViewController.swift in Sources */,
 				54B981A8260CCA01006FD29B /* BudgetViewController.swift in Sources */,
+				541D3E9526177FA800F59EEB /* EditUserViewController.swift in Sources */,
 				5410F4482608C8EB00C00F57 /* SceneDelegate.swift in Sources */,
 				54016104260BCAA600405351 /* SignUpViewController.swift in Sources */,
 				540D449026125AB800217594 /* Transaction.swift in Sources */,

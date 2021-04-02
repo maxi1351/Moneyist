@@ -18,6 +18,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     let SERVER_ADDRESS_DELETE = "http://localhost:4000/user/" + UserDetails.sharedInstance.getUID()
     
+    // Holds user info
+    var userInfo = [
+        "firstName" : "",
+        "surname" : "",
+        "dateOfBirth" : "",
+        "email" : "",
+        "mobileNumber" : ""
+    ]
+    
     let tableValues = ["Edit Account Details", "Send Feedback", "Log Out", "Delete Account"]
     
     // Converts ISO Date string to Swift Date format
@@ -52,7 +61,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
        
         switch (indexPath.row) {
         case 0:
-            break
+            performSegue(withIdentifier: "SettingsToEditUser", sender: nil)
         case 1:
             break
         case 2:
@@ -81,6 +90,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view.
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "SettingsToEditUser") {
+            // Passes budget ID to next view
+            let destinationVC = segue.destination as! EditUserViewController
+            destinationVC.userInfo = userInfo
+        }
+    }
+    
     func getUserDetails() {
         AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
             .responseJSON { response in
@@ -104,6 +121,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     // Set date created field
                     self.dateCreatedField.text = "User Since: " + formatter.string(from: tempDate)
+                    
+                    // Set user details
+                    self.userInfo["firstName"] = result.firstName
+                    self.userInfo["surname"] = result.surname
+                    self.userInfo["dateOfBirth"] = result.dateOfBirth
+                    self.userInfo["email"] = result.email
+                    self.userInfo["mobileNumber"] = result.mobileNumber
                     
                 } catch {
                     print(error)
@@ -177,16 +201,4 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.present(alert, animated: true)
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
