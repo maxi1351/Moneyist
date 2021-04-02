@@ -106,6 +106,8 @@ class BudgetEditViewController: UIViewController {
             .responseString { response in
                 print(response)
                 
+                self.navigationController?.popViewController(animated: true)
+                
                 // Attempt to decode JSON data
                 /*let decoder = JSONDecoder()
                 

@@ -18,4 +18,5 @@ struct User : Codable {
     public var mobileNumber: String
     //public var passwordHash: String
     public var surname: String
+    public var createdAt: String
 }

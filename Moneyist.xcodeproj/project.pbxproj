@@ -26,6 +26,7 @@
 		54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */; };
 		54B981A5260CC9E2006FD29B /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A4260CC9E2006FD29B /* CalendarViewController.swift */; };
 		54B981A8260CCA01006FD29B /* BudgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A7260CCA01006FD29B /* BudgetViewController.swift */; };
+		54B99C0326175A350006EB5B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B99C0226175A350006EB5B /* SettingsViewController.swift */; };
 		54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C15F56260E7E67008C5CE9 /* Budget.swift */; };
 		54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 54DFC66F260E2FFE00AFEFF1 /* Alamofire */; };
 		54F6345526137A51008E612A /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345426137A51008E612A /* DashboardViewController.swift */; };
@@ -56,6 +57,7 @@
 		54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceViewController.swift; sourceTree = "<group>"; };
 		54B981A4260CC9E2006FD29B /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		54B981A7260CCA01006FD29B /* BudgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewController.swift; sourceTree = "<group>"; };
+		54B99C0226175A350006EB5B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		54C15F56260E7E67008C5CE9 /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		54F6345426137A51008E612A /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		54F6345726137B7F008E612A /* UserJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJSON.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				540D448F26125AB800217594 /* Transaction.swift */,
 				54F6345426137A51008E612A /* DashboardViewController.swift */,
 				54F6345726137B7F008E612A /* UserJSON.swift */,
+				54B99C0226175A350006EB5B /* SettingsViewController.swift */,
 			);
 			path = Moneyist;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */,
 				5410F4462608C8EB00C00F57 /* AppDelegate.swift in Sources */,
 				541CC4472614E55300C37FE7 /* BudgetEditViewController.swift in Sources */,
+				54B99C0326175A350006EB5B /* SettingsViewController.swift in Sources */,
 				54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */,
 				54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */,
 				54B981A5260CC9E2006FD29B /* CalendarViewController.swift in Sources */,

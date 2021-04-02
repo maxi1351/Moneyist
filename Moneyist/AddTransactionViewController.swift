@@ -38,6 +38,9 @@ class AddTransactionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Change back button color
+        self.navigationController!.navigationBar.tintColor = UIColor.white
+        
         // Make sure the 'Date' field uses a date picker instead of a keyboard
         showDatePicker()
     }
