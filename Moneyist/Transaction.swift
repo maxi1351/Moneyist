@@ -9,7 +9,7 @@ import Foundation
 
 // Transaction Struct
 struct Transaction : Codable {
-    public var date: Date
+    public var date: String
     public var status: String // CONFIRMED / PENDING
     public var amount: Int32 // 0 minimum
     public var currency: String // GBP / EUR
