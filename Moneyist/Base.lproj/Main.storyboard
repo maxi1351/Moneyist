@@ -823,7 +823,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="leo-7u-aM8">
                                 <rect key="frame" x="0.0" y="201" width="414" height="332"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ReN-v3-j8w">
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="2" minimumInteritemSpacing="10" id="ReN-v3-j8w">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -837,16 +837,20 @@
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mz-5E-GfM">
-                                                    <rect key="frame" x="43.5" y="22.5" width="41.5" height="19.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9mz-5E-GfM">
+                                                    <rect key="frame" x="43.5" y="22.5" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="35" id="0WE-sG-sWR"/>
+                                                        <constraint firstAttribute="height" constant="35" id="bnl-Y7-0EI"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="highlightedColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="9mz-5E-GfM" firstAttribute="centerX" secondItem="6uK-7h-VPc" secondAttribute="centerX" id="4Vy-WU-6hb"/>
-                                                <constraint firstItem="9mz-5E-GfM" firstAttribute="centerY" secondItem="6uK-7h-VPc" secondAttribute="centerY" multiplier="0.5" id="52a-Sr-TS6"/>
+                                                <constraint firstItem="9mz-5E-GfM" firstAttribute="centerY" secondItem="6uK-7h-VPc" secondAttribute="centerY" id="52a-Sr-TS6"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
@@ -920,7 +924,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="isb-wa-rxG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2532" y="224"/>
+            <point key="canvasLocation" x="2530.434782608696" y="223.66071428571428"/>
         </scene>
         <!--SavingSpaceVC-->
         <scene sceneID="1WG-CR-4OV">

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class CalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var monthAndYearLabel: UILabel!
     @IBOutlet weak var calendarCollectionView: UICollectionView!
@@ -35,7 +35,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     // MARK: - Calendar collection view
     
     //func collectionViewLayout {}
-    
+        
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         totalDays.count
     }
@@ -47,9 +47,36 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         // Set day of month for each calendar cell
         calendarCell.dayOfMonth.text = totalDays[indexPath.item]
         
+        // Change label shape to circle
+        calendarCell.dayOfMonth.layer.cornerRadius = calendarCell.dayOfMonth.frame.width/2
+        calendarCell.dayOfMonth.layer.masksToBounds = true
+        
+        // Disable empty cells and highlight today's date on calendar
+        calendarCell.disableEmptyCells()
+        highlightTodaysDate(calendarLabel: calendarCell.dayOfMonth)
+        
         return calendarCell
     }
     
+    func highlightTodaysDate(calendarLabel: UILabel) {
+        let today = getTodaysDate()
+        let calendarLabelDate = "\(calendarLabel.text ?? "") \(monthAndYearLabelDetails())"
+        if (calendarLabelDate == today) {
+            calendarLabel.backgroundColor = UIColor.black
+            calendarLabel.textColor = UIColor.white
+        }
+    }
+    
+    func getTodaysDate() -> String {
+        let todaysDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d LLLL YYYY"
+        let currentDay = dateFormatter.string(from: todaysDate)
+        
+        return currentDay
+    }
+    
+   
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         // --------- Remove if 0 not needed
@@ -95,7 +122,6 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     
     // MARK: - Functions for getting calendar data
-    
     
     // Total number of days in the month
     func totalDaysInMonth() -> Int {
@@ -143,7 +169,9 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        reloadCalendar()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
