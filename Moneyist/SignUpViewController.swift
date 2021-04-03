@@ -147,7 +147,10 @@ class SignUpViewController: UIViewController {
         // Set UID for rest of app
         UserDetails.sharedInstance.setUID(id: uid)
         
+        self.navigationController?.navigationController?.popViewController(animated: true)
+        
         performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
+        
     }
     
     // Prepare segue to dashboard
@@ -256,6 +259,9 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
+        
+        // Change back button color
+        self.navigationController!.navigationBar.tintColor = UIColor.white
         
         activityIndicator.hidesWhenStopped = true
         

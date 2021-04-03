@@ -49,6 +49,9 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         self.hideKeyboard()
         print(UserDetails.sharedInstance.getUID())
         
+        // Change back button color
+        self.navigationController!.navigationBar.tintColor = UIColor.white
+
         // Set the date pickers to be shown instead of a traditional keyboard
         showDatePicker()
         showEndDatePicker()

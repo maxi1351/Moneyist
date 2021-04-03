@@ -19,9 +19,26 @@ class DashboardViewController: UITabBarController {
         
         getUserDetails()
         
+        buttonSetup()
+        
         // Do any additional setup after loading the view.
     }
     
+    func buttonSetup() {
+        
+        // Set up the settings button
+        let back = UIImage(systemName: "person.crop.circle.fill")
+        
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: back, style: .plain, target: self, action: #selector(settingsMenuPressed))
+        
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+    }
+    
+    @objc func settingsMenuPressed() {
+        
+        performSegue(withIdentifier: "toSettings", sender: self)
+    }
     
     func getUserDetails() {
         AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
