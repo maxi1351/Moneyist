@@ -1,19 +1,17 @@
 //
-//  SavingSpaceViewController.swift
+//  SavingSpaceCreateViewController.swift
 //  Moneyist
 //
-//  Created by Maxi Rapa on 25/03/2021.
+//  Created by Maxi Rapa on 05/04/2021.
 //
 
 import UIKit
 
-class SavingSpaceViewController: UIViewController {
+class SavingSpaceCreateViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print(self.title! + " loaded!")
-        
         // Do any additional setup after loading the view.
     }
     

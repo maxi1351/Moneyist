@@ -30,6 +30,9 @@
 		54B99C0326175A350006EB5B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B99C0226175A350006EB5B /* SettingsViewController.swift */; };
 		54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C15F56260E7E67008C5CE9 /* Budget.swift */; };
 		54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 54DFC66F260E2FFE00AFEFF1 /* Alamofire */; };
+		54E4E449261B4ACD001B2AAB /* TransactionEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E4E448261B4ACD001B2AAB /* TransactionEditViewController.swift */; };
+		54E4E44D261B5BD8001B2AAB /* SavingSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E4E44C261B5BD8001B2AAB /* SavingSpace.swift */; };
+		54E4E459261B5D73001B2AAB /* SavingSpaceCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E4E458261B5D73001B2AAB /* SavingSpaceCreateViewController.swift */; };
 		54F6345526137A51008E612A /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345426137A51008E612A /* DashboardViewController.swift */; };
 		54F6345826137B7F008E612A /* UserJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345726137B7F008E612A /* UserJSON.swift */; };
 		72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */; };
@@ -61,6 +64,9 @@
 		54B981A7260CCA01006FD29B /* BudgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewController.swift; sourceTree = "<group>"; };
 		54B99C0226175A350006EB5B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		54C15F56260E7E67008C5CE9 /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
+		54E4E448261B4ACD001B2AAB /* TransactionEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditViewController.swift; sourceTree = "<group>"; };
+		54E4E44C261B5BD8001B2AAB /* SavingSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpace.swift; sourceTree = "<group>"; };
+		54E4E458261B5D73001B2AAB /* SavingSpaceCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceCreateViewController.swift; sourceTree = "<group>"; };
 		54F6345426137A51008E612A /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		54F6345726137B7F008E612A /* UserJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJSON.swift; sourceTree = "<group>"; };
 		72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -98,35 +104,86 @@
 		5410F4442608C8EB00C00F57 /* Moneyist */ = {
 			isa = PBXGroup;
 			children = (
-				54C15F56260E7E67008C5CE9 /* Budget.swift */,
 				5410F4452608C8EB00C00F57 /* AppDelegate.swift */,
-				5410F4472608C8EB00C00F57 /* SceneDelegate.swift */,
-				5410F4492608C8EB00C00F57 /* ViewController.swift */,
+				5410F4512608C8EC00C00F57 /* Assets.xcassets */,
+				54E4E450261B5CDA001B2AAB /* Budgets */,
+				72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */,
+				54B981A4260CC9E2006FD29B /* CalendarViewController.swift */,
+				54B9819E260CC992006FD29B /* ChartViewController.swift */,
+				72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */,
+				54F6345426137A51008E612A /* DashboardViewController.swift */,
+				5410F4562608C8EC00C00F57 /* Info.plist */,
+				5410F4532608C8EC00C00F57 /* LaunchScreen.storyboard */,
 				5410F44B2608C8EB00C00F57 /* Main.storyboard */,
+				5410F44E2608C8EB00C00F57 /* Moneyist.xcdatamodeld */,
+				5410F4472608C8EB00C00F57 /* SceneDelegate.swift */,
+				54E4E456261B5D2F001B2AAB /* Settings */,
+				54E4E45C261B5DBF001B2AAB /* MainScreen */,
+				54E4E452261B5D0A001B2AAB /* StructureFiles */,
+				54E4E454261B5D1B001B2AAB /* Transactions */,
+				54E4E45B261B5D8D001B2AAB /* SavingSpaces */,
+			);
+			path = Moneyist;
+			sourceTree = "<group>";
+		};
+		54E4E450261B5CDA001B2AAB /* Budgets */ = {
+			isa = PBXGroup;
+			children = (
 				54B981A7260CCA01006FD29B /* BudgetViewController.swift */,
 				544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */,
 				541CC4412614BB8C00C37FE7 /* BudgetDetailViewController.swift */,
 				541CC4462614E55300C37FE7 /* BudgetEditViewController.swift */,
-				54B981A4260CC9E2006FD29B /* CalendarViewController.swift */,
-				72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */,
-				72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */,
-				54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */,
-				54B9819E260CC992006FD29B /* ChartViewController.swift */,
-				54B9819B260CC95B006FD29B /* TransactionsViewController.swift */,
-				540D448C2612597F00217594 /* AddTransactionViewController.swift */,
-				5410F4512608C8EC00C00F57 /* Assets.xcassets */,
-				5410F4532608C8EC00C00F57 /* LaunchScreen.storyboard */,
-				5410F4562608C8EC00C00F57 /* Info.plist */,
-				5410F44E2608C8EB00C00F57 /* Moneyist.xcdatamodeld */,
-				54016103260BCAA600405351 /* SignUpViewController.swift */,
+			);
+			path = Budgets;
+			sourceTree = "<group>";
+		};
+		54E4E452261B5D0A001B2AAB /* StructureFiles */ = {
+			isa = PBXGroup;
+			children = (
 				540D448926124F9100217594 /* User.swift */,
-				540D448F26125AB800217594 /* Transaction.swift */,
-				54F6345426137A51008E612A /* DashboardViewController.swift */,
 				54F6345726137B7F008E612A /* UserJSON.swift */,
+				54C15F56260E7E67008C5CE9 /* Budget.swift */,
+				540D448F26125AB800217594 /* Transaction.swift */,
+				54E4E44C261B5BD8001B2AAB /* SavingSpace.swift */,
+			);
+			path = StructureFiles;
+			sourceTree = "<group>";
+		};
+		54E4E454261B5D1B001B2AAB /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				54B9819B260CC95B006FD29B /* TransactionsViewController.swift */,
+				54E4E448261B4ACD001B2AAB /* TransactionEditViewController.swift */,
+				540D448C2612597F00217594 /* AddTransactionViewController.swift */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
+		54E4E456261B5D2F001B2AAB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
 				54B99C0226175A350006EB5B /* SettingsViewController.swift */,
 				541D3E9426177FA800F59EEB /* EditUserViewController.swift */,
 			);
-			path = Moneyist;
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		54E4E45B261B5D8D001B2AAB /* SavingSpaces */ = {
+			isa = PBXGroup;
+			children = (
+				54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */,
+				54E4E458261B5D73001B2AAB /* SavingSpaceCreateViewController.swift */,
+			);
+			path = SavingSpaces;
+			sourceTree = "<group>";
+		};
+		54E4E45C261B5DBF001B2AAB /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				54016103260BCAA600405351 /* SignUpViewController.swift */,
+				5410F4492608C8EB00C00F57 /* ViewController.swift */,
+			);
+			path = MainScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				540D448A26124F9100217594 /* User.swift in Sources */,
+				54E4E449261B4ACD001B2AAB /* TransactionEditViewController.swift in Sources */,
 				5410F44A2608C8EB00C00F57 /* ViewController.swift in Sources */,
 				541CC4422614BB8C00C37FE7 /* BudgetDetailViewController.swift in Sources */,
 				54F6345826137B7F008E612A /* UserJSON.swift in Sources */,
@@ -213,6 +271,7 @@
 				54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */,
 				5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */,
 				54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */,
+				54E4E459261B5D73001B2AAB /* SavingSpaceCreateViewController.swift in Sources */,
 				72DBC1EB26158A8F00F006AE /* CreateReminderViewController.swift in Sources */,
 				540D448D2612597F00217594 /* AddTransactionViewController.swift in Sources */,
 				544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */,
@@ -220,6 +279,7 @@
 				541CC4472614E55300C37FE7 /* BudgetEditViewController.swift in Sources */,
 				54B99C0326175A350006EB5B /* SettingsViewController.swift in Sources */,
 				54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */,
+				54E4E44D261B5BD8001B2AAB /* SavingSpace.swift in Sources */,
 				54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */,
 				54B981A5260CC9E2006FD29B /* CalendarViewController.swift in Sources */,
 				54B981A8260CCA01006FD29B /* BudgetViewController.swift in Sources */,

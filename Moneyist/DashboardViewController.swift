@@ -15,6 +15,9 @@ class DashboardViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Change back button color
+        self.navigationController!.navigationBar.tintColor = UIColor.white
+        
         self.title = "Welcome, " + UserDetails.sharedInstance.getUID()
         
         getUserDetails()

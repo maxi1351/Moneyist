@@ -78,9 +78,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Change back button color
-        self.navigationController!.navigationBar.tintColor = UIColor.white
         
         // Set view title
         self.title = "Settings"
