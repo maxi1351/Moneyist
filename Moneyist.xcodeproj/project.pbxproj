@@ -32,7 +32,7 @@
 		54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 54DFC66F260E2FFE00AFEFF1 /* Alamofire */; };
 		54E4E449261B4ACD001B2AAB /* TransactionEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E4E448261B4ACD001B2AAB /* TransactionEditViewController.swift */; };
 		54E4E44D261B5BD8001B2AAB /* SavingSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E4E44C261B5BD8001B2AAB /* SavingSpace.swift */; };
-		54E4E459261B5D73001B2AAB /* SavingSpaceCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E4E458261B5D73001B2AAB /* SavingSpaceCreateViewController.swift */; };
+		54E4E460261B5FE1001B2AAB /* SavingSpaceCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E4E45F261B5FE1001B2AAB /* SavingSpaceCreateViewController.swift */; };
 		54F6345526137A51008E612A /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345426137A51008E612A /* DashboardViewController.swift */; };
 		54F6345826137B7F008E612A /* UserJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345726137B7F008E612A /* UserJSON.swift */; };
 		72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */; };
@@ -66,7 +66,7 @@
 		54C15F56260E7E67008C5CE9 /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		54E4E448261B4ACD001B2AAB /* TransactionEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditViewController.swift; sourceTree = "<group>"; };
 		54E4E44C261B5BD8001B2AAB /* SavingSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpace.swift; sourceTree = "<group>"; };
-		54E4E458261B5D73001B2AAB /* SavingSpaceCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceCreateViewController.swift; sourceTree = "<group>"; };
+		54E4E45F261B5FE1001B2AAB /* SavingSpaceCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceCreateViewController.swift; sourceTree = "<group>"; };
 		54F6345426137A51008E612A /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		54F6345726137B7F008E612A /* UserJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJSON.swift; sourceTree = "<group>"; };
 		72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */,
-				54E4E458261B5D73001B2AAB /* SavingSpaceCreateViewController.swift */,
+				54E4E45F261B5FE1001B2AAB /* SavingSpaceCreateViewController.swift */,
 			);
 			path = SavingSpaces;
 			sourceTree = "<group>";
@@ -271,7 +271,7 @@
 				54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */,
 				5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */,
 				54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */,
-				54E4E459261B5D73001B2AAB /* SavingSpaceCreateViewController.swift in Sources */,
+				54E4E460261B5FE1001B2AAB /* SavingSpaceCreateViewController.swift in Sources */,
 				72DBC1EB26158A8F00F006AE /* CreateReminderViewController.swift in Sources */,
 				540D448D2612597F00217594 /* AddTransactionViewController.swift in Sources */,
 				544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */,

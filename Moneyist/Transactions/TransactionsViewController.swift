@@ -116,6 +116,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
             cell.textLabel?.textColor = UIColor.systemRed
         }
         
+        // Cell right-side label
         let label = UILabel.init(frame: CGRect(x:0,y:0,width:100,height:20))
         label.font = UIFont(name: "HelveticaNeue-ThinItalic", size: 16.0)
         label.textAlignment = NSTextAlignment.right

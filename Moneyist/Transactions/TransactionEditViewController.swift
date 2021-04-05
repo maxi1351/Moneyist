@@ -29,7 +29,7 @@ class TransactionEditViewController: UIViewController {
     var type = ""
     var status = ""
     
-    // Standard server address (with given route, in this case 'Add Transaction')
+    // Standard server address (with given route, in this case 'Edit Transaction')
     let SERVER_ADDRESS = "http://localhost:4000/transaction/update/"
     
     var TransactionDetails = [
