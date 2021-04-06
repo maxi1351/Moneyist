@@ -32,6 +32,7 @@
 		54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 54DFC66F260E2FFE00AFEFF1 /* Alamofire */; };
 		54F6345526137A51008E612A /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345426137A51008E612A /* DashboardViewController.swift */; };
 		54F6345826137B7F008E612A /* UserJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6345726137B7F008E612A /* UserJSON.swift */; };
+		72422372261A01AE00A1F02E /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72422371261A01AC00A1F02E /* Reminder.swift */; };
 		72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */; };
 		72DBC1EB26158A8F00F006AE /* CreateReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,7 @@
 		54C15F56260E7E67008C5CE9 /* Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Budget.swift; sourceTree = "<group>"; };
 		54F6345426137A51008E612A /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		54F6345726137B7F008E612A /* UserJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJSON.swift; sourceTree = "<group>"; };
+		72422371261A01AC00A1F02E /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReminderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +123,7 @@
 				54016103260BCAA600405351 /* SignUpViewController.swift */,
 				540D448926124F9100217594 /* User.swift */,
 				540D448F26125AB800217594 /* Transaction.swift */,
+				72422371261A01AC00A1F02E /* Reminder.swift */,
 				54F6345426137A51008E612A /* DashboardViewController.swift */,
 				54F6345726137B7F008E612A /* UserJSON.swift */,
 				54B99C0226175A350006EB5B /* SettingsViewController.swift */,
@@ -220,6 +223,7 @@
 				541CC4472614E55300C37FE7 /* BudgetEditViewController.swift in Sources */,
 				54B99C0326175A350006EB5B /* SettingsViewController.swift in Sources */,
 				54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */,
+				72422372261A01AE00A1F02E /* Reminder.swift in Sources */,
 				54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */,
 				54B981A5260CC9E2006FD29B /* CalendarViewController.swift in Sources */,
 				54B981A8260CCA01006FD29B /* BudgetViewController.swift in Sources */,

@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Alamofire
 
 class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+    @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var descriptionField: UITextField!
     @IBOutlet weak var typeField: UITextField!
     @IBOutlet weak var dateField: UITextField!
@@ -16,38 +18,80 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     @IBAction func createReminderButton(_ sender: Any) {
         createReminder()
+        //print("REMINDER CREATED -> \(reminderDetails)")
     }
     
     let datePicker = UIDatePicker()
+    var reminderID = ""
+    
+    let SERVER_ADDRESS = "http://localhost:4000/reminder/" + UserDetails.sharedInstance.getUID()
     
     // Hold the reminder details
     var reminderDetails = [
         //"userID" : UserDetails.sharedInstance.getUID(),
-        "Description" : "",
-        "Type" : "",
-        "Date" : "",
-        "Time" : ""
+        "title" : "",
+        "associated" : "",
+        "type" : "",
+        "description" : "",
+        "date" : ""
+        //"Time" : ""
     ] as [String : Any]
     
     // Predefine types of reminder the user can choose
     enum reminderType: String, CaseIterable {
         //case goal = "Goal"
-        case payment = "Payment"
-        case income = "Income"
+        case payment = "PAYMENT"
+        case income = "INCOME"
     }
     
     func createReminder() {
         
         reminderDetails = [
             //"userID" : UserDetails.sharedInstance.getUID()
-            "Description" : descriptionField.text!,
-            "Type" : typeField.text!,
-            "Date" : dateField.text!,
-            "Time" : timeField.text!
+            "title" : titleField.text!,
+            "description" : descriptionField.text ?? "",
+            "type" : typeField.text!,
+            "date" : dateField.text!,
+            "associated" : false
+            //"Time" : timeField.text!
         ]
         
-        print("REMINDER CREATED")
+      /*  // Test
+        reminderDetails = [
+            "title" : "Pay rent",
+            "type" : "PAYMENT",
+            "associated" : false,
+            "description" : "",
+            "date" : 2021/03/01
+        ]   */
+        
+        //print("REMINDER CREATED")
         print("Reminder details = \(reminderDetails)")
+        print("User ID = \(UserDetails.sharedInstance.getUID())")
+        
+        
+        AF.request(SERVER_ADDRESS, method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                
+                print("Response:")
+                print(response)
+                print(response.data!)
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    let result = try decoder.decode(ReminderID.self, from: response.data!)
+                    //print("Result = \(result)")
+
+                    //print("ReminderID:")
+                    //print(result.reminderID!)       // Found nil while unwrapping optional value
+                    //self.reminderID = result.reminderID!
+                    //print(self.reminderID)
+                    
+                } catch {
+                    print(error)
+                }
+            }
     }
     
     // MARK: - Picker for selecting type of reminder
@@ -70,7 +114,7 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     // Hide keyboard when screen is tapped
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        hidePicker()
     }
     
     // MARK: - Date picker for date field input
@@ -95,7 +139,7 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker))
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(hidePicker))
         
         // Add to toolbar
         toolbar.setItems([doneButton, spaceButton, cancelButton], animated: false)
@@ -114,8 +158,8 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.view.endEditing(true)
     }
     
-    // User finishes using the date picker
-    @objc func cancelDatePicker(){
+    // User finishes using the picker
+    @objc func hidePicker(){
         self.view.endEditing(true)
     }
     
@@ -144,7 +188,7 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTimePicker))
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(hidePicker))
         
         // Add to toolbar
         toolbar.setItems([doneButton, spaceButton, cancelButton], animated: false)
@@ -163,10 +207,10 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.view.endEditing(true)
     }
     
-    // User finishes using the time picker
+  /*  // User finishes using the time picker
     @objc func cancelTimePicker() {
         self.view.endEditing(true)
-    }
+    } */
     
     // Show date/time picker depending on the text field being edited
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -184,11 +228,12 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(self.title! + " loaded!")
         let thePicker = UIPickerView()
         typeField.inputView = thePicker
         thePicker.delegate = self
         dateField.delegate = self
-        timeField.delegate = self
+        //timeField.delegate = self
     }
     
     

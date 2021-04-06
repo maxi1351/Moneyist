@@ -10,6 +10,8 @@ import UIKit
 class CalendarCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var dayOfMonth: UILabel!
+    @IBOutlet weak var eventIndicator: UILabel!
+    
     
     var today = false
     
