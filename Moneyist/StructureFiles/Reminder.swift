@@ -11,12 +11,8 @@ import Foundation
 struct Reminder : Codable {
     //public var userID: String
     public var title: String
-    //public var type: String                 // GOAL / PAYMENT / INCOME
     //public var reminderID: String?            // Fix - nil returned
-   // public var description: String?
     public var date: String
-    //public var associated: Bool
-    //reminder ID
 }
 
 struct ReminderID: Codable {

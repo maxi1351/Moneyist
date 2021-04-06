@@ -72,14 +72,14 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+                
         let selectedDay = allDaysInMonth[indexPath.item].day
         
         dateSelected = selectedDay + " " + monthAndYearLabelDetails()
         print("\(dateSelected)")
         
+        //remindersTable.isHidden = true
         specificDayReminders.removeAll()
         
         for reminder in allReminders {
@@ -92,8 +92,8 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
             }
         }
         
+        //if !specificDayReminders.isEmpty { remindersTable.isHidden = false }
         print("Specific day reminders = \(specificDayReminders)")
-        
         reloadTable()
     }
     
@@ -130,13 +130,10 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
                     }
                 }
             }
-            
             let dayDetails = CalendarDay(day: day, event: event)
             allDaysInMonth.append(dayDetails)
             count += 1
-            
         }
-        
         // Show the month and year currently displayed by the calendar
         monthAndYearLabel.text = monthAndYearLabelDetails()
         reloadCalendar()
@@ -271,7 +268,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         remindersTable.reloadData()
     }
     
-    // MARK: Table view
+    // MARK: Reminders table view
     
     func numberOfSections(in tableView: UITableView) -> Int {
         if !specificDayReminders.isEmpty { return 1 }
@@ -292,7 +289,6 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         header.textLabel?.textAlignment = NSTextAlignment.center
-
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -309,13 +305,24 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         return reminderCell
     }
     
+   /* func addShadow() {
+        remindersTable.layer.shadowColor = UIColor.darkGray.cgColor
+        remindersTable.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+        remindersTable.layer.shadowOpacity = 0.6
+        remindersTable.layer.shadowRadius = 5.0
+    } */
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print(self.title! + " reloading!")
+        getReminders()
         //reloadCalendar()
-        //print("Total reminder count = \(allReminders.count)") */
+        //print("Total reminder count = \(allReminders.count)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        //getReminders()
+        //loadCalendarMonth()
         reloadCalendar()
         reloadTable()
     }
@@ -324,11 +331,12 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         super.viewDidLoad()
         
         print(self.title! + " loaded!")
-        //reloadCalendar()
         loadCalendarMonth()
         getReminders()
+        //addShadow()
+        //remindersTable.isHidden = true
+        //remindersTable.tableFooterView = UIView()
         reloadTable()
-        //self.view.addSubview(remindersTable)
     }
     
     

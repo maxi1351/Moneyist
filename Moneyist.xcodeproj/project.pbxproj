@@ -143,13 +143,11 @@
 			isa = PBXGroup;
 			children = (
 				540D448926124F9100217594 /* User.swift */,
-				540D448F26125AB800217594 /* Transaction.swift */,
-				72422371261A01AC00A1F02E /* Reminder.swift */,
-				54F6345426137A51008E612A /* DashboardViewController.swift */,
 				54F6345726137B7F008E612A /* UserJSON.swift */,
 				54C15F56260E7E67008C5CE9 /* Budget.swift */,
 				540D448F26125AB800217594 /* Transaction.swift */,
 				54E4E44C261B5BD8001B2AAB /* SavingSpace.swift */,
+				72422371261A01AC00A1F02E /* Reminder.swift */,
 			);
 			path = StructureFiles;
 			sourceTree = "<group>";
