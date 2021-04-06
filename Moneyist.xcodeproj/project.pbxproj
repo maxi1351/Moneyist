@@ -21,6 +21,7 @@
 		541CC4422614BB8C00C37FE7 /* BudgetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541CC4412614BB8C00C37FE7 /* BudgetDetailViewController.swift */; };
 		541CC4472614E55300C37FE7 /* BudgetEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541CC4462614E55300C37FE7 /* BudgetEditViewController.swift */; };
 		541D3E9526177FA800F59EEB /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D3E9426177FA800F59EEB /* EditUserViewController.swift */; };
+		543E59F9261CA7290098EB48 /* SavingSpaceEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E59F8261CA7290098EB48 /* SavingSpaceEditViewController.swift */; };
 		544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */; };
 		54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819B260CC95B006FD29B /* TransactionsViewController.swift */; };
 		54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819E260CC992006FD29B /* ChartViewController.swift */; };
@@ -57,6 +58,7 @@
 		541CC4412614BB8C00C37FE7 /* BudgetDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailViewController.swift; sourceTree = "<group>"; };
 		541CC4462614E55300C37FE7 /* BudgetEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetEditViewController.swift; sourceTree = "<group>"; };
 		541D3E9426177FA800F59EEB /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
+		543E59F8261CA7290098EB48 /* SavingSpaceEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceEditViewController.swift; sourceTree = "<group>"; };
 		544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCreationViewController.swift; sourceTree = "<group>"; };
 		54B9819B260CC95B006FD29B /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		54B9819E260CC992006FD29B /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			children = (
 				54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */,
 				54E4E45F261B5FE1001B2AAB /* SavingSpaceCreateViewController.swift */,
+				543E59F8261CA7290098EB48 /* SavingSpaceEditViewController.swift */,
 			);
 			path = SavingSpaces;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				540D448A26124F9100217594 /* User.swift in Sources */,
 				54E4E449261B4ACD001B2AAB /* TransactionEditViewController.swift in Sources */,
 				5410F44A2608C8EB00C00F57 /* ViewController.swift in Sources */,
+				543E59F9261CA7290098EB48 /* SavingSpaceEditViewController.swift in Sources */,
 				541CC4422614BB8C00C37FE7 /* BudgetDetailViewController.swift in Sources */,
 				54F6345826137B7F008E612A /* UserJSON.swift in Sources */,
 				72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */,

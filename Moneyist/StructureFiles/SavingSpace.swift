@@ -9,9 +9,10 @@ import Foundation
 
 // Saving Space Struct
 struct SavingSpace : Codable {
+    public var _id: String
     public var userID: String?
     public var category: String
     public var amount: Int32
-    //public var description: String
+    public var description: String?
     public var endDate: String
 }
