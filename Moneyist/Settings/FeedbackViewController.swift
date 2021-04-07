@@ -6,32 +6,73 @@
 //
 
 import UIKit
+import Alamofire
 import Cosmos
 
 class FeedbackViewController: UIViewController {
     
-    lazy var cosmosView: CosmosView = {
-        var view = CosmosView()
-        return view
-    }()
-
+    @IBOutlet weak var ratingView: CosmosView!
+    @IBOutlet weak var feedbackTextView: UITextView!
+    
+    let SERVER_ADDRESS = "http://localhost:4000/feedback/" + UserDetails.sharedInstance.getUID()
+    
+    // Struct to be sent to the server
+    var feedbackStruct = [
+        "userId" : UserDetails.sharedInstance.getUID(),
+        "comment" : "",
+        "rating" : 0,
+        "date" : ""
+    ] as [String : Any]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        feedbackTextView.layer.borderWidth = 2
+        feedbackTextView.layer.borderColor = UIColor.systemGreen.cgColor
         
-        setupCosmosView()
+        ratingView.settings.filledColor = UIColor.orange
+        
+        // Alternate settings
+        /*ratingView.settings.filledBorderWidth = 2
+        ratingView.settings.emptyBorderWidth = 2
+        
+        ratingView.settings.filledBorderColor = UIColor.systemGreen
+        ratingView.settings.emptyBorderColor = UIColor.systemGreen
+        
+        ratingView.settings.filledColor = UIColor.systemGreen*/
+        
+        ratingView.rating = 3
+        
+        
+        //setupCosmosView()
         
     }
     
-    // Star rating (Cosmos) setup
-    func setupCosmosView() {
-        //self.addSubView
-        view.addSubview(cosmosView)
+    
+    @IBAction func sendButtonPress(_ sender: UIButton) {
+        print(Int(ratingView.rating))
         
-        //cosmosView.centerInSuperview()
+        // Get current date and format it
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
         
-        //cosmosView.
+        // Update values
+        feedbackStruct = [
+            "userId" : UserDetails.sharedInstance.getUID(),
+            "comment" : feedbackTextView.text!,
+            "rating" : ratingView.rating,
+            "date" : formatter.string(from: date)
+        ]
         
+        AF.request(SERVER_ADDRESS, method: .post, parameters: feedbackStruct, encoding: JSONEncoding.default)
+            .responseJSON { response in
+
+                print(response)
+            }
     }
+    
+    
     
 
     /*

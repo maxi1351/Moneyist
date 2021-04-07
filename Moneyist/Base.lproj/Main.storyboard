@@ -1551,18 +1551,72 @@ Saving Space</string>
         <!--Feedback View Controller-->
         <scene sceneID="gVX-Zp-RGA">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D8u-Ms-wqW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="8kW-ug-5Df" customClass="FeedbackViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vnY-sz-4uN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GOt-Ii-mvD">
+                                <rect key="frame" x="167" y="555" width="81" height="46"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="createButtonPressed:" destination="9Oq-JP-7Zq" eventType="touchUpInside" id="3cy-aD-K5f"/>
+                                    <action selector="sendButtonPress:" destination="8kW-ug-5Df" eventType="touchUpInside" id="I82-zL-KDF"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="Ehe" translatesAutoresizingMaskIntoConstraints="NO" id="AyR-Ca-eh8">
+                                <rect key="frame" x="87" y="320" width="223" height="128"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="111" id="Qzd-La-LNj"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kno-KX-sh6">
+                                <rect key="frame" x="87" y="292" width="70" height="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xqC-Ev-7A1" customClass="CosmosView" customModule="Cosmos">
+                                <rect key="frame" x="69" y="215" width="203" height="33"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="starSize">
+                                        <real key="value" value="50"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="d05-8l-Mgj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="d05-8l-Mgj" firstAttribute="bottom" secondItem="GOt-Ii-mvD" secondAttribute="bottom" constant="261" id="1Ds-rW-dtn"/>
+                            <constraint firstItem="GOt-Ii-mvD" firstAttribute="leading" secondItem="d05-8l-Mgj" secondAttribute="leading" constant="167" id="8zG-O1-Kn8"/>
+                            <constraint firstItem="GOt-Ii-mvD" firstAttribute="centerX" secondItem="vnY-sz-4uN" secondAttribute="centerX" id="9Cd-EF-7nY"/>
+                            <constraint firstItem="Kno-KX-sh6" firstAttribute="leading" secondItem="d05-8l-Mgj" secondAttribute="leading" constant="87" id="Sr1-Cv-Rmp"/>
+                            <constraint firstItem="d05-8l-Mgj" firstAttribute="trailing" secondItem="AyR-Ca-eh8" secondAttribute="trailing" constant="104" id="USq-Ka-su1"/>
+                            <constraint firstItem="Kno-KX-sh6" firstAttribute="top" secondItem="xqC-Ev-7A1" secondAttribute="bottom" constant="44" id="bI3-1F-lKy"/>
+                            <constraint firstItem="Kno-KX-sh6" firstAttribute="leading" secondItem="AyR-Ca-eh8" secondAttribute="leading" id="hkD-L8-hqF"/>
+                            <constraint firstItem="xqC-Ev-7A1" firstAttribute="leading" secondItem="d05-8l-Mgj" secondAttribute="leading" constant="69" id="hvr-4u-lUd"/>
+                            <constraint firstItem="d05-8l-Mgj" firstAttribute="trailing" secondItem="xqC-Ev-7A1" secondAttribute="trailing" constant="142" id="oSV-yL-M4D"/>
+                            <constraint firstItem="AyR-Ca-eh8" firstAttribute="top" secondItem="Kno-KX-sh6" secondAttribute="bottom" constant="25" id="rcb-e9-6oH"/>
+                            <constraint firstItem="Kno-KX-sh6" firstAttribute="top" secondItem="vnY-sz-4uN" secondAttribute="top" constant="292" id="vNH-xh-pCh"/>
+                            <constraint firstItem="xqC-Ev-7A1" firstAttribute="top" secondItem="d05-8l-Mgj" secondAttribute="top" constant="127" id="zCP-eW-jcP"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SEx-qa-eMM"/>
+                    <connections>
+                        <outlet property="feedbackTextView" destination="AyR-Ca-eh8" id="Ds4-AQ-hIE"/>
+                        <outlet property="ratingView" destination="xqC-Ev-7A1" id="QMu-BU-JJr"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="D8u-Ms-wqW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-565" y="-1595"/>
+            <point key="canvasLocation" x="-565.21739130434787" y="-1595.0892857142856"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="rVg-l8-wIU">
@@ -1975,6 +2029,9 @@ Saving Space</string>
         <namedColor name="AccentColor">
             <color red="0.20399999618530273" green="0.77999997138977051" blue="0.34900000691413879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
