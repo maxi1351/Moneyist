@@ -188,11 +188,24 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
                     .responseJSON { response in
                             print(response)
                         
-                        
                     }
+                
+                // Check to see if all transactions for a given year have been deleted
+                if (self.currentYearTransactionList.count <= 1) {
+                    
+                    self.years.remove(at: self.yearIndex)
+                    
+                    self.yearIndex = 0
+                    self.transactionList.removeAll()
+                    
+                    print(self.years)
+                    
+                    print("YEEEEET")
+                }
                 
                 // Refreshes data after deletion
                 self.getTransactions()
+                print(self.transactionList)
     
             }
             
@@ -278,7 +291,8 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
                         // Save result of request
                         self.transactionList = result
                         
-                        //print(self.transactionList[0])
+                        print("DEBUG")
+                        print(self.transactionList)
                         
                         self.refresh()
                         

@@ -63,6 +63,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         case 0:
             performSegue(withIdentifier: "SettingsToEditUser", sender: nil)
         case 1:
+            performSegue(withIdentifier: "settingsToFeedback", sender: nil)
             break
         case 2:
             logout()
@@ -131,7 +132,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 }
             }
     }
-
+    
     func logout() {
         
         // Ask user if they are sure using an alert

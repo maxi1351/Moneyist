@@ -18,6 +18,8 @@
 		5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5410F44E2608C8EB00C00F57 /* Moneyist.xcdatamodeld */; };
 		5410F4522608C8EC00C00F57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5410F4512608C8EC00C00F57 /* Assets.xcassets */; };
 		5410F4552608C8EC00C00F57 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5410F4532608C8EC00C00F57 /* LaunchScreen.storyboard */; };
+		5415AA9A261DE0B80014222C /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5415AA99261DE0B80014222C /* FeedbackViewController.swift */; };
+		5415AA9F261DE6230014222C /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 5415AA9E261DE6230014222C /* Cosmos */; };
 		541CC4422614BB8C00C37FE7 /* BudgetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541CC4412614BB8C00C37FE7 /* BudgetDetailViewController.swift */; };
 		541CC4472614E55300C37FE7 /* BudgetEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541CC4462614E55300C37FE7 /* BudgetEditViewController.swift */; };
 		541D3E9526177FA800F59EEB /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D3E9426177FA800F59EEB /* EditUserViewController.swift */; };
@@ -55,6 +57,7 @@
 		5410F4512608C8EC00C00F57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5410F4542608C8EC00C00F57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5410F4562608C8EC00C00F57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5415AA99261DE0B80014222C /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		541CC4412614BB8C00C37FE7 /* BudgetDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailViewController.swift; sourceTree = "<group>"; };
 		541CC4462614E55300C37FE7 /* BudgetEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetEditViewController.swift; sourceTree = "<group>"; };
 		541D3E9426177FA800F59EEB /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5415AA9F261DE6230014222C /* Cosmos in Frameworks */,
 				54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,6 +173,7 @@
 			children = (
 				54B99C0226175A350006EB5B /* SettingsViewController.swift */,
 				541D3E9426177FA800F59EEB /* EditUserViewController.swift */,
+				5415AA99261DE0B80014222C /* FeedbackViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -210,6 +215,7 @@
 			name = Moneyist;
 			packageProductDependencies = (
 				54DFC66F260E2FFE00AFEFF1 /* Alamofire */,
+				5415AA9E261DE6230014222C /* Cosmos */,
 			);
 			productName = Moneyist;
 			productReference = 5410F4422608C8EB00C00F57 /* Moneyist.app */;
@@ -240,6 +246,7 @@
 			mainGroup = 5410F4392608C8EB00C00F57;
 			packageReferences = (
 				54DFC66E260E2FFE00AFEFF1 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				5415AA9D261DE6230014222C /* XCRemoteSwiftPackageReference "Cosmos" */,
 			);
 			productRefGroup = 5410F4432608C8EB00C00F57 /* Products */;
 			projectDirPath = "";
@@ -281,6 +288,7 @@
 				54E4E460261B5FE1001B2AAB /* SavingSpaceCreateViewController.swift in Sources */,
 				72DBC1EB26158A8F00F006AE /* CreateReminderViewController.swift in Sources */,
 				540D448D2612597F00217594 /* AddTransactionViewController.swift in Sources */,
+				5415AA9A261DE0B80014222C /* FeedbackViewController.swift in Sources */,
 				544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */,
 				5410F4462608C8EB00C00F57 /* AppDelegate.swift in Sources */,
 				541CC4472614E55300C37FE7 /* BudgetEditViewController.swift in Sources */,
@@ -499,6 +507,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5415AA9D261DE6230014222C /* XCRemoteSwiftPackageReference "Cosmos" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/Cosmos.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 23.0.0;
+			};
+		};
 		54DFC66E260E2FFE00AFEFF1 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -510,6 +526,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5415AA9E261DE6230014222C /* Cosmos */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5415AA9D261DE6230014222C /* XCRemoteSwiftPackageReference "Cosmos" */;
+			productName = Cosmos;
+		};
 		54DFC66F260E2FFE00AFEFF1 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 54DFC66E260E2FFE00AFEFF1 /* XCRemoteSwiftPackageReference "Alamofire" */;
