@@ -9,13 +9,12 @@ import Foundation
 
 // Reminder struct
 struct Reminder : Codable {
-    //public var userID: String
     public var title: String
-    //public var reminderID: String?            // Fix - nil returned
+    public var reminderId: String
     public var date: String
 }
 
-struct ReminderID: Codable {
-    var reminderID: String?
+struct ReminderID : Codable {
+    public var reminderId: String?
 }
 

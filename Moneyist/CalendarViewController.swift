@@ -20,8 +20,11 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     var allReminders = [Reminder]()             // All reminders from backend
     var specificDayReminders = [Reminder]()     // Reminders for the selected date
     var dateSelected = ""                       // String of the date selected
+    var reminderID = ""                         // reminderID of selected reminder
+    var weekDay = ""                            // Weekday of date selected on calendar
     
-    let SERVER_ADDRESS = "http://localhost:4000/reminder/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/reminder/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_SPECIFIC = "http://localhost:4000/reminder/"   // + reminderID
     
     struct CalendarDay {
         var day : String       // The day on the calendar
@@ -41,9 +44,13 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     @IBAction func createReminderButton(_ sender: UIButton) {
-        performSegue(withIdentifier: "toCreateReminder", sender: nil)
+        performSegue(withIdentifier: "toReminderCreate", sender: nil)
     }
     
+    @IBAction func viewAllRemindersButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "toReminders", sender: nil)
+    }
+        
     // MARK: - Calendar collection view
     
     //func collectionViewLayout {}
@@ -71,7 +78,6 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         return calendarCell
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
                 
         let selectedDay = allDaysInMonth[indexPath.item].day
@@ -83,23 +89,24 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         specificDayReminders.removeAll()
         
         for reminder in allReminders {
-            let convertedDate = convertISOTime(date: reminder.date)
-            let reminderDate = convertReminderDate(date: convertedDate)
-            //print("Reminder date = \(reminderDate)")
-            //print("Selected date = \(dateSelected)")
+            let reminderDate = convertReminderDate(date: reminder.date)
+
             if dateSelected == reminderDate {
                 specificDayReminders.append(reminder)
+                weekDay = getWeekday(date: reminder.date)
             }
         }
-        
         //if !specificDayReminders.isEmpty { remindersTable.isHidden = false }
-        print("Specific day reminders = \(specificDayReminders)")
         reloadTable()
+    }
+    
+    // Reload collection view
+    func reloadCalendar() {
+        calendarCollectionView.reloadData()
     }
     
     // Load the collection view
     func loadCalendarMonth() {
-        
         allDaysInMonth.removeAll()
         
         var count = 1
@@ -109,6 +116,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         var day = ""
         var event = ""
         
+        // Store days to display on calendar
         while(count <= 42) {
             event = "false"
             
@@ -117,17 +125,12 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
             }
             
             else {
-                
                 day = String(count - startWeekdayCell)
                 let date = day + " " + monthAndYearLabelDetails()
                 
                 for reminder in allReminders {
-                    let reminderDate = convertReminderDate(date: convertISOTime(date: reminder.date))
-                    //print("date = \(date)")
-                    //print("reminder Date = \(reminderDate)")
-                    if date == reminderDate {
-                        event = "true"
-                    }
+                    let reminderDate = convertReminderDate(date: reminder.date)
+                    if date == reminderDate { event = "true" }
                 }
             }
             let dayDetails = CalendarDay(day: day, event: event)
@@ -166,7 +169,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     func getTodaysDate() -> String {
         let todaysDate = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d LLLL YYYY"
+        dateFormatter.dateFormat = "d LLLL yyyy"
         let currentDay = dateFormatter.string(from: todaysDate)
         
         return currentDay
@@ -198,39 +201,37 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     // Month and year currently displayed by calendar
     func monthAndYearLabelDetails() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "LLLL YYYY"
+        dateFormatter.dateFormat = "LLLL yyyy"
         let monthAndYear = dateFormatter.string(from: selectedDate)
         
         return monthAndYear
     }
     
-    // Date of the reminder
-    func convertReminderDate(date: Date) -> String {
-        // TODO: Fix. Gives the next day's date
-        
-        //print("Date before = \(date)")
+    // Convert date from server to format suitable for user
+    func convertReminderDate(date: String) -> String {
+        let convertedDate = UserDetails.sharedInstance.convertISOTime(date: date)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd LLLL YYYY"
-        let reminderDate = dateFormatter.string(from: date)
-        //let reminderDate = dateFormatter.string(from: date-1)
-        //print("Date after = \(reminderDate)")
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.dateFormat = "d LLLL yyyy"
+        let reminderDate = dateFormatter.string(from: convertedDate)
 
         return reminderDate
     }
     
+    // MARK: - Functions for reminder details
     
+    // Get all reminders from server
     func getReminders() {
         
-        AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
+        AF.request(SERVER_ADDRESS_ALL, encoding: JSONEncoding.default)
             .responseJSON { response in
                 
-                print("Reminder response:")
-                print(response)
+                //print(response)
                 
                 let decoder = JSONDecoder()
                 
                 do {
-                    print("Decode")
+                    print("Decoding")
                     let result = try decoder.decode([Reminder].self, from: response.data!)
                     
                     print(result)
@@ -241,31 +242,40 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
                         self.reloadTable()
                         self.loadCalendarMonth()
                         //self.reloadCalendar()
-                                            }
-                } catch {
+                    }
+               } catch {
                     print(error)
                 }
             }.resume()
+    }
+    
+    // Delete reminder requested by user
+    func deleteReminder(index: Int) {
+        // Send reminder deletion request
+        AF.request(self.SERVER_ADDRESS_SPECIFIC + self.specificDayReminders[index].reminderId, method: .delete, encoding: JSONEncoding.default)
+            .responseString { response in
+                print("Delete Reminder Response:")
+                print(response)
+            }
+        print("Reminder DELETED!")
+        // Refresh data after deletion
         
+        // FIX - highlighting of cell
+        specificDayReminders.remove(at: index)
+        self.getReminders()
+        self.reloadTable()
+        self.loadCalendarMonth()
     }
     
-    // Converts ISO Date string to Swift Date format
-    func convertISOTime(date: String) -> Date {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-        
-        return formatter.date(from: date)!
-    }
-    
-    
-    func reloadCalendar() {
-        calendarCollectionView.reloadData()
-    }
-    
-    func reloadTable() {
-        remindersTable.reloadData()
+    // Get weekday for the date
+    func getWeekday(date: String) -> String {
+        let convertedDate = UserDetails.sharedInstance.convertISOTime(date: date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.dateFormat = "EEEE"
+        let weekday = dateFormatter.string(from: convertedDate)
+
+        return weekday
     }
     
     // MARK: Reminders table view
@@ -280,7 +290,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         var headerTitle = ""
         
         if !specificDayReminders.isEmpty {
-            headerTitle = dateSelected
+            headerTitle = weekDay + " " + dateSelected
         }
     
         return headerTitle
@@ -305,6 +315,46 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         return reminderCell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        reminderID = specificDayReminders[indexPath.row].reminderId
+        performSegue(withIdentifier: "toReminderEdit", sender: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            //self.deleteReminder(index: indexPath.row)
+            //remindersTable.deleteRows(at: [indexPath], with: .fade)
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete the reminder?", preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("Yes Pressed")
+                
+                // Delete reminder from database
+                self.deleteReminder(index: indexPath.row)
+            }
+            
+            // Controls what happens after the user presses NO
+            let noAction = UIAlertAction(title: "No", style: UIAlertAction.Style.cancel) {
+                    UIAlertAction in
+                    NSLog("No Pressed")
+                }
+            
+            alert.addAction(yesAction)
+            alert.addAction(noAction)
+            
+            self.present(alert, animated: true)
+        }
+    }
+    
+    // Reload table view
+    func reloadTable() {
+        remindersTable.reloadData()
+    }
+    
    /* func addShadow() {
         remindersTable.layer.shadowColor = UIColor.darkGray.cgColor
         remindersTable.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
@@ -312,19 +362,22 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         remindersTable.layer.shadowRadius = 5.0
     } */
     
+    // MARK: - View controller
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print(self.title! + " reloading!")
         getReminders()
         //reloadCalendar()
-        //print("Total reminder count = \(allReminders.count)")
+        print("Total reminder count = \(allReminders.count)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //getReminders()
-        //loadCalendarMonth()
-        reloadCalendar()
+        specificDayReminders.removeAll()
         reloadTable()
+        getReminders()
+        reloadCalendar()
+        //reloadTable()
     }
     
     override func viewDidLoad() {
@@ -332,22 +385,22 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         print(self.title! + " loaded!")
         loadCalendarMonth()
-        getReminders()
-        //addShadow()
-        //remindersTable.isHidden = true
-        //remindersTable.tableFooterView = UIView()
+        specificDayReminders.removeAll()
         reloadTable()
+        getReminders()
+        //remindersTable.tableFooterView = UIView()
     }
     
-    
-    /*
      // MARK: - Navigation
      
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //let destinationVC = segue.destination as! RemindersViewController
+        //destinationVC.reminders = self.allReminders
+        if segue.identifier == "toReminderEdit" {
+            let destinationVC = segue.destination as! ReminderEditViewController
+            destinationVC.reminderID = self.reminderID
+        }
+     
      }
-     */
     
 }
