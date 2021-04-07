@@ -81,6 +81,10 @@ class AddTransactionViewController: UIViewController {
                 } catch {
                     print(error)
                 }
+                
+                // Return to previous screen
+                self.navigationController?.popViewController(animated: true)
+                
             }
     }
     
