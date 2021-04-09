@@ -69,11 +69,9 @@ class EditUserViewController: UIViewController {
         AF.request(SERVER_ADDRESS, method: .patch, parameters: userInfo, encoding: JSONEncoding.default)
             .responseString { response in
                 print(response)
-                
-                //self.navigationController?.popViewController(animated: true)
-                
-                
             }
+        
+        self.navigationController?.popViewController(animated: true)
     }
     
     // Handles date input

@@ -126,12 +126,12 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
                 NSLog("OK Pressed")
             
             
-            //self.navigationController?.popViewController(animated: true)
+            self.navigationController?.popViewController(animated: true)
             
             // Go back to budget screen
             //self.parent!.performSegue(withIdentifier: "BudgetToDetail", sender: nil)
             
-            self.performSegue(withIdentifier: "unwindToBudgetVC", sender: self)
+            //self.performSegue(withIdentifier: "unwindToBudgetVC", sender: self)
         }
         
         alert.addAction(okAction)
