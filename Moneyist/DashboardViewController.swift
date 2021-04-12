@@ -18,7 +18,9 @@ class DashboardViewController: UITabBarController {
         // Change back button color
         self.navigationController!.navigationBar.tintColor = UIColor.white
         
-        self.title = "Welcome, " + UserDetails.sharedInstance.getUID()
+        self.title = "Dashboard"
+        
+        //self.title = "Welcome, " + UserDetails.sharedInstance.getUID()
         
         getUserDetails()
         
@@ -57,6 +59,7 @@ class DashboardViewController: UITabBarController {
                     print(result.firstName)
                     
                     self.title = "Welcome, " + result.firstName
+
                     
                 } catch {
                     print(error)

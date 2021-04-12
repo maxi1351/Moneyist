@@ -46,17 +46,11 @@ class ViewController: UIViewController {
     let SERVER_ADDRESS = "http://localhost:4000/user/login"
     
     @IBAction func forgotPassButtonClick(_ sender: Any) {
-        // TODO
+        // Jump to password reset screen
+        performSegue(withIdentifier: "menuToForgotPass", sender: nil)
     }
     
     @IBAction func signInButtonClick(_ sender: Any) {
-        // TODO
-        
-        // DEBUG!!!!!
-        //UserDetails.sharedInstance.setUID(id: "60621966a72f470383bf7096")
-        
-        //performSegue(withIdentifier: "ToDashboard", sender: nil)
-        
         processUserDetails()
     }
     
@@ -114,7 +108,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
-        // Do any additional setup after loading the view.
+        
+        // Change back button color
+        self.navigationController!.navigationBar.tintColor = UIColor.white
         
         print("Loading Complete.")
         

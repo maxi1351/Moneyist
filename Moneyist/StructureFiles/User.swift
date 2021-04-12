@@ -47,4 +47,8 @@ class UserDetails {
     public func setCurrency(newCurrency: String) {
         currency = newCurrency
     }
+    
+    public func getServerAddress() -> String {
+        return SERVER_ADDRESS
+    }
 }

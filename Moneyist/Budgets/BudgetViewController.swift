@@ -76,13 +76,40 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
-    // Test button press
-    @IBAction func testButtonPress(_ sender: Any) {
-        getBudgets()
-    }
-    
-    // Proceed with caution!!!
+    // Proceed with caution!!! / DELETE ALL BUDGETS
     @IBAction func deleteAllButtonPress(_ sender: UIButton) {
+        // Ask user if they are sure using an alert
+        let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete all of your budget plans?\nTHIS ACTION IS IRREVERSIBLE.\nTHINK BEFORE YOU CLICK!", preferredStyle: .alert)
+        
+        // Controls what happens after the user presses YES
+        let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.destructive) {
+                UIAlertAction in
+                NSLog("Yes Pressed")
+            
+            // Send DELETE ALL TRANSACTIONS request
+            AF.request(self.SERVER_ADDRESS, method: .delete, encoding: JSONEncoding.default)
+                .responseJSON { response in
+                        print(response)
+                    
+                }
+            
+            // Refreshes data after deletion
+            self.refresh()
+
+        }
+        
+        // Controls what happens after the user presses NO
+        let noAction = UIAlertAction(title: "No", style: UIAlertAction.Style.cancel) {
+                UIAlertAction in
+                NSLog("No Pressed")
+            
+                // Do nothing
+        }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        self.present(alert, animated: true)
         
     }
     
@@ -141,7 +168,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
             let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete the '\(budgetList[indexPath.row].name)' budget plan?", preferredStyle: .alert)
             
             // Controls what happens after the user presses YES
-            let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) {
+            let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.destructive) {
                     UIAlertAction in
                     NSLog("Yes Pressed")
                 

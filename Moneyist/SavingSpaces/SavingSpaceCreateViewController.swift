@@ -14,8 +14,12 @@ class SavingSpaceCreateViewController: UIViewController {
     @IBOutlet weak var categoryField: UITextField!
     @IBOutlet weak var amountField: UITextField!
     @IBOutlet weak var dateField: UITextField!
+    @IBOutlet weak var createReminderSegment: UISegmentedControl!
     
     var datePicker = UIDatePicker()
+    
+    var createReminderBool = true
+    var savingSpaceID = ""
     
     // Standard server address (with given route, in this case 'Create Saving Space')
     let SERVER_ADDRESS = "http://localhost:4000/savingSpace/" + UserDetails.sharedInstance.getUID()
@@ -38,23 +42,61 @@ class SavingSpaceCreateViewController: UIViewController {
             "endDate" : dateField.text!
         ]
         
+        struct SSIDGet : Codable {
+            var savingSpaceId: String?
+        }
+        
         AF.request(SERVER_ADDRESS, method: .post, parameters: savingSpaceDetails, encoding: JSONEncoding.default)
             .responseString { response in
-                //print(response)
-
+            
                 print(response)
                 
                 self.navigationController?.popViewController(animated: true)
                 
-                /*let decoder = JSONDecoder()
+                let decoder = JSONDecoder()
                 
                 do {
-                    let result = try decoder.decode(Budget.self, from: response.data!)
-                    print(result.name!)
-                    //self.finishCreation()
+                    let result = try decoder.decode(SSIDGet.self, from: response.data!)
+                    print(result.savingSpaceId!)
+                    self.savingSpaceID = result.savingSpaceId!
                 } catch {
                     print(error)
-                }*/
+                }
+                
+                // Run only once data is collected from the server
+                DispatchQueue.main.async {
+                    if (self.createReminderBool) {
+                        self.createReminder()
+                    }
+                    else {
+                        // Do nothing
+                    }
+                }
+            }.resume()
+    }
+    
+    
+    @IBAction func createReminderSegmentPressed(_ sender: UISegmentedControl) {
+        
+    }
+    
+    func createReminder() {
+        
+        let reminderDetails = [
+            "userID" : UserDetails.sharedInstance.getUID(),
+            "associated" : true,
+            "ID" : savingSpaceID,
+            "title" : "ehe",
+            "type" : "GOAL",
+            "description" : "ehetenandayo",
+            "date" : dateField.text!
+            
+        ] as [String : Any]
+        
+        AF.request(UserDetails.sharedInstance.getServerAddress() + "reminder/" + UserDetails.sharedInstance.getUID(), method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                print(response)
+                
             }
     }
     

@@ -24,6 +24,7 @@
 		541D3E9526177FA800F59EEB /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D3E9426177FA800F59EEB /* EditUserViewController.swift */; };
 		543E59F9261CA7290098EB48 /* SavingSpaceEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E59F8261CA7290098EB48 /* SavingSpaceEditViewController.swift */; };
 		544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */; };
+		54A1E02F2624EBB000732404 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A1E02E2624EBB000732404 /* ResetPasswordViewController.swift */; };
 		54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819B260CC95B006FD29B /* TransactionsViewController.swift */; };
 		54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819E260CC992006FD29B /* ChartViewController.swift */; };
 		54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */; };
@@ -67,6 +68,7 @@
 		541D3E9426177FA800F59EEB /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
 		543E59F8261CA7290098EB48 /* SavingSpaceEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceEditViewController.swift; sourceTree = "<group>"; };
 		544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCreationViewController.swift; sourceTree = "<group>"; };
+		54A1E02E2624EBB000732404 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		54B9819B260CC95B006FD29B /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		54B9819E260CC992006FD29B /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		54B981A1260CC9C6006FD29B /* SavingSpaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceViewController.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			children = (
 				54016103260BCAA600405351 /* SignUpViewController.swift */,
 				5410F4492608C8EB00C00F57 /* ViewController.swift */,
+				54A1E02E2624EBB000732404 /* ResetPasswordViewController.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				540D448A26124F9100217594 /* User.swift in Sources */,
 				54E4E449261B4ACD001B2AAB /* TransactionEditViewController.swift in Sources */,
 				5410F44A2608C8EB00C00F57 /* ViewController.swift in Sources */,
+				54A1E02F2624EBB000732404 /* ResetPasswordViewController.swift in Sources */,
 				543E59F9261CA7290098EB48 /* SavingSpaceEditViewController.swift in Sources */,
 				541CC4422614BB8C00C37FE7 /* BudgetDetailViewController.swift in Sources */,
 				54F6345826137B7F008E612A /* UserJSON.swift in Sources */,

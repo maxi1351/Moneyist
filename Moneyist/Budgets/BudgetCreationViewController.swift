@@ -13,27 +13,20 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var budgetNameField: UITextField!
     @IBOutlet weak var initialAmountField: UITextField!
     @IBOutlet weak var amountAfterExpensesField: UITextField!
-    @IBOutlet weak var amountForNeedsField: UITextField!
-    @IBOutlet weak var amountForWantsField: UITextField!
-    @IBOutlet weak var savingsAndDebtsField: UITextField!
     @IBOutlet weak var startDateField: UITextField!
     @IBOutlet weak var endDateField: UITextField!
+    @IBOutlet weak var createReminderSegment: UISegmentedControl!
     
     var datePicker = UIDatePicker()
     
-    @IBAction func debugDetailTestPress(_ sender: UIButton) {
-        performSegue(withIdentifier: "BudgetCreateToDetail", sender: nil)
-    }
+    // Bool determining whether a reminder should be created
+    var createReminderBool = true
     
     // Holds budget details
     var budgetDetails = [
         "userID" : UserDetails.sharedInstance.getUID(),
         "name" : "",
         "initialAmount" : 0,
-        "amountAfterExpenses" : 0,
-        "amountForNeeds" : 0,
-        "amountForWants" : 0,
-        "savingsAndDebts" : 0,
         "startDate" : "",
         "endDate" : ""
     ] as [String : Any]
@@ -48,6 +41,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         self.hideKeyboard()
         print(UserDetails.sharedInstance.getUID())
+        
         
         // Change back button color
         self.navigationController!.navigationBar.tintColor = UIColor.white
@@ -73,26 +67,39 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    @IBAction func createReminderSegmentChanged(_ sender: UISegmentedControl) {
+        switch createReminderSegment.selectedSegmentIndex {
+            case 0:
+                createReminderBool = true
+                break
+            case 1:
+                createReminderBool = false
+                break
+            default:
+                break;
+        }
+        
+        print("Reminder status changed to: " + String(createReminderBool))
+    }
     
     // Request budget info from server
     func createBudget() {
         
         budgetDetails = [
             "userID" : UserDetails.sharedInstance.getUID(),
-            "name" : budgetNameField.text!,
-            "initialAmount" : Int(initialAmountField.text!)!,
-            "amountAfterExpenses" : Int(amountAfterExpensesField.text!)!,
-            "amountForNeeds" : Int(amountForNeedsField.text!)!,
-            "amountForWants" : Int(amountForWantsField.text!)!,
-            "savingsAndDebts" : Int(savingsAndDebtsField.text!)!,
-            "startDate" : startDateField.text!,
-            "endDate" : endDateField.text!
+            "name" : budgetNameField.text ?? "",
+            "initialAmount" : Int(initialAmountField.text ?? "") ?? 0,
+            "amountAfterExpenses" : Int(amountAfterExpensesField.text ?? "") ?? 0,
+            "startDate" : startDateField.text ?? "",
+            "endDate" : endDateField.text ?? ""
         ]
         
         struct BudgetGet : Codable {
             var budgetId: String?
         }
 
+        var noErrors = true
+        
         AF.request(SERVER_ADDRESS, method: .post, parameters: budgetDetails, encoding: JSONEncoding.default)
             .responseJSON { response in
                 //print(response)
@@ -103,14 +110,83 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
                 
                 do {
                     let result = try decoder.decode(BudgetGet.self, from: response.data!)
-                    print(result.budgetId!)
-                    self.budgetID = result.budgetId!
-                    self.finishCreation()
+                    print(result.budgetId ?? "Yeet")
+                    
+                    // Assign budgetID or "ERROR" if a data validation error is found
+                    self.budgetID = result.budgetId ?? "ERROR"
+                    
+                    if (self.budgetID == "ERROR") {
+                        print("Data validation error!")
+                        // Handle the given validation error
+                        self.handleValidationError(data: response.data!)
+                        noErrors = false
+                    }
+                    else {
+                        self.finishCreation()
+                        noErrors = true
+                    }
                 } catch {
                     print(error)
                 }
-            }
+                
+                // Run only once data is collected from the server
+                DispatchQueue.main.async {
+                    if (self.createReminderBool) {
+                        if (noErrors) {
+                            self.createReminder()
+                        }
+                    }
+                    else {
+                        // Do nothing
+                    }
+                }
+            }.resume()
         
+    }
+    
+    func handleValidationError(data: Data) {
+        
+        struct errorValidation: Codable {
+            var msg: String
+        }
+        
+        let errorsArray = [
+            "errors" : [errorValidation]()
+        ]
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode([errorValidation].self, from: data)
+            
+            for entry in result {
+                print(entry.msg)
+            }
+            
+            
+        } catch {
+            print(error)
+        }
+    }
+    
+    func createReminder() {
+        
+        let reminderDetails = [
+            "userID" : UserDetails.sharedInstance.getUID(),
+            "associated" : true,
+            "ID" : budgetID,
+            "title" : "ehe",
+            "type" : "GOAL",
+            "description" : "ehetenandayo",
+            "date" : endDateField.text!
+            
+        ] as [String : Any]
+        
+        AF.request(UserDetails.sharedInstance.getServerAddress() + "reminder/" + UserDetails.sharedInstance.getUID(), method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                print(response)
+                
+            }
     }
     
     func finishCreation() {
