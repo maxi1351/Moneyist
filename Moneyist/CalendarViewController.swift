@@ -13,6 +13,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     @IBOutlet weak var monthAndYearLabel: UILabel!
     @IBOutlet weak var calendarCollectionView: UICollectionView!
     @IBOutlet weak var remindersTable: UITableView!
+    @IBOutlet weak var remindersButton: UIButton!
     
     let calendar = Calendar.current
     var selectedDate = Date()                   // Date selected on calendar
@@ -384,6 +385,9 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         super.viewDidLoad()
         
         print(self.title! + " loaded!")
+        //remindersButton.backgroundColor = #colorLiteral(red: 0.06458269067, green: 0.2881486304, blue: 0.1114761736, alpha: 1)
+        remindersButton.layer.cornerRadius = 14
+        remindersButton.layer.masksToBounds = true
         loadCalendarMonth()
         specificDayReminders.removeAll()
         reloadTable()

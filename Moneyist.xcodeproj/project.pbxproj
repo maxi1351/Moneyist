@@ -41,6 +41,8 @@
 		72422372261A01AE00A1F02E /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72422371261A01AC00A1F02E /* Reminder.swift */; };
 		72422391261D020A00A1F02E /* RemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72422390261D020A00A1F02E /* RemindersViewController.swift */; };
 		72422398261DCAD300A1F02E /* ReminderEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72422397261DCAD300A1F02E /* ReminderEditViewController.swift */; };
+		724223E6261FCA1800A1F02E /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 724223E5261FCA1800A1F02E /* Charts */; };
+		724223ED261FE15600A1F02E /* ChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724223EC261FE15600A1F02E /* ChartTableViewCell.swift */; };
 		72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */; };
 		72DBC1EB26158A8F00F006AE /* CreateReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */; };
 /* End PBXBuildFile section */
@@ -80,6 +82,7 @@
 		72422371261A01AC00A1F02E /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		72422390261D020A00A1F02E /* RemindersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
 		72422397261DCAD300A1F02E /* ReminderEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditViewController.swift; sourceTree = "<group>"; };
+		724223EC261FE15600A1F02E /* ChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTableViewCell.swift; sourceTree = "<group>"; };
 		72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReminderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +93,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54F59916261DF92000994E1C /* Cosmos in Frameworks */,
+				724223E6261FCA1800A1F02E /* Charts in Frameworks */,
 				54DFC670260E2FFE00AFEFF1 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -125,6 +129,7 @@
 				72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */,
 				72422397261DCAD300A1F02E /* ReminderEditViewController.swift */,
 				54B9819E260CC992006FD29B /* ChartViewController.swift */,
+				724223EC261FE15600A1F02E /* ChartTableViewCell.swift */,
 				54F6345426137A51008E612A /* DashboardViewController.swift */,
 				5410F4562608C8EC00C00F57 /* Info.plist */,
 				5410F4532608C8EC00C00F57 /* LaunchScreen.storyboard */,
@@ -222,6 +227,7 @@
 			packageProductDependencies = (
 				54DFC66F260E2FFE00AFEFF1 /* Alamofire */,
 				54F59915261DF92000994E1C /* Cosmos */,
+				724223E5261FCA1800A1F02E /* Charts */,
 			);
 			productName = Moneyist;
 			productReference = 5410F4422608C8EB00C00F57 /* Moneyist.app */;
@@ -253,6 +259,7 @@
 			packageReferences = (
 				54DFC66E260E2FFE00AFEFF1 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				54F59914261DF92000994E1C /* XCRemoteSwiftPackageReference "Cosmos" */,
+				724223E4261FCA1300A1F02E /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 5410F4432608C8EB00C00F57 /* Products */;
 			projectDirPath = "";
@@ -289,6 +296,7 @@
 				54F6345826137B7F008E612A /* UserJSON.swift in Sources */,
 				72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */,
 				54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */,
+				724223ED261FE15600A1F02E /* ChartTableViewCell.swift in Sources */,
 				5410F4502608C8EB00C00F57 /* Moneyist.xcdatamodeld in Sources */,
 				72422391261D020A00A1F02E /* RemindersViewController.swift in Sources */,
 				54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */,
@@ -460,6 +468,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Moneyist/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -479,6 +488,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Moneyist/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -531,6 +541,14 @@
 				minimumVersion = 23.0.0;
 			};
 		};
+		724223E4261FCA1300A1F02E /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -543,6 +561,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 54F59914261DF92000994E1C /* XCRemoteSwiftPackageReference "Cosmos" */;
 			productName = Cosmos;
+		};
+		724223E5261FCA1800A1F02E /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 724223E4261FCA1300A1F02E /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -38,9 +38,9 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     // Predefine types of reminder the user can choose
     enum reminderType: String, CaseIterable {
-        //case goal = "Goal"
         case payment = "Payment"
         case income = "Income"
+        case goal = "Goal"
     }
     
     func createReminder() {
