@@ -29,6 +29,7 @@ class FeedbackViewController: UIViewController {
        
         feedbackTextView.layer.borderWidth = 2
         feedbackTextView.layer.borderColor = UIColor.systemGreen.cgColor
+
         
         ratingView.settings.filledColor = UIColor.orange
         
@@ -70,6 +71,8 @@ class FeedbackViewController: UIViewController {
 
                 print(response)
             }
+        
+        self.navigationController?.popViewController(animated: true)
     }
     
     
