@@ -31,6 +31,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     let SERVER_ADDRESS = "http://localhost:4000/transaction/all/" + UserDetails.sharedInstance.getUID()
     let SERVER_ADDRESS_DELETE = "http://localhost:4000/transaction/" // + transactionID
     let SERVER_ADDRESS_ALL_DELETE = "http://localhost:4000/transaction/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_UPDATE = "http://localhost:4000/transaction/update/"
     
     var transactionList: Array<Transaction> = []
     var currentYearTransactionList: Array<Transaction> = []
@@ -170,7 +171,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     // Swipe to delete function
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    /*func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         // If user want to delete item
         if editingStyle == .delete {
@@ -224,8 +225,112 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
             
             
         }
-    }
+    }*/
 
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+
+        let confirmAction = UITableViewRowAction(style: .normal, title: "Mark As Confirmed") { (rowAction, indexPath) in
+            self.updateTransactionStatus(indexPath: indexPath)
+        }
+        confirmAction.backgroundColor = .systemGreen
+
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (rowAction, indexPath) in
+            self.deleteTransaction(indexPath: indexPath)
+        }
+        deleteAction.backgroundColor = .red
+
+        // Add confirm action only if transaction is pending
+        
+        if (transactionByMonth[indexPath.section][indexPath.row].status == "PENDING") {
+            return [deleteAction, confirmAction]
+        }
+        else {
+            return [deleteAction]
+        }
+        
+    }
+    
+    func updateTransactionStatus(indexPath: IndexPath) {
+        // Convert time format
+        let tempDate = UserDetails.sharedInstance.convertISOTime(date: transactionByMonth[indexPath.section][indexPath.row].date)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        
+        let finalDate = formatter.string(from: tempDate)
+        
+        // Parameters
+        let TransactionDetails = [
+            "type" : transactionByMonth[indexPath.section][indexPath.row].type,
+            "amount" : transactionByMonth[indexPath.section][indexPath.row].amount,
+            "currency" : transactionByMonth[indexPath.section][indexPath.row].currency,
+            "status" : "CONFIRMED",
+            "date" : finalDate
+        ] as [String : Any]
+        
+        // Make a PATCH request with transaction info
+        AF.request(SERVER_ADDRESS_UPDATE + transactionByMonth[indexPath.section][indexPath.row]._id, method: .patch, parameters: TransactionDetails, encoding: JSONEncoding.default)
+            .responseString { response in
+                print(response)
+                
+                DispatchQueue.main.async {
+                    
+                    // Refreshes data after update
+                    self.getTransactions()
+                    print(self.transactionList)
+                }
+                
+            }.resume()
+    }
+    
+    func deleteTransaction(indexPath: IndexPath) {
+        // Ask user if they are sure using an alert
+        let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete the transaction?", preferredStyle: .alert)
+        
+        // Controls what happens after the user presses YES
+        let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.destructive) {
+                UIAlertAction in
+                NSLog("Yes Pressed")
+            
+            // Send transaction deletion request
+            AF.request(self.SERVER_ADDRESS_DELETE + self.transactionByMonth[indexPath.section][indexPath.row]._id, method: .delete, encoding: JSONEncoding.default)
+                .responseString { response in
+                        print(response)
+                    
+                    DispatchQueue.main.async {
+                        // Check to see if all transactions for a given year have been deleted
+                        if (self.currentYearTransactionList.count <= 1) {
+                            
+                            self.years.remove(at: self.yearIndex)
+                            
+                            self.yearIndex = 0
+                            self.transactionList.removeAll()
+                            
+                            print(self.years)
+                            
+                            print("YEEEEET")
+                        }
+                        
+                        // Refreshes data after deletion
+                        self.getTransactions()
+                        print(self.transactionList)
+                    }
+                }.resume()
+        }
+        
+        // Controls what happens after the user presses NO
+        let noAction = UIAlertAction(title: "No", style: UIAlertAction.Style.cancel) {
+                UIAlertAction in
+                NSLog("No Pressed")
+            
+                // Do nothing
+        }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        self.present(alert, animated: true)
+    }
+    
     func calculateRequiredDates() {
         
         // Reset values

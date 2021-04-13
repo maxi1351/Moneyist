@@ -2369,7 +2369,7 @@ Saving Space</string>
         <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="trash.fill" catalog="system" width="121" height="128"/>
+        <image name="trash.fill" catalog="system" width="32" height="32"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">
             <color red="0.20399999618530273" green="0.77999997138977051" blue="0.34900000691413879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

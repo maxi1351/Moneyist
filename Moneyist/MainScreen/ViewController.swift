@@ -42,6 +42,8 @@ class ViewController: UIViewController {
         "password" : "hee"
     ]
     
+    
+    
     // Standard server address (with given route, in this case 'Add Transaction')
     let SERVER_ADDRESS = "http://localhost:4000/user/login"
     
