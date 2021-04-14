@@ -88,8 +88,8 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         budgetDetails = [
             "userID" : UserDetails.sharedInstance.getUID(),
             "name" : budgetNameField.text ?? "",
-            "initialAmount" : Int(initialAmountField.text ?? "") ?? 0,
-            "amountAfterExpenses" : Int(amountAfterExpensesField.text ?? "") ?? 0,
+            "initialAmount" : Int(initialAmountField.text ?? "") ?? nil,
+            "amountAfterExpenses" : Int(amountAfterExpensesField.text ?? "") ?? nil,
             "startDate" : startDateField.text ?? "",
             "endDate" : endDateField.text ?? ""
         ]
@@ -146,21 +146,42 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     
     func handleValidationError(data: Data) {
         
-        struct errorValidation: Codable {
+        struct error: Codable {
             var msg: String
         }
         
-        let errorsArray = [
-            "errors" : [errorValidation]()
-        ]
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        let errorsArray = [errorValidation]()
+        
         
         let decoder = JSONDecoder()
         
         do {
-            let result = try decoder.decode([errorValidation].self, from: data)
+            let result = try decoder.decode(errorValidation.self, from: data)
             
-            for entry in result {
+            /*for entry in result {
                 print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            for e in result.errors {
+                // Ask user if they are sure using an alert
+                let alert = UIAlertController(title: "Error", message: e.msg, preferredStyle: .alert)
+                
+                // Controls what happens after the user presses YES
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                        UIAlertAction in
+                        NSLog("OK Pressed")
+                   
+                }
+               
+                alert.addAction(okAction)
+                
+                self.present(alert, animated: true)
             }
             
             

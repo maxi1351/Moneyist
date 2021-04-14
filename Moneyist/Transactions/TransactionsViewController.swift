@@ -296,6 +296,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
                 .responseString { response in
                         print(response)
                     
+                    
                     DispatchQueue.main.async {
                         // Check to see if all transactions for a given year have been deleted
                         if (self.currentYearTransactionList.count <= 1) {
@@ -381,8 +382,12 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
             .responseJSON { response in
 
+                
+                print("Testing transactions")
                 //print("T Response:")
-                //print(response)
+                print(response)
+                
+                
                 
                 let decoder = JSONDecoder()
 
