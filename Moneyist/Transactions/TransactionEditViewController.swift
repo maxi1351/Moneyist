@@ -112,21 +112,81 @@ class TransactionEditViewController: UIViewController {
         
         TransactionDetails = [
             "type" : type,
-            "amount" : amountField.text!,
+            "amount" : amountField.text ?? "",
             "currency" : currency,
             "status" : status,
-            "date" : dateField.text!
+            "date" : dateField.text ?? ""
         ]
+        
+        struct TResponse: Codable {
+            var msg: String?
+        }
         
         // Make a PATCH request with transaction info
         AF.request(SERVER_ADDRESS + transactionID, method: .patch, parameters: TransactionDetails, encoding: JSONEncoding.default)
             .responseString { response in
-                print(response)
+                print(response.description)
                 
-                // Return to previous screen
-                self.navigationController?.popViewController(animated: true)
+                if (response.description != "success(\"OK\")") {
+                    print("Good response!")
+                    self.handleValidationError(data: response.data!)
+                }
+                else {
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
             }
         
+    }
+    
+    func handleValidationError(data: Data) {
+        
+        struct error: Codable {
+            var msg: String
+        }
+        
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        let errorsArray = [errorValidation]()
+        
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            var errorString = ""
+            
+            for e in result.errors {
+                errorString += e.msg + "\n"
+            }
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+           
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+            
+        } catch {
+            print(error)
+        }
     }
     
     @IBAction func currencySelectionChanged(_ sender: UISegmentedControl) {

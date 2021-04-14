@@ -164,7 +164,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
             destinationVC.type = selectedTransaction!.type
             destinationVC.status = selectedTransaction!.status
             destinationVC.currency = selectedTransaction!.currency
-            destinationVC.transactionID = selectedTransaction!._id
+            destinationVC.transactionID = selectedTransaction!._id!
             
             print(selectedTransaction!)
         }
@@ -268,7 +268,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         ] as [String : Any]
         
         // Make a PATCH request with transaction info
-        AF.request(SERVER_ADDRESS_UPDATE + transactionByMonth[indexPath.section][indexPath.row]._id, method: .patch, parameters: TransactionDetails, encoding: JSONEncoding.default)
+        AF.request(SERVER_ADDRESS_UPDATE + transactionByMonth[indexPath.section][indexPath.row]._id!, method: .patch, parameters: TransactionDetails, encoding: JSONEncoding.default)
             .responseString { response in
                 print(response)
                 
@@ -292,7 +292,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
                 NSLog("Yes Pressed")
             
             // Send transaction deletion request
-            AF.request(self.SERVER_ADDRESS_DELETE + self.transactionByMonth[indexPath.section][indexPath.row]._id, method: .delete, encoding: JSONEncoding.default)
+            AF.request(self.SERVER_ADDRESS_DELETE + self.transactionByMonth[indexPath.section][indexPath.row]._id!, method: .delete, encoding: JSONEncoding.default)
                 .responseString { response in
                         print(response)
                     

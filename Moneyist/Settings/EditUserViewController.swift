@@ -63,7 +63,7 @@ class EditUserViewController: UIViewController {
             "mobileNumber" : mobileNumberField.text!
         ]
         
-        print(userInfo["surname"]!)
+        print(userInfo["firstName"]!)
         
         // Make a PATCH request with user details
         AF.request(SERVER_ADDRESS, method: .patch, parameters: userInfo, encoding: JSONEncoding.default)
