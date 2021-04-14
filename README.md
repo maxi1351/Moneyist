@@ -1,4 +1,4 @@
-#MONEYIST - Financial management app.
+# MONEYIST - Financial management app.
 
 App requires server to function correctly.
 
