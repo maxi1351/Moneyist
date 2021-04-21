@@ -13,7 +13,29 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var reminderTable: UITableView!
     
     @IBAction func deleteAllButton(_ sender: Any) {
-        //deleteAllReminders()
+        // Ask user if they are sure using an alert
+        let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete all of your transactions?\nTHIS ACTION IS IRREVERSIBLE.\nTHINK BEFORE YOU CLICK!", preferredStyle: .alert)
+        
+        // Controls what happens after the user presses YES
+        let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.destructive) {
+                UIAlertAction in
+                NSLog("Yes Pressed")
+            //deleteAllReminders()
+                }
+        
+        
+        // Controls what happens after the user presses NO
+        let noAction = UIAlertAction(title: "No", style: UIAlertAction.Style.cancel) {
+                UIAlertAction in
+                NSLog("No Pressed")
+                // Do nothing
+            
+        }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        self.present(alert, animated: true)
     }
     
     var reminderID = ""
@@ -206,7 +228,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         getReminders()
         reloadTable()
-        print("Reloading")
+        print(self.title! + " reloading!")
     }
     
     override func viewDidLoad() {
@@ -222,6 +244,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
         // Add reminder button
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
     }

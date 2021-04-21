@@ -1,34 +1,42 @@
 //
-//  CreateReminderViewController.swift
+//  ReminderEditViewController.swift
 //  Moneyist
 //
-//  Created by Asma Nasir on 01/04/2021.
+//  Created by Asma Nasir on 07/04/2021.
 //
 
 import UIKit
 import Alamofire
 
-class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
-    
+class ReminderEditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var descriptionField: UITextField!
     @IBOutlet weak var typeField: UITextField!
     @IBOutlet weak var dateField: UITextField!
-    @IBOutlet weak var timeField: UITextField!
     
-    @IBAction func createReminderButton(_ sender: Any) {
-        createReminder()
-        //self.dismiss(animated: true, completion: nil)
+    @IBAction func editButton(_ sender: Any) {
+        updateReminder()
     }
     
     let datePicker = UIDatePicker()
     var reminderID = ""
+    var reminder : ReminderDetails? = nil
 
-    let SERVER_ADDRESS = "http://localhost:4000/reminder/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_UPDATE = "http://localhost:4000/reminder/update/"   // + reminderID
+    let SERVER_ADDRESS_SPECIFIC = "http://localhost:4000/reminder/"  // + reminderID
+    
+    // Reminder details struct
+    struct ReminderDetails : Codable {
+        var title: String
+        var description: String?
+        var type : String
+        var date: String
+        //var reminderId: String
+    }
     
     // Hold the reminder details
     var reminderDetails = [
-        //"userID" : UserDetails.sharedInstance.getUID(),
         "title" : "",
         "description" : "",
         "type" : "",
@@ -38,46 +46,79 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     // Predefine types of reminder the user can choose
     enum reminderType: String, CaseIterable {
+        //case goal = "Goal"
         case payment = "Payment"
         case income = "Income"
-        case goal = "Goal"
     }
     
-    func createReminder() {
+    func getReminderDetails() {
+        AF.request(SERVER_ADDRESS_SPECIFIC + reminderID, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                print("From SERVER:")
+                print(response)
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    print("Decode")
+                    let result = try decoder.decode(ReminderDetails.self, from: response.data!)
+                    
+                    print(result)
+                    
+                    DispatchQueue.main.async {
+                        // Save result of request
+                        self.reminder = result
+                        self.setReminderDetails()
+                    }
+               } catch {
+                    print(error)
+                }
+            }.resume()
+    }
+    
+    
+    func setReminderDetails() {
+        let convertedDate = UserDetails.sharedInstance.convertISOTime(date: (reminder?.date)!)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        
+        dateField.text = dateFormatter.string(from: convertedDate)
+        titleField.text = reminder?.title
+        descriptionField.text = reminder?.description
+        typeField.text = reminder?.type.lowercased().capitalized
+    }
+    
+    func updateReminder() {
         
         reminderDetails = [
-            //"userID" : UserDetails.sharedInstance.getUID()
             "title" : titleField.text!,
-            "description" : descriptionField.text ?? "",
+            "description" : descriptionField.text!,
             "type" : typeField.text!.uppercased(),
             "date" : dateField.text!,
             "associated" : false
         ]
         
-        print("Reminder details = \(reminderDetails)")
-        
-        /*struct ReminderID : Codable {
-            var reminderId: String?
-        }*/
-
-        
-        AF.request(SERVER_ADDRESS, method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
-            .responseJSON { response in
-                
+        // Make a PATCH request with reminder info
+        AF.request(SERVER_ADDRESS_UPDATE + reminderID, method: .patch, parameters: reminderDetails, encoding: JSONEncoding.default)
+            .responseString { response in
+                print("From SERVER")
                 print(response)
                 
-              /*  let decoder = JSONDecoder()
-                
-                do {
-                    let result = try decoder.decode(ReminderID.self, from: response.data!)
-                    self.reminderID = result.reminderId!
-                    print("Result ID = \(result.reminderId!)")
-                    print("Reminder Id = \(self.reminderID)")
-                    self.navigationController?.popViewController(animated: true)
-                } catch {
-                    print(error)
-                } */
+                // Return to previous screen
+                self.navigationController?.popViewController(animated: true)
             }
+    }
+    
+    // Convert date from server to format suitable for user
+    func convertReminderDate(date: String) -> String {
+        let convertedDate = UserDetails.sharedInstance.convertISOTime(date: date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.dateFormat = "d LLLL yyyy"
+        let reminderDate = dateFormatter.string(from: convertedDate)
+
+        return reminderDate
     }
     
     // MARK: - Picker for selecting type of reminder
@@ -150,26 +191,15 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.view.endEditing(true)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         print(self.title! + " loaded!")
+        getReminderDetails()
         let thePicker = UIPickerView()
         typeField.inputView = thePicker
         thePicker.delegate = self
         showDatePicker()
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }
