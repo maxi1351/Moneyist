@@ -195,7 +195,7 @@ class ViewController: UIViewController {
             var errorString = ""
             
             for e in result.errors {
-                errorString += e.msg + "\n"
+                errorString += "\n" + e.msg //+ "\n"
             }
             
             // Ask user if they are sure using an alert
