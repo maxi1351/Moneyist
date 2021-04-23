@@ -96,14 +96,14 @@ class SignUpViewController: UIViewController {
             
             // Request the creation of a new account
             AF.request(SERVER_ADDRESS, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-                .responseJSON { response in
+                .responseString { response in
                     
                     // Decode the JSON data using the struct created before
                     let decoder = JSONDecoder()
                     
                     print(response)
                     
-                    do {
+                    /*do {
                         let result = try decoder.decode(UserData.self, from: response.data!)
                         print(result.userId)
                         
@@ -126,7 +126,7 @@ class SignUpViewController: UIViewController {
                         
                         
                         self.activityIndicator.stopAnimating()
-                    }
+                    }*/
                     
                 }
             

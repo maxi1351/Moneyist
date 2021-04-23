@@ -45,7 +45,7 @@ class ViewController: UIViewController {
     
     
     // Standard server address (with given route, in this case 'Add Transaction')
-    let SERVER_ADDRESS = "http://localhost:4000/user/login"
+    let SERVER_ADDRESS = "http://localhost:4000/auth/login"
     
     @IBAction func forgotPassButtonClick(_ sender: Any) {
         // Jump to password reset screen
@@ -54,6 +54,31 @@ class ViewController: UIViewController {
     
     @IBAction func signInButtonClick(_ sender: Any) {
         processUserDetails()
+    }
+    
+    func fetchTheCookies() {
+        let parameters: [String: AnyObject] = [:]
+
+        /*AF.request(SERVER_ADDRESS, method: .post, parameters: parameters).responseJSON { response in
+            if let headerFields = response.response?.allHeaderFields as? [String: String], let URL = response.request?.url
+            {
+                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
+                 print(cookies)
+            }
+        }*/
+        
+        AF.request(SERVER_ADDRESS, method: HTTPMethod.post, parameters: parameters).responseData { (responseObject) -> Void in
+
+                    if let responseStatus = responseObject.response?.statusCode {
+                        if responseStatus != 200 {
+                            // error
+                            print("Cookie error")
+                        } else {
+                            // view all cookies
+                            print(HTTPCookieStorage.shared.cookies!)
+                        }
+                    }
+                }
     }
     
     func processUserDetails() {
@@ -69,11 +94,20 @@ class ViewController: UIViewController {
         // Struct for decoding JSON data
         struct UserData: Codable { var userId: String }
         
+        fetchTheCookies()
+        
         AF.request(SERVER_ADDRESS, method: .post, parameters: loginDetails, encoding: JSONEncoding.default)
-            .responseJSON { response in
+            .responseString { response in
                 print(response)
                 
-                let decoder = JSONDecoder()
+                //let cookies = HTTPCookie.cookies(withResponseHeaderFields: response.allHeaderFields , for: response.URL!)
+
+                /*if let fields = response.response?.allHeaderFields as? [String : String]{
+                            let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.request?.url!)!)
+                            HTTPCookieStorage.shared.setCookies(cookies, for: (response.request?.url!)!, mainDocumentURL: nil)
+                        }*/
+                
+                /*let decoder = JSONDecoder()
                 
                 do {
                     let result = try decoder.decode(UserData.self, from: response.data!)
@@ -87,18 +121,22 @@ class ViewController: UIViewController {
                     //self.finishCreation()
                 } catch {
                     print(error)
-                }
+                }*/
+                
+                self.loginUser()
             }
+                
+            
     }
     
-    func loginUser(uid: String) {
+    func loginUser() {
         
         /*
          FILL OUT LOGIN CODE HERE ONCE SERVER TEAM IS DONE WITH THEIR WORK
          */
         
         // Set UID for rest of app
-        UserDetails.sharedInstance.setUID(id: uid)
+        //UserDetails.sharedInstance.setUID(id: uid)
         
         performSegue(withIdentifier: "ToDashboard", sender: nil)
     }

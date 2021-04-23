@@ -28,9 +28,9 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     // Holds difference of transactions
     var balance = 0
     
-    let SERVER_ADDRESS = "http://localhost:4000/transaction/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/transaction/all/"// + UserDetails.sharedInstance.getUID()
     let SERVER_ADDRESS_DELETE = "http://localhost:4000/transaction/" // + transactionID
-    let SERVER_ADDRESS_ALL_DELETE = "http://localhost:4000/transaction/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_ALL_DELETE = "http://localhost:4000/transaction/all/"// + UserDetails.sharedInstance.getUID()
     let SERVER_ADDRESS_UPDATE = "http://localhost:4000/transaction/update/"
     
     var transactionList: Array<Transaction> = []
