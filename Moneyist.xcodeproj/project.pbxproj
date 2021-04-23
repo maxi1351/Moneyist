@@ -44,6 +44,12 @@
 		72422398261DCAD300A1F02E /* ReminderEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72422397261DCAD300A1F02E /* ReminderEditViewController.swift */; };
 		724223E6261FCA1800A1F02E /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 724223E5261FCA1800A1F02E /* Charts */; };
 		724223ED261FE15600A1F02E /* ChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724223EC261FE15600A1F02E /* ChartTableViewCell.swift */; };
+		725B2D70262E90270045467F /* SpendingCategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725B2D6F262E90270045467F /* SpendingCategoriesTableViewCell.swift */; };
+		7275EEAF262D397300A148DF /* SpendingCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7275EEAE262D397300A148DF /* SpendingCategory.swift */; };
+		7275EEB4262E334A00A148DF /* SpendingCategoryEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7275EEB3262E334A00A148DF /* SpendingCategoryEditViewController.swift */; };
+		72906B70262C6A7D0090FC58 /* SpendingCategoryAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72906B6F262C6A7D0090FC58 /* SpendingCategoryAddViewController.swift */; };
+		72906B74262C6B710090FC58 /* ColoursCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72906B73262C6B710090FC58 /* ColoursCollectionViewCell.swift */; };
+		72B70D6C262D337C000DC297 /* SpendingCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B70D6B262D337C000DC297 /* SpendingCategoriesViewController.swift */; };
 		72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */; };
 		72DBC1EB26158A8F00F006AE /* CreateReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */; };
 /* End PBXBuildFile section */
@@ -85,6 +91,12 @@
 		72422390261D020A00A1F02E /* RemindersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
 		72422397261DCAD300A1F02E /* ReminderEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditViewController.swift; sourceTree = "<group>"; };
 		724223EC261FE15600A1F02E /* ChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTableViewCell.swift; sourceTree = "<group>"; };
+		725B2D6F262E90270045467F /* SpendingCategoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingCategoriesTableViewCell.swift; sourceTree = "<group>"; };
+		7275EEAE262D397300A148DF /* SpendingCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingCategory.swift; sourceTree = "<group>"; };
+		7275EEB3262E334A00A148DF /* SpendingCategoryEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingCategoryEditViewController.swift; sourceTree = "<group>"; };
+		72906B6F262C6A7D0090FC58 /* SpendingCategoryAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingCategoryAddViewController.swift; sourceTree = "<group>"; };
+		72906B73262C6B710090FC58 /* ColoursCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoursCollectionViewCell.swift; sourceTree = "<group>"; };
+		72B70D6B262D337C000DC297 /* SpendingCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingCategoriesViewController.swift; sourceTree = "<group>"; };
 		72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateReminderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,13 +137,9 @@
 				5410F4452608C8EB00C00F57 /* AppDelegate.swift */,
 				5410F4512608C8EC00C00F57 /* Assets.xcassets */,
 				54E4E450261B5CDA001B2AAB /* Budgets */,
-				72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */,
-				54B981A4260CC9E2006FD29B /* CalendarViewController.swift */,
-				72422390261D020A00A1F02E /* RemindersViewController.swift */,
-				72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */,
-				72422397261DCAD300A1F02E /* ReminderEditViewController.swift */,
-				54B9819E260CC992006FD29B /* ChartViewController.swift */,
-				724223EC261FE15600A1F02E /* ChartTableViewCell.swift */,
+				72906B78262C79950090FC58 /* CalendarAndReminders */,
+				72906B79262C79C60090FC58 /* Chart */,
+				72906B76262C794C0090FC58 /* SpendingCategories */,
 				54F6345426137A51008E612A /* DashboardViewController.swift */,
 				5410F4562608C8EC00C00F57 /* Info.plist */,
 				5410F4532608C8EC00C00F57 /* LaunchScreen.storyboard */,
@@ -167,6 +175,7 @@
 				540D448F26125AB800217594 /* Transaction.swift */,
 				54E4E44C261B5BD8001B2AAB /* SavingSpace.swift */,
 				72422371261A01AC00A1F02E /* Reminder.swift */,
+				7275EEAE262D397300A148DF /* SpendingCategory.swift */,
 			);
 			path = StructureFiles;
 			sourceTree = "<group>";
@@ -209,6 +218,39 @@
 				54A1E02E2624EBB000732404 /* ResetPasswordViewController.swift */,
 			);
 			path = MainScreen;
+			sourceTree = "<group>";
+		};
+		72906B76262C794C0090FC58 /* SpendingCategories */ = {
+			isa = PBXGroup;
+			children = (
+				72906B6F262C6A7D0090FC58 /* SpendingCategoryAddViewController.swift */,
+				72906B73262C6B710090FC58 /* ColoursCollectionViewCell.swift */,
+				72B70D6B262D337C000DC297 /* SpendingCategoriesViewController.swift */,
+				7275EEB3262E334A00A148DF /* SpendingCategoryEditViewController.swift */,
+				725B2D6F262E90270045467F /* SpendingCategoriesTableViewCell.swift */,
+			);
+			path = SpendingCategories;
+			sourceTree = "<group>";
+		};
+		72906B78262C79950090FC58 /* CalendarAndReminders */ = {
+			isa = PBXGroup;
+			children = (
+				72DBC1E7261505C400F006AE /* CalendarCollectionViewCell.swift */,
+				54B981A4260CC9E2006FD29B /* CalendarViewController.swift */,
+				72422390261D020A00A1F02E /* RemindersViewController.swift */,
+				72DBC1EA26158A8F00F006AE /* CreateReminderViewController.swift */,
+				72422397261DCAD300A1F02E /* ReminderEditViewController.swift */,
+			);
+			path = CalendarAndReminders;
+			sourceTree = "<group>";
+		};
+		72906B79262C79C60090FC58 /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				54B9819E260CC992006FD29B /* ChartViewController.swift */,
+				724223EC261FE15600A1F02E /* ChartTableViewCell.swift */,
+			);
+			path = Chart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +339,7 @@
 				54A1E02F2624EBB000732404 /* ResetPasswordViewController.swift in Sources */,
 				543E59F9261CA7290098EB48 /* SavingSpaceEditViewController.swift in Sources */,
 				541CC4422614BB8C00C37FE7 /* BudgetDetailViewController.swift in Sources */,
+				72B70D6C262D337C000DC297 /* SpendingCategoriesViewController.swift in Sources */,
 				54F6345826137B7F008E612A /* UserJSON.swift in Sources */,
 				72DBC1E8261505C400F006AE /* CalendarCollectionViewCell.swift in Sources */,
 				54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */,
@@ -305,23 +348,28 @@
 				72422391261D020A00A1F02E /* RemindersViewController.swift in Sources */,
 				54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */,
 				54E4E460261B5FE1001B2AAB /* SavingSpaceCreateViewController.swift in Sources */,
+				72906B70262C6A7D0090FC58 /* SpendingCategoryAddViewController.swift in Sources */,
 				72DBC1EB26158A8F00F006AE /* CreateReminderViewController.swift in Sources */,
 				540D448D2612597F00217594 /* AddTransactionViewController.swift in Sources */,
 				5415AA9A261DE0B80014222C /* FeedbackViewController.swift in Sources */,
 				544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */,
 				5410F4462608C8EB00C00F57 /* AppDelegate.swift in Sources */,
 				541CC4472614E55300C37FE7 /* BudgetEditViewController.swift in Sources */,
+				72906B74262C6B710090FC58 /* ColoursCollectionViewCell.swift in Sources */,
 				54B99C0326175A350006EB5B /* SettingsViewController.swift in Sources */,
 				54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */,
 				54E4E44D261B5BD8001B2AAB /* SavingSpace.swift in Sources */,
 				72422372261A01AE00A1F02E /* Reminder.swift in Sources */,
 				54B981A2260CC9C6006FD29B /* SavingSpaceViewController.swift in Sources */,
+				7275EEB4262E334A00A148DF /* SpendingCategoryEditViewController.swift in Sources */,
 				72422398261DCAD300A1F02E /* ReminderEditViewController.swift in Sources */,
 				54B981A5260CC9E2006FD29B /* CalendarViewController.swift in Sources */,
 				54B981A8260CCA01006FD29B /* BudgetViewController.swift in Sources */,
 				541D3E9526177FA800F59EEB /* EditUserViewController.swift in Sources */,
 				5410F4482608C8EB00C00F57 /* SceneDelegate.swift in Sources */,
+				7275EEAF262D397300A148DF /* SpendingCategory.swift in Sources */,
 				54016104260BCAA600405351 /* SignUpViewController.swift in Sources */,
+				725B2D70262E90270045467F /* SpendingCategoriesTableViewCell.swift in Sources */,
 				540D449026125AB800217594 /* Transaction.swift in Sources */,
 				54F6345526137A51008E612A /* DashboardViewController.swift in Sources */,
 			);

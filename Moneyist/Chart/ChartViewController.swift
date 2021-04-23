@@ -25,7 +25,7 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //var selectedIndex = 0
     
     let colorsArray = [#colorLiteral(red: 0.03912452236, green: 0.3398694694, blue: 0.4359056056, alpha: 1), #colorLiteral(red: 0.2000421584, green: 0.6995770335, blue: 0.6809796691, alpha: 1), #colorLiteral(red: 0.153665185, green: 0.5830183625, blue: 0.4813076258, alpha: 1), #colorLiteral(red: 0.175951435, green: 0.6201614255, blue: 0.2976064565, alpha: 1), #colorLiteral(red: 0.7415904999, green: 0.9133911133, blue: 0.1858743429, alpha: 1)]
-
+        
     struct Budget {
         var name : String
         var amount : Double

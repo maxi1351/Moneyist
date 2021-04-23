@@ -32,6 +32,12 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         var event : String     // Indicates wether a reminder is associated with that day
     }
     
+    // Store the start and end date for reminders needed from server
+   /* var timePeriod = [
+        "startDate" : "",
+        "endDate" : ""
+    ]*/
+    
     // MARK: - Buttons
     
     @IBAction func nextMonth(_ sender: Any) {
@@ -61,7 +67,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+                
         let calendarCell = calendarCollectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCollectionViewCell
         
         // Set day of month for each calendar cell
@@ -224,10 +230,17 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     // Get all reminders from server
     func getReminders() {
         
+        /*timePeriod = [
+            "startDate" : "2021/04/01",
+            "endDate" : "2021/04/03"
+        ]*/
+        
+        //parameters: timePeriod ,
+        
         AF.request(SERVER_ADDRESS_ALL, encoding: JSONEncoding.default)
             .responseJSON { response in
-                
-                //print(response)
+                print("From SERVER:")
+                print(response)
                 
                 let decoder = JSONDecoder()
                 
@@ -240,8 +253,8 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
                     DispatchQueue.main.async {
                         // Save result of request
                         self.allReminders = result
-                        self.reloadTable()
                         self.loadCalendarMonth()
+                        self.reloadTable()
                         //self.reloadCalendar()
                     }
                } catch {
@@ -264,8 +277,9 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         // FIX - highlighting of cell
         specificDayReminders.remove(at: index)
         self.getReminders()
+        //self.loadCalendarMonth()
+        self.reloadCalendar()
         self.reloadTable()
-        self.loadCalendarMonth()
     }
     
     // Get weekday for the date
@@ -378,6 +392,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         reloadTable()
         getReminders()
         reloadCalendar()
+        print("reloadCalendar")
         //reloadTable()
     }
     
@@ -389,6 +404,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         remindersButton.layer.cornerRadius = 14
         remindersButton.layer.masksToBounds = true
         loadCalendarMonth()
+        print("loadCalendarMonth")
         specificDayReminders.removeAll()
         reloadTable()
         getReminders()

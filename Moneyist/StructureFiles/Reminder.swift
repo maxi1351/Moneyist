@@ -14,7 +14,7 @@ struct Reminder : Codable {
     public var date: String
 }
 
-struct ReminderID : Codable {
+/*struct ReminderID : Codable {
     public var reminderId: String?
-}
+}*/
 
