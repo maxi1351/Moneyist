@@ -58,7 +58,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
     ] as [String : Any]
     
     struct BudgetGet : Codable {
-        var _id: String;
+        var budgetId: String;
         var endDate: String;
         var name: String
     }
@@ -144,7 +144,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
     // When a cell was pressed
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        budgetID = budgetList[indexPath.row]._id
+        budgetID = budgetList[indexPath.row].budgetId
         
         // Performs segue to show more details about artwork
         performSegue(withIdentifier: "BudgetToDetail", sender: nil)
@@ -173,7 +173,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
                     NSLog("Yes Pressed")
                 
                 // Sends DELETE request
-                AF.request(self.SERVER_ADDRESS_DELETE + self.budgetList[indexPath.row]._id, method: .delete, encoding: JSONEncoding.default)
+                AF.request(self.SERVER_ADDRESS_DELETE + self.budgetList[indexPath.row].budgetId, method: .delete, encoding: JSONEncoding.default)
                     .responseJSON { response in
                             print(response)
                     }

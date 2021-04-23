@@ -25,7 +25,7 @@ class AddTransactionViewController: UIViewController {
     var status = "CONFIRMED"
     
     // Standard server address (with given route, in this case 'Add Transaction')
-    let SERVER_ADDRESS = "http://localhost:4000/transaction/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/transaction/add" //+ UserDetails.sharedInstance.getUID()
     
     var TransactionDetails = [
         "type" : "",

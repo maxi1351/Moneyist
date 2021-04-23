@@ -138,7 +138,7 @@ class ViewController: UIViewController {
         // Set UID for rest of app
         //UserDetails.sharedInstance.setUID(id: uid)
         
-        performSegue(withIdentifier: "ToDashboard", sender: nil)
+        performSegue(withIdentifier: "toSplash", sender: nil)
     }
     
     @IBAction func SignUpButtonClick(_ sender: Any) {

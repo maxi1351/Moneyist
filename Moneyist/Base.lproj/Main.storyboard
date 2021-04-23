@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oaH-ia-Q6y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oaH-ia-Q6y">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -114,11 +114,12 @@
                         <segue destination="4R6-N0-5kb" kind="show" identifier="ToSignUpVC" id="ykw-uE-zT9"/>
                         <segue destination="fUL-9e-EOi" kind="presentation" identifier="ToDashboard" modalPresentationStyle="fullScreen" id="PPx-za-JrO"/>
                         <segue destination="355-Ne-1vp" kind="show" identifier="menuToForgotPass" id="0S0-IR-y1n"/>
+                        <segue destination="49a-pz-Lah" kind="presentation" identifier="toSplash" modalPresentationStyle="fullScreen" id="z7c-AC-YvS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R60-7h-cnm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1271.0144927536232" y="107.8125"/>
+            <point key="canvasLocation" x="-2622" y="125"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="Hxu-w5-HHE">
@@ -319,7 +320,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pDW-P2-QnS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2242" y="108"/>
+            <point key="canvasLocation" x="-3593" y="125"/>
         </scene>
         <!--BudgetVC-->
         <scene sceneID="weH-6J-bn7">
@@ -2341,6 +2342,52 @@ Saving Space</string>
             </objects>
             <point key="canvasLocation" x="801" y="-394"/>
         </scene>
+        <!--Welcome Splash View Controller-->
+        <scene sceneID="11Z-51-RaW">
+            <objects>
+                <viewController id="49a-pz-Lah" customClass="WelcomeSplashViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DkT-Ui-COy">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Welcome back," textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ivg-bA-HnS">
+                                <rect key="frame" x="37" y="354" width="341" height="67"/>
+                                <color key="tintColor" name="AccentColor"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="32"/>
+                                <color key="textColor" name="AccentColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="=)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B2r-Dn-Dmt">
+                                <rect key="frame" x="37" y="397" width="341" height="67"/>
+                                <color key="tintColor" name="AccentColor"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="32"/>
+                                <color key="textColor" name="AccentColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2mG-vw-i1M"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ivg-bA-HnS" firstAttribute="top" secondItem="2mG-vw-i1M" secondAttribute="top" constant="310" id="2H5-bm-39o"/>
+                            <constraint firstItem="Ivg-bA-HnS" firstAttribute="centerX" secondItem="DkT-Ui-COy" secondAttribute="centerX" id="LKB-nP-52i"/>
+                            <constraint firstItem="Ivg-bA-HnS" firstAttribute="trailing" secondItem="B2r-Dn-Dmt" secondAttribute="trailing" id="Vtv-xp-Ca9"/>
+                            <constraint firstItem="Ivg-bA-HnS" firstAttribute="leading" secondItem="B2r-Dn-Dmt" secondAttribute="leading" id="W56-kd-DIw"/>
+                            <constraint firstItem="2mG-vw-i1M" firstAttribute="bottom" secondItem="B2r-Dn-Dmt" secondAttribute="bottom" constant="398" id="XcL-W9-7fb"/>
+                            <constraint firstItem="Ivg-bA-HnS" firstAttribute="leading" secondItem="2mG-vw-i1M" secondAttribute="leading" constant="37" id="bCv-U4-CaB"/>
+                            <constraint firstItem="B2r-Dn-Dmt" firstAttribute="top" secondItem="2mG-vw-i1M" secondAttribute="top" constant="353" id="eHo-Up-jjS"/>
+                            <constraint firstItem="2mG-vw-i1M" firstAttribute="bottom" secondItem="Ivg-bA-HnS" secondAttribute="bottom" constant="441" id="f3m-lr-e5n"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="moB-ep-J0r"/>
+                    <connections>
+                        <outlet property="nameLabel" destination="B2r-Dn-Dmt" id="xUR-Ae-Cfw"/>
+                        <segue destination="fUL-9e-EOi" kind="presentation" identifier="SplashToDashboard" modalPresentationStyle="fullScreen" id="kg7-md-Y7g"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4qV-QW-o3p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1408.6956521739132" y="-53.571428571428569"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="3uZ-dB-a6c">
             <objects>
@@ -2367,11 +2414,11 @@ Saving Space</string>
             <objects>
                 <viewController title="RemindersVC" id="4Xm-ut-ODf" customClass="RemindersViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Pro-t3-SfE">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="xS2-pU-A4h">
-                                <rect key="frame" x="0.0" y="88" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="714"/>
                                 <color key="separatorColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="reminderTableCell" id="gUS-0H-H0t">
@@ -2613,7 +2660,7 @@ Saving Space</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Ceg-an-rHG"/>
-        <segue reference="PPx-za-JrO"/>
+        <segue reference="kg7-md-Y7g"/>
         <segue reference="erZ-X8-yiC"/>
         <segue reference="wtG-35-eJo"/>
     </inferredMetricsTieBreakers>
@@ -2628,7 +2675,7 @@ Saving Space</string>
         <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="trash.fill" catalog="system" width="121" height="128"/>
+        <image name="trash.fill" catalog="system" width="32" height="32"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">
             <color red="0.20399999618530273" green="0.77999997138977051" blue="0.34900000691413879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

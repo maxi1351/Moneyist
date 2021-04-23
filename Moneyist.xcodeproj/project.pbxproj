@@ -24,6 +24,7 @@
 		541D3E9526177FA800F59EEB /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D3E9426177FA800F59EEB /* EditUserViewController.swift */; };
 		543E59F9261CA7290098EB48 /* SavingSpaceEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E59F8261CA7290098EB48 /* SavingSpaceEditViewController.swift */; };
 		544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */; };
+		548A1855263328D2007AB9A9 /* WelcomeSplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548A1854263328D2007AB9A9 /* WelcomeSplashViewController.swift */; };
 		54A1E02F2624EBB000732404 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A1E02E2624EBB000732404 /* ResetPasswordViewController.swift */; };
 		54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819B260CC95B006FD29B /* TransactionsViewController.swift */; };
 		54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819E260CC992006FD29B /* ChartViewController.swift */; };
@@ -74,6 +75,7 @@
 		541D3E9426177FA800F59EEB /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
 		543E59F8261CA7290098EB48 /* SavingSpaceEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceEditViewController.swift; sourceTree = "<group>"; };
 		544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCreationViewController.swift; sourceTree = "<group>"; };
+		548A1854263328D2007AB9A9 /* WelcomeSplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeSplashViewController.swift; sourceTree = "<group>"; };
 		54A1E02E2624EBB000732404 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		54B9819B260CC95B006FD29B /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		54B9819E260CC992006FD29B /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				54016103260BCAA600405351 /* SignUpViewController.swift */,
 				5410F4492608C8EB00C00F57 /* ViewController.swift */,
 				54A1E02E2624EBB000732404 /* ResetPasswordViewController.swift */,
+				548A1854263328D2007AB9A9 /* WelcomeSplashViewController.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */,
 				5410F4462608C8EB00C00F57 /* AppDelegate.swift in Sources */,
 				541CC4472614E55300C37FE7 /* BudgetEditViewController.swift in Sources */,
+				548A1855263328D2007AB9A9 /* WelcomeSplashViewController.swift in Sources */,
 				72906B74262C6B710090FC58 /* ColoursCollectionViewCell.swift in Sources */,
 				54B99C0326175A350006EB5B /* SettingsViewController.swift in Sources */,
 				54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */,

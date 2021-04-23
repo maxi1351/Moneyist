@@ -14,9 +14,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var nameField: UILabel!
     @IBOutlet weak var dateCreatedField: UILabel!
     
-    let SERVER_ADDRESS = "http://localhost:4000/user/details/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/user/profile/" //+ UserDetails.sharedInstance.getUID()
     
-    let SERVER_ADDRESS_DELETE = "http://localhost:4000/user/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_DELETE = "http://localhost:4000/user/delete/" //+ UserDetails.sharedInstance.getUID()
     
     // Holds user info
     var userInfo = [

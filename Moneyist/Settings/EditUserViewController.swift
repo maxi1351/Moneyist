@@ -16,7 +16,7 @@ class EditUserViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var mobileNumberField: UITextField!
     
-    let SERVER_ADDRESS = "http://localhost:4000/user/details/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/user/profile/update" //+ UserDetails.sharedInstance.getUID()
     
     let datePicker = UIDatePicker()
     
