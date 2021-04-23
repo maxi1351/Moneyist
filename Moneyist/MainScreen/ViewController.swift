@@ -31,15 +31,15 @@ class ViewController: UIViewController {
     // DEBUG!
     // Skips the entry of credentials
     @IBAction func autoLoginDebugPress(_ sender: UIButton) {
-        usernameField.text = "sample99@yahoo.jp"
+        /*usernameField.text = "sample99@yahoo.jp"
         passwordField.text = "samplepass"
         
-        processUserDetails()
+        processUserDetails()*/
     }
     
     var loginDetails = [
-        "username" : "sample25@yahoo.jp",
-        "password" : "hee"
+        "username" : "",
+        "password" : ""
     ]
     
     
@@ -88,24 +88,28 @@ class ViewController: UIViewController {
             "password" : passwordField.text!
         ]
         
-        //print(loginDetails["username"]!)
-        //print(loginDetails["password"]!)
+        print(loginDetails["username"]!)
+        print(loginDetails["password"]!)
         
         // Struct for decoding JSON data
         struct UserData: Codable { var userId: String }
         
-        fetchTheCookies()
+        //fetchTheCookies()
         
         AF.request(SERVER_ADDRESS, method: .post, parameters: loginDetails, encoding: JSONEncoding.default)
             .responseString { response in
                 print(response)
                 
-                //let cookies = HTTPCookie.cookies(withResponseHeaderFields: response.allHeaderFields , for: response.URL!)
-
-                /*if let fields = response.response?.allHeaderFields as? [String : String]{
-                            let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.request?.url!)!)
-                            HTTPCookieStorage.shared.setCookies(cookies, for: (response.request?.url!)!, mainDocumentURL: nil)
-                        }*/
+                // Check for positive response
+                if (response.description == "success(\"OK\")") {
+                    print("SUCCESS!")
+                    //self.loginUser()
+                }
+                // Error
+                else {
+                    print("Error found!")
+                    self.handleValidationError(data: response.data!)
+                }
                 
                 /*let decoder = JSONDecoder()
                 
@@ -123,10 +127,95 @@ class ViewController: UIViewController {
                     print(error)
                 }*/
                 
-                self.loginUser()
+                /*let decoder = JSONDecoder()
+                
+                do {
+                    let result = try decoder.decode(UserData.self, from: response.data!)
+                    print(result. ?? "Yeet")
+                    
+                    // Assign budgetID or "ERROR" if a data validation error is found
+                    self.budgetID = result.budgetId ?? "ERROR"
+                    
+                    if (self.budgetID == "ERROR") {
+                        print("Data validation error!")
+                        // Handle the given validation error
+                        self.handleValidationError(data: response.data!)
+                        noErrors = false
+                    }
+                    else {
+                        self.finishCreation()
+                        noErrors = true
+                    }
+                } catch {
+                    print(error)
+                }
+                
+                // Run only once data is collected from the server
+                DispatchQueue.main.async {
+                    if (self.createReminderBool) {
+                        if (noErrors) {
+                            self.createReminder()
+                        }
+                    }
+                    else {
+                        // Do nothing
+                    }
+                }*/
+                
+                
             }
                 
             
+    }
+    
+    func handleValidationError(data: Data) {
+        
+        struct error: Codable {
+            var msg: String
+        }
+        
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        let errorsArray = [errorValidation]()
+        
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            var errorString = ""
+            
+            for e in result.errors {
+                errorString += e.msg + "\n"
+            }
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+           
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+            
+        } catch {
+            print(error)
+        }
     }
     
     func loginUser() {

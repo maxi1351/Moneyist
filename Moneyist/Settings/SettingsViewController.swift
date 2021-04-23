@@ -18,6 +18,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     let SERVER_ADDRESS_DELETE = "http://localhost:4000/user/delete/" //+ UserDetails.sharedInstance.getUID()
     
+    let SERVER_ADDRESS_LOGOUT = "http://localhost:4000/auth/logout/" // GET
+    
     // Holds user info
     var userInfo = [
         "firstName" : "",
@@ -91,6 +93,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        print("Reloading data!")
+        getUserDetails()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "SettingsToEditUser") {
             // Passes budget ID to next view
@@ -145,6 +154,42 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) {
                 UIAlertAction in
                 NSLog("Yes Pressed")
+            
+            
+            AF.request(self.SERVER_ADDRESS_LOGOUT, method: .get, encoding: JSONEncoding.default)
+                .responseString { response in
+                    
+                    print(response)
+                    
+                    // Decode the JSON data
+                    /*let decoder = JSONDecoder()
+                    
+                    do {
+                        let result = try decoder.decode(User.self, from: response.data!)
+                        
+                        // Set name field
+                        self.nameField.text = result.firstName + " " + result.surname
+                        
+                        // Convert time format
+                        let tempDate = self.convertISOTime(date: result.createdAt)
+                        
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "d MMMM y"
+                        
+                        // Set date created field
+                        self.dateCreatedField.text = "User Since: " + formatter.string(from: tempDate)
+                        
+                        // Set user details
+                        self.userInfo["firstName"] = result.firstName
+                        self.userInfo["surname"] = result.surname
+                        self.userInfo["dateOfBirth"] = result.dateOfBirth
+                        self.userInfo["email"] = result.email
+                        self.userInfo["mobileNumber"] = result.mobileNumber
+                        
+                    } catch {
+                        print(error)
+                    }*/
+                }
             
             // TODO Fix return to login screen when user arrives from signup screen
             // Goes back to root view controller

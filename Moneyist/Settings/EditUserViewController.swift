@@ -50,20 +50,42 @@ class EditUserViewController: UIViewController {
     }
     
     @IBAction func editButtonPress(_ sender: UIButton) {
-        updateUserDetails()
+        
+        // Create alert to get password from user
+        let alert = UIAlertController(title: "Please confirm your credentials.", message: "", preferredStyle: .alert)
+
+        alert.addTextField { (textField) in
+            textField.placeholder = "Enter your password."
+            textField.isSecureTextEntry = true
+        }
+
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0]
+            
+            // Update user details with password
+            self.updateUserDetails(password: textField!.text!)
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+        
+        
     }
     
-    func updateUserDetails() {
+    func updateUserDetails(password: String) {
         
         userInfo = [
             "firstName" : firstNameField.text!,
             "surname" : surnameField.text!,
             "dateOfBirth" : dobField.text!,
             "email" : emailField.text!,
-            "mobileNumber" : mobileNumberField.text!
+            "mobileNumber" : mobileNumberField.text!,
+            "password" : password
         ]
         
-        print(userInfo["firstName"]!)
+        print(userInfo["password"]!)
+        
+        
         
         // Make a PATCH request with user details
         AF.request(SERVER_ADDRESS, method: .patch, parameters: userInfo, encoding: JSONEncoding.default)

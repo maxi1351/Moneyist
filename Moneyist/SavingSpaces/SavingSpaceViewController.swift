@@ -85,10 +85,14 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
                 AF.request(self.SERVER_ADDRESS_DELETE + self.savingSpaceList[indexPath.row]._id, method: .delete, encoding: JSONEncoding.default)
                     .responseJSON { response in
                             print(response)
-                    }
+                        
+                        DispatchQueue.main.async {
+                            // Refreshes the data after deletion
+                            self.getSavingSpaces()
+                        }
+                    }.resume()
                 
-                // Refreshes the data after deletion
-                self.getSavingSpaces()
+                
             }
             
             // Controls what happens after the user presses NO

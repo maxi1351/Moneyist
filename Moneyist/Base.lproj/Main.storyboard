@@ -2381,7 +2381,7 @@ Saving Space</string>
                     <navigationItem key="navigationItem" id="moB-ep-J0r"/>
                     <connections>
                         <outlet property="nameLabel" destination="B2r-Dn-Dmt" id="xUR-Ae-Cfw"/>
-                        <segue destination="fUL-9e-EOi" kind="presentation" identifier="SplashToDashboard" modalPresentationStyle="fullScreen" id="kg7-md-Y7g"/>
+                        <segue destination="fUL-9e-EOi" kind="presentation" identifier="SplashToDashboard" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="kg7-md-Y7g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4qV-QW-o3p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2660,7 +2660,7 @@ Saving Space</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Ceg-an-rHG"/>
-        <segue reference="kg7-md-Y7g"/>
+        <segue reference="PPx-za-JrO"/>
         <segue reference="erZ-X8-yiC"/>
         <segue reference="wtG-35-eJo"/>
     </inferredMetricsTieBreakers>

@@ -22,7 +22,7 @@ class SavingSpaceCreateViewController: UIViewController {
     var savingSpaceID = ""
     
     // Standard server address (with given route, in this case 'Create Saving Space')
-    let SERVER_ADDRESS = "http://localhost:4000/savingSpace/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/savingSpace/create" //+ UserDetails.sharedInstance.getUID()
     
     override func viewDidLoad() {
         super.viewDidLoad()
