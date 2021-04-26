@@ -31,10 +31,10 @@ class ViewController: UIViewController {
     // DEBUG!
     // Skips the entry of credentials
     @IBAction func autoLoginDebugPress(_ sender: UIButton) {
-        /*usernameField.text = "sample99@yahoo.jp"
+        usernameField.text = "sample99@yahoo.jp"
         passwordField.text = "samplepass"
         
-        processUserDetails()*/
+        processUserDetails()
     }
     
     var loginDetails = [
@@ -100,10 +100,12 @@ class ViewController: UIViewController {
             .responseString { response in
                 print(response)
                 
+                //self.loginUser()
+                
                 // Check for positive response
                 if (response.description == "success(\"OK\")") {
                     print("SUCCESS!")
-                    //self.loginUser()
+                    self.loginUser()
                 }
                 // Error
                 else {

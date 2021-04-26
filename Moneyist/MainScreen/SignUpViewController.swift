@@ -34,7 +34,9 @@ class SignUpViewController: UIViewController {
     ]
     
     // Standard server address (with given route, in this case 'user/register')
-    let SERVER_ADDRESS = "http://localhost:4000/user/signup"
+    let SERVER_ADDRESS = "http://localhost:4000/auth/signup"
+    
+    let SERVER_ADDRESS_LOGIN = "http://localhost:4000/auth/login"
     
     // Date picker declaration
     let datePicker = UIDatePicker()
@@ -102,31 +104,15 @@ class SignUpViewController: UIViewController {
                     let decoder = JSONDecoder()
                     
                     print(response)
+                                     
+                    if (response.description != "success(\"OK\")") {
+                        print("Good response!")
+                        self.loginUser()
+                    }
+                    else {
+                        self.handleValidationError(data: response.data!)
+                    }
                     
-                    /*do {
-                        let result = try decoder.decode(UserData.self, from: response.data!)
-                        print(result.userId)
-                        
-                        self.activityIndicator.stopAnimating()
-                        
-                        // Logs in user with acquired UID
-                        self.loginUser(uid: result.userId)
-                    } catch {
-                        print("Attempting to show errors...")
-                        
-                        do {
-                            let result = try decoder.decode(ErrorSet.self, from: response.data!)
-                            
-                            print(response)
-                            
-                            //self.showError(title: "Sign-Up Error", message: result.msg)
-                        } catch {
-                            print(error)
-                        }
-                        
-                        
-                        self.activityIndicator.stopAnimating()
-                    }*/
                     
                 }
             
@@ -134,6 +120,84 @@ class SignUpViewController: UIViewController {
         }
         else {
             activityIndicator.stopAnimating()
+        }
+    }
+    
+    func loginUser() {
+        
+        var loginDetails = [
+            "username" : emailField.text!,
+            "password" : passwordField.text!
+        ]
+        
+        print(loginDetails["username"]!)
+        print(loginDetails["password"]!)
+        
+        // Struct for decoding JSON data
+        struct UserData: Codable { var userId: String }
+        
+       
+        AF.request(SERVER_ADDRESS_LOGIN, method: .post, parameters: loginDetails, encoding: JSONEncoding.default)
+            .responseString { response in
+                print(response)
+              
+                // Check for positive response
+                if (response.description == "success(\"OK\")") {
+                    print("SUCCESS!")
+                    self.performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
+                }
+                // Error
+                else {
+                    print("Error found!")
+                    self.handleValidationError(data: response.data!)
+                }
+                
+            }
+    }
+    
+    func handleValidationError(data: Data) {
+        
+        struct error: Codable {
+            var msg: String
+        }
+        
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        let errorsArray = [errorValidation]()
+        
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            for e in result.errors {
+                // Ask user if they are sure using an alert
+                let alert = UIAlertController(title: "Error", message: e.msg, preferredStyle: .alert)
+                
+                // Controls what happens after the user presses YES
+                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                        UIAlertAction in
+                        NSLog("OK Pressed")
+                   
+                }
+               
+                alert.addAction(okAction)
+                
+                self.present(alert, animated: true)
+            }
+            
+            
+        } catch {
+            print(error)
         }
     }
     

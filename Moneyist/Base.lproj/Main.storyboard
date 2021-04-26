@@ -2394,7 +2394,6 @@ Saving Space</string>
                 <navigationController id="fUL-9e-EOi" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="gy3-Im-kU1"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MbB-T4-Z34">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.55997004530000005" blue="0.054172117380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
@@ -2414,7 +2413,7 @@ Saving Space</string>
             <objects>
                 <viewController title="RemindersVC" id="4Xm-ut-ODf" customClass="RemindersViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Pro-t3-SfE">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="55" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="xS2-pU-A4h">
@@ -2660,7 +2659,7 @@ Saving Space</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Ceg-an-rHG"/>
-        <segue reference="PPx-za-JrO"/>
+        <segue reference="ZVV-QC-4iq"/>
         <segue reference="erZ-X8-yiC"/>
         <segue reference="wtG-35-eJo"/>
     </inferredMetricsTieBreakers>
@@ -2675,7 +2674,7 @@ Saving Space</string>
         <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="trash.fill" catalog="system" width="32" height="32"/>
+        <image name="trash.fill" catalog="system" width="121" height="128"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">
             <color red="0.20399999618530273" green="0.77999997138977051" blue="0.34900000691413879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
