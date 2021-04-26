@@ -2394,6 +2394,7 @@ Saving Space</string>
                 <navigationController id="fUL-9e-EOi" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="gy3-Im-kU1"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="MbB-T4-Z34">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.0" green="0.55997004530000005" blue="0.054172117380000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">

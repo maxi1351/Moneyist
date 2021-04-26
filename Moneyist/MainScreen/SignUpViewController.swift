@@ -105,9 +105,10 @@ class SignUpViewController: UIViewController {
                     
                     print(response)
                                      
-                    if (response.description != "success(\"OK\")") {
+                    if (response.description == "success(\"Created\")") {
                         print("Good response!")
-                        self.loginUser()
+                        //self.loginUser()
+                        self.performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
                     }
                     else {
                         self.handleValidationError(data: response.data!)
@@ -116,43 +117,10 @@ class SignUpViewController: UIViewController {
                     
                 }
             
-            
         }
         else {
             activityIndicator.stopAnimating()
         }
-    }
-    
-    func loginUser() {
-        
-        var loginDetails = [
-            "username" : emailField.text!,
-            "password" : passwordField.text!
-        ]
-        
-        print(loginDetails["username"]!)
-        print(loginDetails["password"]!)
-        
-        // Struct for decoding JSON data
-        struct UserData: Codable { var userId: String }
-        
-       
-        AF.request(SERVER_ADDRESS_LOGIN, method: .post, parameters: loginDetails, encoding: JSONEncoding.default)
-            .responseString { response in
-                print(response)
-              
-                // Check for positive response
-                if (response.description == "success(\"OK\")") {
-                    print("SUCCESS!")
-                    self.performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
-                }
-                // Error
-                else {
-                    print("Error found!")
-                    self.handleValidationError(data: response.data!)
-                }
-                
-            }
     }
     
     func handleValidationError(data: Data) {
