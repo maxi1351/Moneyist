@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--E-->
+        <!--Login-->
         <scene sceneID="VZc-Ni-L5o">
             <objects>
-                <viewController title="E" id="52i-Xr-fkl" customClass="ViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Login" id="52i-Xr-fkl" customClass="ViewController" customModule="Moneyist" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hJ8-iT-p5V">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -119,7 +119,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R60-7h-cnm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2622" y="125"/>
+            <point key="canvasLocation" x="-2633" y="125"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="Hxu-w5-HHE">
@@ -167,12 +167,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="aYh-sz-GT5">
-                                <rect key="frame" x="202" y="739" width="20" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="5uB-en-EXw"/>
-                                </constraints>
-                            </activityIndicatorView>
                             <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xS8-WR-0Tl">
                                 <rect key="frame" x="88" y="197" width="239" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -184,10 +178,8 @@
                         <constraints>
                             <constraint firstItem="whH-T6-XwK" firstAttribute="top" secondItem="jiW-xa-AAN" secondAttribute="bottom" constant="17" id="1lT-Qj-1lG"/>
                             <constraint firstItem="Ehn-K9-LGc" firstAttribute="top" secondItem="xS8-WR-0Tl" secondAttribute="bottom" constant="18" id="3NP-bE-vQb"/>
-                            <constraint firstItem="aYh-sz-GT5" firstAttribute="top" secondItem="hKs-jK-X5A" secondAttribute="bottom" constant="64" id="6vl-z1-OMd"/>
                             <constraint firstItem="whH-T6-XwK" firstAttribute="trailing" secondItem="NGS-Tt-yVu" secondAttribute="trailing" id="C7R-4L-ieY"/>
                             <constraint firstItem="Syj-4c-1Ri" firstAttribute="trailing" secondItem="hKs-jK-X5A" secondAttribute="trailing" constant="154" id="CYS-gF-jeQ"/>
-                            <constraint firstItem="hKs-jK-X5A" firstAttribute="centerX" secondItem="aYh-sz-GT5" secondAttribute="centerX" id="Ik6-6e-IVd"/>
                             <constraint firstItem="xS8-WR-0Tl" firstAttribute="leading" secondItem="Ehn-K9-LGc" secondAttribute="leading" id="LAf-U3-z0I"/>
                             <constraint firstItem="REH-xO-T1M" firstAttribute="trailing" secondItem="nrZ-ja-aYb" secondAttribute="trailing" id="XiN-6Q-FBc"/>
                             <constraint firstItem="Ehn-K9-LGc" firstAttribute="leading" secondItem="REH-xO-T1M" secondAttribute="leading" id="aWA-Ci-Gsd"/>
@@ -206,14 +198,12 @@
                             <constraint firstItem="jiW-xa-AAN" firstAttribute="leading" secondItem="whH-T6-XwK" secondAttribute="leading" id="vE8-UX-Rmo"/>
                             <constraint firstItem="xS8-WR-0Tl" firstAttribute="top" secondItem="Syj-4c-1Ri" secondAttribute="top" constant="109" id="wvI-zx-mRq"/>
                             <constraint firstItem="nrZ-ja-aYb" firstAttribute="leading" secondItem="jiW-xa-AAN" secondAttribute="leading" id="xeC-oy-FJw"/>
-                            <constraint firstItem="aYh-sz-GT5" firstAttribute="leading" secondItem="Syj-4c-1Ri" secondAttribute="leading" constant="202" id="yfj-ln-TEj"/>
                             <constraint firstItem="Ehn-K9-LGc" firstAttribute="trailing" secondItem="REH-xO-T1M" secondAttribute="trailing" id="zI5-Fx-cB8"/>
                             <constraint firstItem="jiW-xa-AAN" firstAttribute="trailing" secondItem="whH-T6-XwK" secondAttribute="trailing" id="zYH-4X-xRP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Sign Up" id="ao3-kQ-g4B"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="aYh-sz-GT5" id="euz-7F-Pd5"/>
                         <outlet property="confirmPasswordField" destination="NGS-Tt-yVu" id="O67-U6-hgL"/>
                         <outlet property="dobField" destination="REH-xO-T1M" id="w0y-nS-hEY"/>
                         <outlet property="emailField" destination="nrZ-ja-aYb" id="NSq-D3-Blf"/>
@@ -1190,7 +1180,7 @@
                             <constraint firstItem="cHn-Za-Yqi" firstAttribute="bottom" secondItem="skq-6Q-KnA" secondAttribute="bottom" constant="72" id="nUA-QK-Dl0"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Saving Space" image="dollarsign.circle.fill" catalog="system" id="d3Q-k7-zz3"/>
+                    <tabBarItem key="tabBarItem" title="Saving Spaces" image="dollarsign.circle.fill" catalog="system" id="d3Q-k7-zz3"/>
                     <connections>
                         <outlet property="savingSpaceTable" destination="rYi-PF-O0c" id="jYz-Kk-PhB"/>
                         <segue destination="9Oq-JP-7Zq" kind="show" identifier="savingSpacesToAdd" id="1gV-Mf-2Zz"/>
@@ -1869,9 +1859,11 @@ Saving Space</string>
                         <segue destination="5aP-WS-498" kind="show" identifier="SettingsToEditUser" id="pFI-Op-oRz"/>
                         <segue destination="8kW-ug-5Df" kind="show" identifier="settingsToFeedback" id="jhD-xk-Vxo"/>
                         <segue destination="cGJ-Ux-Y24" kind="show" identifier="toSpendingCategories" id="vro-a1-So5"/>
+                        <segue destination="hxY-di-C2Y" kind="unwind" identifier="unwindToLogin" unwindAction="prepareForUnwindWithSegue:" id="P2Z-Gq-Ofj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mr4-Px-AzB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="hxY-di-C2Y" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="513.04347826086962" y="-1421.6517857142856"/>
         </scene>
@@ -2660,7 +2652,7 @@ Saving Space</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Ceg-an-rHG"/>
-        <segue reference="ZVV-QC-4iq"/>
+        <segue reference="PPx-za-JrO"/>
         <segue reference="erZ-X8-yiC"/>
         <segue reference="wtG-35-eJo"/>
     </inferredMetricsTieBreakers>

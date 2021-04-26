@@ -165,8 +165,15 @@ class TransactionEditViewController: UIViewController {
             
             var errorString = ""
             
+            var count = 1
+            
             for e in result.errors {
-                errorString += e.msg + "\n"
+                if (count == result.errors.count) {
+                    errorString += e.msg
+                } else {
+                    errorString += e.msg + "\n"
+                }
+                count += 1
             }
             
             // Ask user if they are sure using an alert
@@ -179,6 +186,9 @@ class TransactionEditViewController: UIViewController {
                
             }
            
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
+            
             alert.addAction(okAction)
             
             self.present(alert, animated: true)

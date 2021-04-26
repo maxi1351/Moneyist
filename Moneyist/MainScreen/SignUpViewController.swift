@@ -18,9 +18,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
     @IBOutlet weak var mobileNumberField: UITextField!
-    
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+
     // Holds user details in dictionary format
     var userDetails = [
         "firstName" : "",
@@ -48,9 +46,6 @@ class SignUpViewController: UIViewController {
     }
     
     func requestCreation() {
-        
-        activityIndicator.startAnimating()
-        
         // Check if inputs are valid
         if (true) {
             // Get user details from input
@@ -118,9 +113,6 @@ class SignUpViewController: UIViewController {
                 }
             
         }
-        else {
-            activityIndicator.stopAnimating()
-        }
     }
     
     func handleValidationError(data: Data) {
@@ -147,22 +139,35 @@ class SignUpViewController: UIViewController {
             }*/
             print("ERRORS FOUND: ")
             
+            var errorString = ""
+            
+            var count = 1
+            
             for e in result.errors {
-                // Ask user if they are sure using an alert
-                let alert = UIAlertController(title: "Error", message: e.msg, preferredStyle: .alert)
-                
-                // Controls what happens after the user presses YES
-                let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
-                        UIAlertAction in
-                        NSLog("OK Pressed")
-                   
+                if (count == result.errors.count) {
+                    errorString += e.msg
+                } else {
+                    errorString += e.msg + "\n"
                 }
-               
-                alert.addAction(okAction)
-                
-                self.present(alert, animated: true)
+                count += 1
             }
             
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+            
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
+           
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
             
         } catch {
             print(error)
@@ -295,7 +300,6 @@ class SignUpViewController: UIViewController {
         // Change back button color
         self.navigationController!.navigationBar.tintColor = UIColor.white
         
-        activityIndicator.hidesWhenStopped = true
         
         // Make sure the DOB text field shows a date picker and not a keyboard
         showDatePicker()

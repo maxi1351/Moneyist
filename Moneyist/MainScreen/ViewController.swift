@@ -42,7 +42,9 @@ class ViewController: UIViewController {
         "password" : ""
     ]
     
-    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+
+    }
     
     // Standard server address (with given route, in this case 'Add Transaction')
     let SERVER_ADDRESS = "http://localhost:4000/auth/login"
@@ -54,31 +56,6 @@ class ViewController: UIViewController {
     
     @IBAction func signInButtonClick(_ sender: Any) {
         processUserDetails()
-    }
-    
-    func fetchTheCookies() {
-        let parameters: [String: AnyObject] = [:]
-
-        /*AF.request(SERVER_ADDRESS, method: .post, parameters: parameters).responseJSON { response in
-            if let headerFields = response.response?.allHeaderFields as? [String: String], let URL = response.request?.url
-            {
-                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
-                 print(cookies)
-            }
-        }*/
-        
-        AF.request(SERVER_ADDRESS, method: HTTPMethod.post, parameters: parameters).responseData { (responseObject) -> Void in
-
-                    if let responseStatus = responseObject.response?.statusCode {
-                        if responseStatus != 200 {
-                            // error
-                            print("Cookie error")
-                        } else {
-                            // view all cookies
-                            print(HTTPCookieStorage.shared.cookies!)
-                        }
-                    }
-                }
     }
     
     func processUserDetails() {
@@ -112,62 +89,9 @@ class ViewController: UIViewController {
                     print("Error found!")
                     self.handleValidationError(data: response.data!)
                 }
-                
-                /*let decoder = JSONDecoder()
-                
-                do {
-                    let result = try decoder.decode(UserData.self, from: response.data!)
-                    print(result.userId)
-                    
-                    // Set "global" UID
-                    UserDetails.sharedInstance.setUID(id: result.userId)
-                    
-                    self.loginUser(uid: result.userId)
-                    
-                    //self.finishCreation()
-                } catch {
-                    print(error)
-                }*/
-                
-                /*let decoder = JSONDecoder()
-                
-                do {
-                    let result = try decoder.decode(UserData.self, from: response.data!)
-                    print(result. ?? "Yeet")
-                    
-                    // Assign budgetID or "ERROR" if a data validation error is found
-                    self.budgetID = result.budgetId ?? "ERROR"
-                    
-                    if (self.budgetID == "ERROR") {
-                        print("Data validation error!")
-                        // Handle the given validation error
-                        self.handleValidationError(data: response.data!)
-                        noErrors = false
-                    }
-                    else {
-                        self.finishCreation()
-                        noErrors = true
-                    }
-                } catch {
-                    print(error)
-                }
-                
-                // Run only once data is collected from the server
-                DispatchQueue.main.async {
-                    if (self.createReminderBool) {
-                        if (noErrors) {
-                            self.createReminder()
-                        }
-                    }
-                    else {
-                        // Do nothing
-                    }
-                }*/
-                
-                
+
             }
-                
-            
+ 
     }
     
     func handleValidationError(data: Data) {
@@ -220,15 +144,8 @@ class ViewController: UIViewController {
         }
     }
     
+    // Proceed to splash screen
     func loginUser() {
-        
-        /*
-         FILL OUT LOGIN CODE HERE ONCE SERVER TEAM IS DONE WITH THEIR WORK
-         */
-        
-        // Set UID for rest of app
-        //UserDetails.sharedInstance.setUID(id: uid)
-        
         performSegue(withIdentifier: "toSplash", sender: nil)
     }
     

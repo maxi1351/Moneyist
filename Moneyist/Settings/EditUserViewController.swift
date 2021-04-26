@@ -96,6 +96,65 @@ class EditUserViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    func handleValidationError(data: Data) {
+        
+        struct error: Codable {
+            var msg: String
+        }
+        
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        let errorsArray = [errorValidation]()
+        
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            var errorString = ""
+            
+            var count = 1
+            
+            for e in result.errors {
+                if (count == result.errors.count) {
+                    errorString += e.msg
+                } else {
+                    errorString += e.msg + "\n"
+                }
+                count += 1
+            }
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+           
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
+            
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+        } catch {
+            print(error)
+        }
+    }
+    
     // Handles date input
     func showDatePicker() {
         // Set datePicker format

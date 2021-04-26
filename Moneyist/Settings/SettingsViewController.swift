@@ -161,39 +161,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     print(response)
                     
-                    // Decode the JSON data
-                    /*let decoder = JSONDecoder()
-                    
-                    do {
-                        let result = try decoder.decode(User.self, from: response.data!)
-                        
-                        // Set name field
-                        self.nameField.text = result.firstName + " " + result.surname
-                        
-                        // Convert time format
-                        let tempDate = self.convertISOTime(date: result.createdAt)
-                        
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "d MMMM y"
-                        
-                        // Set date created field
-                        self.dateCreatedField.text = "User Since: " + formatter.string(from: tempDate)
-                        
-                        // Set user details
-                        self.userInfo["firstName"] = result.firstName
-                        self.userInfo["surname"] = result.surname
-                        self.userInfo["dateOfBirth"] = result.dateOfBirth
-                        self.userInfo["email"] = result.email
-                        self.userInfo["mobileNumber"] = result.mobileNumber
-                        
-                    } catch {
-                        print(error)
-                    }*/
                 }
             
             // TODO Fix return to login screen when user arrives from signup screen
             // Goes back to root view controller
-            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            //self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            self.performSegue(withIdentifier: "unwindToLogin", sender: self)
         }
         
         // Controls what happens after the user presses NO
@@ -212,6 +185,50 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    func verifyCredentialsForDeletion() {
+        // Create alert to get password from user
+        let alert = UIAlertController(title: "Please confirm your credentials.", message: "", preferredStyle: .alert)
+
+        alert.addTextField { (textField) in
+            textField.placeholder = "Enter your password."
+            textField.isSecureTextEntry = true
+        }
+
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0]
+            
+            let deleteParams = [
+                "password" : textField?.text
+            ] as! [String : String]
+            
+            // Send DELETE request to server
+            AF.request(self.SERVER_ADDRESS_DELETE, method: .delete, parameters: deleteParams, encoding: JSONEncoding.default)
+                .responseString { response in
+                    
+                    print(deleteParams["password"]!)
+                    print(response)
+                    
+                    if (response.description == "success(\"OK\")") {
+                        print("Good response!")
+                        // Goes back to root view controller
+                        self.performSegue(withIdentifier: "unwindToLogin", sender: self)
+                    }
+                    else {
+                        // Show errors
+                        print("Account deletion error!")
+                        self.handleValidationError(data: response.data!)
+                    }
+                    
+                    
+                    
+                    }
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Back", style: .default))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func deleteAccount() {
         // Ask user if they are sure using an alert
         let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete your account?\nTHIS ACTION IS IRREVERSIBLE.\nTHINK BEFORE YOU CLICK!", preferredStyle: .alert)
@@ -221,16 +238,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 UIAlertAction in
                 NSLog("Yes Pressed")
             
-            // Send DELETE request to server
-            AF.request(self.SERVER_ADDRESS_DELETE, method: .delete, encoding: JSONEncoding.default)
-                .responseJSON { response in
-                    
-                    print(response)
-                    
-                    // Goes back to root view controller
-                    self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-                    
-                    }
+            self.verifyCredentialsForDeletion()
         }
         
         // Controls what happens after the user presses NO
@@ -246,5 +254,65 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         self.present(alert, animated: true)
+    }
+    
+    func handleValidationError(data: Data) {
+        
+        struct error: Codable {
+            var msg: String
+        }
+        
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        let errorsArray = [errorValidation]()
+        
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            var errorString = ""
+            
+            var count = 1
+            
+            for e in result.errors {
+                if (count == result.errors.count) {
+                    errorString += e.msg
+                } else {
+                    errorString += e.msg + "\n"
+                }
+                count += 1
+            }
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+           
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
+            
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+            
+        } catch {
+            print(error)
+        }
     }
 }
