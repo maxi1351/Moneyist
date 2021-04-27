@@ -24,6 +24,7 @@
 		541D3E9526177FA800F59EEB /* EditUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D3E9426177FA800F59EEB /* EditUserViewController.swift */; };
 		543E59F9261CA7290098EB48 /* SavingSpaceEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E59F8261CA7290098EB48 /* SavingSpaceEditViewController.swift */; };
 		544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */; };
+		548A1855263328D2007AB9A9 /* WelcomeSplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548A1854263328D2007AB9A9 /* WelcomeSplashViewController.swift */; };
 		54A1E02F2624EBB000732404 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A1E02E2624EBB000732404 /* ResetPasswordViewController.swift */; };
 		54B9819C260CC95B006FD29B /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819B260CC95B006FD29B /* TransactionsViewController.swift */; };
 		54B9819F260CC992006FD29B /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B9819E260CC992006FD29B /* ChartViewController.swift */; };
@@ -74,6 +75,8 @@
 		541D3E9426177FA800F59EEB /* EditUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewController.swift; sourceTree = "<group>"; };
 		543E59F8261CA7290098EB48 /* SavingSpaceEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingSpaceEditViewController.swift; sourceTree = "<group>"; };
 		544B4376260F8C70006F37E1 /* BudgetCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCreationViewController.swift; sourceTree = "<group>"; };
+		548A1854263328D2007AB9A9 /* WelcomeSplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeSplashViewController.swift; sourceTree = "<group>"; };
+		548D618126372FE200AC5DBC /* FlagPhoneNumber.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FlagPhoneNumber.framework; path = Carthage/Build/iOS/FlagPhoneNumber.framework; sourceTree = "<group>"; };
 		54A1E02E2624EBB000732404 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		54B9819B260CC95B006FD29B /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		54B9819E260CC992006FD29B /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +123,7 @@
 			children = (
 				5410F4442608C8EB00C00F57 /* Moneyist */,
 				5410F4432608C8EB00C00F57 /* Products */,
+				548D618026372FE200AC5DBC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -153,6 +157,14 @@
 				54E4E45B261B5D8D001B2AAB /* SavingSpaces */,
 			);
 			path = Moneyist;
+			sourceTree = "<group>";
+		};
+		548D618026372FE200AC5DBC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				548D618126372FE200AC5DBC /* FlagPhoneNumber.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		54E4E450261B5CDA001B2AAB /* Budgets */ = {
@@ -216,6 +228,7 @@
 				54016103260BCAA600405351 /* SignUpViewController.swift */,
 				5410F4492608C8EB00C00F57 /* ViewController.swift */,
 				54A1E02E2624EBB000732404 /* ResetPasswordViewController.swift */,
+				548A1854263328D2007AB9A9 /* WelcomeSplashViewController.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -263,6 +276,7 @@
 				5410F43E2608C8EB00C00F57 /* Sources */,
 				5410F43F2608C8EB00C00F57 /* Frameworks */,
 				5410F4402608C8EB00C00F57 /* Resources */,
+				548D61852637300A00AC5DBC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -328,6 +342,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		548D61852637300A00AC5DBC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)//Carthage/Build/iOS/FlagPhoneNumber.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5410F43E2608C8EB00C00F57 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -355,6 +390,7 @@
 				544B4377260F8C70006F37E1 /* BudgetCreationViewController.swift in Sources */,
 				5410F4462608C8EB00C00F57 /* AppDelegate.swift in Sources */,
 				541CC4472614E55300C37FE7 /* BudgetEditViewController.swift in Sources */,
+				548A1855263328D2007AB9A9 /* WelcomeSplashViewController.swift in Sources */,
 				72906B74262C6B710090FC58 /* ColoursCollectionViewCell.swift in Sources */,
 				54B99C0326175A350006EB5B /* SettingsViewController.swift in Sources */,
 				54C15F57260E7E67008C5CE9 /* Budget.swift in Sources */,
@@ -519,6 +555,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Moneyist/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -526,10 +566,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamnine.Moneyist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Debug;
 		};
@@ -539,6 +581,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Moneyist/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -546,10 +592,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.teamnine.Moneyist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
 			};
 			name = Release;
 		};

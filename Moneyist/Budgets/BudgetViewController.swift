@@ -65,9 +65,9 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
     
     var budgetList: Array<BudgetGet> = []
     
-    let SERVER_ADDRESS = "http://localhost:4000/budget/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/budget/all/" //+ UserDetails.sharedInstance.getUID()
     
-    let SERVER_ADDRESS_DELETE = "http://localhost:4000/budget/" // Followed bu BudgetID
+    let SERVER_ADDRESS_DELETE = "http://localhost:4000/budget/" // Followed by BudgetID
     
     var budgetID = ""
     
@@ -250,6 +250,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
         AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
             .responseJSON { response in
 
+                print("TESTING BUDGETS")
                 print(response)
                 
                 let decoder = JSONDecoder()

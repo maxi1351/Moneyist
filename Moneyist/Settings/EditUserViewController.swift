@@ -16,7 +16,7 @@ class EditUserViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var mobileNumberField: UITextField!
     
-    let SERVER_ADDRESS = "http://localhost:4000/user/details/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/user/profile/update" //+ UserDetails.sharedInstance.getUID()
     
     let datePicker = UIDatePicker()
     
@@ -50,20 +50,42 @@ class EditUserViewController: UIViewController {
     }
     
     @IBAction func editButtonPress(_ sender: UIButton) {
-        updateUserDetails()
+        
+        // Create alert to get password from user
+        let alert = UIAlertController(title: "Please confirm your credentials.", message: "", preferredStyle: .alert)
+
+        alert.addTextField { (textField) in
+            textField.placeholder = "Enter your password."
+            textField.isSecureTextEntry = true
+        }
+
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "Enter", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0]
+            
+            // Update user details with password
+            self.updateUserDetails(password: textField!.text!)
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+        
+        
     }
     
-    func updateUserDetails() {
+    func updateUserDetails(password: String) {
         
         userInfo = [
             "firstName" : firstNameField.text!,
             "surname" : surnameField.text!,
             "dateOfBirth" : dobField.text!,
             "email" : emailField.text!,
-            "mobileNumber" : mobileNumberField.text!
+            "mobileNumber" : mobileNumberField.text!,
+            "password" : password
         ]
         
-        print(userInfo["surname"]!)
+        print(userInfo["password"]!)
+        
+        
         
         // Make a PATCH request with user details
         AF.request(SERVER_ADDRESS, method: .patch, parameters: userInfo, encoding: JSONEncoding.default)
@@ -72,6 +94,65 @@ class EditUserViewController: UIViewController {
             }
         
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func handleValidationError(data: Data) {
+        
+        struct error: Codable {
+            var msg: String
+        }
+        
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        let errorsArray = [errorValidation]()
+        
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            var errorString = ""
+            
+            var count = 1
+            
+            for e in result.errors {
+                if (count == result.errors.count) {
+                    errorString += e.msg
+                } else {
+                    errorString += e.msg + "\n"
+                }
+                count += 1
+            }
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+           
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
+            
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+        } catch {
+            print(error)
+        }
     }
     
     // Handles date input

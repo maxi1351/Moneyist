@@ -25,7 +25,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     var status = "CONFIRMED"
     
     // Standard server address (with given route, in this case 'Add Transaction')
-    let SERVER_ADDRESS = "http://localhost:4000/transaction/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/transaction/add" //+ UserDetails.sharedInstance.getUID()
     // Server address to get all spending categories
     let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all/" + UserDetails.sharedInstance.getUID()
     
@@ -84,26 +84,117 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
         print(TransactionDetails["category"]!)
         print("User ID: " + UserDetails.sharedInstance.getUID())
         
+        struct TGet : Codable {
+            var transactionId: String?
+        }
+        
+        var noErrors = true
+        
         AF.request(SERVER_ADDRESS, method: .post, parameters: TransactionDetails, encoding: JSONEncoding.default)
-            .responseString { response in
+            .responseJSON { response in
                 //print(response)
 
+                print("Server Response:")
                 print(response)
                 
                 let decoder = JSONDecoder()
                 
                 do {
-                    let result = try decoder.decode(Budget.self, from: response.data!)
-                    print(result.name!)
+                    let result = try decoder.decode(TGet.self, from: response.data!)
+                    print(result.transactionId ?? "ERROR")
+                    
+                    let tempID = result.transactionId ?? "ERROR"
+                    
+                    if (tempID == "ERROR") {
+                        print("Data validation error!")
+                        // Handle the given validation error
+                        self.handleValidationError(data: response.data!)
+                        noErrors = false
+                    }
+                    else {
+                        noErrors = true
+                    }
+                    
                     //self.finishCreation()
                 } catch {
                     print(error)
                 }
                 
-                // Return to previous screen
-                self.navigationController?.popViewController(animated: true)
+                // Run only once data is collected from the server
+                DispatchQueue.main.async {
+                   
+                    if (noErrors) {
+                        // Return to previous screen
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    else {
+                        // Do nothing
+                    }
+                }
+                
+                
                 
             }
+    }
+    
+    func handleValidationError(data: Data) {
+        
+        struct error: Codable {
+            var msg: String
+        }
+        
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        let errorsArray = [errorValidation]()
+        
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            var errorString = ""
+            
+            var count = 1
+            
+            for e in result.errors {
+                if (count == result.errors.count) {
+                    errorString += e.msg
+                } else {
+                    errorString += e.msg + "\n"
+                }
+                count += 1
+            }
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+           
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
+            
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+            
+        } catch {
+            print(error)
+        }
     }
     
     @IBAction func currencySelectionChanged(_ sender: UISegmentedControl) {

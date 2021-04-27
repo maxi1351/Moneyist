@@ -22,7 +22,7 @@ class SavingSpaceCreateViewController: UIViewController {
     var savingSpaceID = ""
     
     // Standard server address (with given route, in this case 'Create Saving Space')
-    let SERVER_ADDRESS = "http://localhost:4000/savingSpace/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/savingSpace/create" //+ UserDetails.sharedInstance.getUID()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,38 +46,69 @@ class SavingSpaceCreateViewController: UIViewController {
             var savingSpaceId: String?
         }
         
+        var noErrors = true
+        
         AF.request(SERVER_ADDRESS, method: .post, parameters: savingSpaceDetails, encoding: JSONEncoding.default)
             .responseString { response in
             
                 print(response)
                 
-                self.navigationController?.popViewController(animated: true)
-                
                 let decoder = JSONDecoder()
                 
                 do {
                     let result = try decoder.decode(SSIDGet.self, from: response.data!)
-                    print(result.savingSpaceId!)
-                    self.savingSpaceID = result.savingSpaceId!
+                    
+                    print(result.savingSpaceId ?? "ERROR")
+                    
+                    let tempID = result.savingSpaceId ?? "ERROR"
+                    
+                    if (tempID == "ERROR") {
+                        print("Data validation error!")
+                        noErrors = false
+                    }
+                    else {
+                        noErrors = true
+                        self.savingSpaceID = result.savingSpaceId!
+                    }
+                    
                 } catch {
                     print(error)
                 }
                 
                 // Run only once data is collected from the server
                 DispatchQueue.main.async {
-                    if (self.createReminderBool) {
-                        self.createReminder()
+                    if (noErrors) {
+                        print("No errors have been detected")
+                        if (self.createReminderBool) {
+                            self.createReminder()
+                        }
+                        else {
+                            // Do nothing
+                            self.navigationController?.popViewController(animated: true)
+                        }
                     }
                     else {
-                        // Do nothing
+                        print("Errors have been detected!")
+                        // Handle the given validation error
+                        self.handleValidationError(data: response.data!)
                     }
+                    
                 }
             }.resume()
     }
     
     
     @IBAction func createReminderSegmentPressed(_ sender: UISegmentedControl) {
+        switch createReminderSegment.selectedSegmentIndex {
+            case 0:
+                createReminderBool = true
+            case 1:
+                createReminderBool = false
+            default:
+                break;
+        }
         
+        print("Reminder bool changed to: " + String(createReminderBool))
     }
     
     func createReminder() {
@@ -94,10 +125,78 @@ class SavingSpaceCreateViewController: UIViewController {
         ] as [String : Any]
         
         AF.request(UserDetails.sharedInstance.getServerAddress() + "reminder/" + UserDetails.sharedInstance.getUID(), method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
-            .responseJSON { response in
+            .responseString { response in
                 print(response)
                 
+                if (response.description == "success(\"OK\")") {
+                    print("Good response!")
+                    self.navigationController?.popViewController(animated: true)
+                }
+                else {
+                    self.handleValidationError(data: response.data!)
+                }
+                
             }
+    }
+    
+    func handleValidationError(data: Data) {
+        
+        struct error: Codable {
+            var msg: String
+        }
+        
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        let errorsArray = [errorValidation]()
+        
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            var errorString = ""
+            
+            var count = 1
+            
+            for e in result.errors {
+                if (count == result.errors.count) {
+                    errorString += e.msg
+                } else {
+                    errorString += e.msg + "\n"
+                }
+                count += 1
+            }
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+           
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
+            
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+            
+        } catch {
+            print(error)
+        }
     }
     
     // Handles date input

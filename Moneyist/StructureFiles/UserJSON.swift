@@ -10,7 +10,7 @@ import Foundation
 
 // Budget Struct
 struct User : Codable {
-    public var __v: Int32
+    //public var __v: Int32
     public var _id: String
     public var dateOfBirth: String
     public var email: String

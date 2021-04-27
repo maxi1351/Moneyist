@@ -35,7 +35,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     var budgetID = "60638600a4cd6506a63059fe"
     
     // Server request is dependent on User ID
-    let SERVER_ADDRESS = "http://localhost:4000/budget/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/budget/create" //+ UserDetails.sharedInstance.getUID()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,7 +101,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         var noErrors = true
         
         AF.request(SERVER_ADDRESS, method: .post, parameters: budgetDetails, encoding: JSONEncoding.default)
-            .responseJSON { response in
+            .responseString { response in
                 //print(response)
 
                 print(response)
@@ -192,6 +192,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     
     func createReminder() {
         
+        // TODO UPDATE!!!!!!!!!!!!!
         let reminderDetails = [
             "userID" : UserDetails.sharedInstance.getUID(),
             "associated" : true,
@@ -203,7 +204,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
             
         ] as [String : Any]
         
-        AF.request(UserDetails.sharedInstance.getServerAddress() + "reminder/" + UserDetails.sharedInstance.getUID(), method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
+        AF.request(UserDetails.sharedInstance.getServerAddress() + "reminder/create" + UserDetails.sharedInstance.getUID(), method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print(response)
                 

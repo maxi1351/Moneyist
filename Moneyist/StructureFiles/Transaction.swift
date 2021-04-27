@@ -9,7 +9,7 @@ import Foundation
 
 // Transaction Struct
 struct Transaction : Codable {
-    public var _id: String
+    public var _id: String?
     public var date: String
     public var status: String // CONFIRMED / PENDING
     public var amount: Int32 // 0 minimum

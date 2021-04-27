@@ -38,14 +38,16 @@ class ViewController: UIViewController {
     }
     
     var loginDetails = [
-        "username" : "sample25@yahoo.jp",
-        "password" : "hee"
+        "username" : "",
+        "password" : ""
     ]
     
-    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+
+    }
     
     // Standard server address (with given route, in this case 'Add Transaction')
-    let SERVER_ADDRESS = "http://localhost:4000/user/login"
+    let SERVER_ADDRESS = "http://localhost:4000/auth/login"
     
     @IBAction func forgotPassButtonClick(_ sender: Any) {
         // Jump to password reset screen
@@ -63,44 +65,88 @@ class ViewController: UIViewController {
             "password" : passwordField.text!
         ]
         
-        //print(loginDetails["username"]!)
-        //print(loginDetails["password"]!)
+        print(loginDetails["username"]!)
+        print(loginDetails["password"]!)
         
         // Struct for decoding JSON data
         struct UserData: Codable { var userId: String }
         
+        //fetchTheCookies()
+        
         AF.request(SERVER_ADDRESS, method: .post, parameters: loginDetails, encoding: JSONEncoding.default)
-            .responseJSON { response in
+            .responseString { response in
                 print(response)
                 
-                let decoder = JSONDecoder()
+                //self.loginUser()
                 
-                do {
-                    let result = try decoder.decode(UserData.self, from: response.data!)
-                    print(result.userId)
-                    
-                    // Set "global" UID
-                    UserDetails.sharedInstance.setUID(id: result.userId)
-                    
-                    self.loginUser(uid: result.userId)
-                    
-                    //self.finishCreation()
-                } catch {
-                    print(error)
+                // Check for positive response
+                if (response.description == "success(\"OK\")") {
+                    print("SUCCESS!")
+                    self.loginUser()
                 }
+                // Error
+                else {
+                    print("Error found!")
+                    self.handleValidationError(data: response.data!)
+                }
+
             }
+ 
     }
     
-    func loginUser(uid: String) {
+    func handleValidationError(data: Data) {
         
-        /*
-         FILL OUT LOGIN CODE HERE ONCE SERVER TEAM IS DONE WITH THEIR WORK
-         */
+        struct error: Codable {
+            var msg: String
+        }
         
-        // Set UID for rest of app
-        UserDetails.sharedInstance.setUID(id: uid)
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
         
-        performSegue(withIdentifier: "ToDashboard", sender: nil)
+        let errorsArray = [errorValidation]()
+        
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            var errorString = ""
+            
+            for e in result.errors {
+                errorString += "\n" + e.msg //+ "\n"
+            }
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+           
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+            
+        } catch {
+            print(error)
+        }
+    }
+    
+    // Proceed to splash screen
+    func loginUser() {
+        performSegue(withIdentifier: "toSplash", sender: nil)
     }
     
     @IBAction func SignUpButtonClick(_ sender: Any) {

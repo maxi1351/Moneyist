@@ -18,9 +18,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
     @IBOutlet weak var mobileNumberField: UITextField!
-    
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+
     // Holds user details in dictionary format
     var userDetails = [
         "firstName" : "",
@@ -34,7 +32,9 @@ class SignUpViewController: UIViewController {
     ]
     
     // Standard server address (with given route, in this case 'user/register')
-    let SERVER_ADDRESS = "http://localhost:4000/user/signup"
+    let SERVER_ADDRESS = "http://localhost:4000/auth/signup"
+    
+    let SERVER_ADDRESS_LOGIN = "http://localhost:4000/auth/login"
     
     // Date picker declaration
     let datePicker = UIDatePicker()
@@ -46,9 +46,6 @@ class SignUpViewController: UIViewController {
     }
     
     func requestCreation() {
-        
-        activityIndicator.startAnimating()
-        
         // Check if inputs are valid
         if (true) {
             // Get user details from input
@@ -96,44 +93,84 @@ class SignUpViewController: UIViewController {
             
             // Request the creation of a new account
             AF.request(SERVER_ADDRESS, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-                .responseJSON { response in
+                .responseString { response in
                     
                     // Decode the JSON data using the struct created before
                     let decoder = JSONDecoder()
                     
                     print(response)
-                    
-                    do {
-                        let result = try decoder.decode(UserData.self, from: response.data!)
-                        print(result.userId)
-                        
-                        self.activityIndicator.stopAnimating()
-                        
-                        // Logs in user with acquired UID
-                        self.loginUser(uid: result.userId)
-                    } catch {
-                        print("Attempting to show errors...")
-                        
-                        do {
-                            let result = try decoder.decode(ErrorSet.self, from: response.data!)
-                            
-                            print(response)
-                            
-                            //self.showError(title: "Sign-Up Error", message: result.msg)
-                        } catch {
-                            print(error)
-                        }
-                        
-                        
-                        self.activityIndicator.stopAnimating()
+                                     
+                    if (response.description == "success(\"Created\")") {
+                        print("Good response!")
+                        //self.loginUser()
+                        self.performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
                     }
+                    else {
+                        self.handleValidationError(data: response.data!)
+                    }
+                    
                     
                 }
             
-            
         }
-        else {
-            activityIndicator.stopAnimating()
+    }
+    
+    func handleValidationError(data: Data) {
+        
+        struct error: Codable {
+            var msg: String
+        }
+        
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        let errorsArray = [errorValidation]()
+        
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            var errorString = ""
+            
+            var count = 1
+            
+            for e in result.errors {
+                if (count == result.errors.count) {
+                    errorString += e.msg
+                } else {
+                    errorString += e.msg + "\n"
+                }
+                count += 1
+            }
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+            
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
+           
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+        } catch {
+            print(error)
         }
     }
     
@@ -263,7 +300,6 @@ class SignUpViewController: UIViewController {
         // Change back button color
         self.navigationController!.navigationBar.tintColor = UIColor.white
         
-        activityIndicator.hidesWhenStopped = true
         
         // Make sure the DOB text field shows a date picker and not a keyboard
         showDatePicker()
