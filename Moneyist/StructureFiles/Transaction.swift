@@ -16,4 +16,5 @@ struct Transaction : Codable {
     public var currency: String // GBP / EUR
     public var type: String // INCOME / OUTCOME
     public var userID: String
+    public var category: String?
 }

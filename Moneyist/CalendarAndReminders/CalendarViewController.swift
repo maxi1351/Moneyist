@@ -33,10 +33,10 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     // Store the start and end date for reminders needed from server
-   /* var timePeriod = [
-        "startDate" : "",
-        "endDate" : ""
-    ]*/
+    var timePeriod : Parameters = [
+        "startDate": "",
+        "endDate": ""
+    ]
     
     // MARK: - Buttons
     
@@ -230,17 +230,18 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     // Get all reminders from server
     func getReminders() {
         
-        /*timePeriod = [
-            "startDate" : "2021/04/01",
-            "endDate" : "2021/04/03"
-        ]*/
+        timePeriod = [
+            "startDate": "2021/04/03",
+            "endDate": "2021/04/04"
+        ]
         
         //parameters: timePeriod ,
         
-        AF.request(SERVER_ADDRESS_ALL, encoding: JSONEncoding.default)
+        AF.request(SERVER_ADDRESS_ALL, parameters: timePeriod, encoding: URLEncoding.default)
             .responseJSON { response in
                 print("From SERVER:")
                 print(response)
+                print(self.timePeriod)
                 
                 let decoder = JSONDecoder()
                 

@@ -165,6 +165,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
             destinationVC.status = selectedTransaction!.status
             destinationVC.currency = selectedTransaction!.currency
             destinationVC.transactionID = selectedTransaction!._id
+            destinationVC.category = selectedTransaction?.category ?? ""
             
             print(selectedTransaction!)
         }

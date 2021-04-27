@@ -8,17 +8,17 @@
 import UIKit
 import Alamofire
 
-class AddTransactionViewController: UIViewController {
+class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
 
     @IBOutlet weak var amountField: UITextField!
     @IBOutlet weak var dateField: UITextField!
-    
+    @IBOutlet weak var categoryField: UITextField!
     @IBOutlet weak var currencySegment: UISegmentedControl!
     @IBOutlet weak var typeSegment: UISegmentedControl!
     @IBOutlet weak var statusSegment: UISegmentedControl!
     
     let datePicker = UIDatePicker()
-    
+
     // Variables determining final transaction options
     var currency = "GBP"
     var type = "INCOME"
@@ -26,15 +26,24 @@ class AddTransactionViewController: UIViewController {
     
     // Standard server address (with given route, in this case 'Add Transaction')
     let SERVER_ADDRESS = "http://localhost:4000/transaction/" + UserDetails.sharedInstance.getUID()
+    // Server address to get all spending categories
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all/" + UserDetails.sharedInstance.getUID()
     
     var TransactionDetails = [
         "type" : "",
         "amount" : "",
         "currency" : "",
         "status" : "",
-        "date" : ""
+        "date" : "",
+        "category" : ""
     ]
     
+    var spendingCategories = [SpendingCategory]()      // Store all categories
+    var categoryID = ""
+    let screenWidth = UIScreen.main.bounds.width - 10
+    let screenHeight = UIScreen.main.bounds.height / 2.5
+    var selectedRow = 0
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,8 +52,15 @@ class AddTransactionViewController: UIViewController {
         
         // Make sure the 'Date' field uses a date picker instead of a keyboard
         showDatePicker()
+        
+        // Display picker when category field pressed
+        getSpendingCategories()
+        categoryField.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getSpendingCategories()
+    }
     
     @IBAction func addButtonPress(_ sender: UIButton) {
         addTransaction()
@@ -56,7 +72,8 @@ class AddTransactionViewController: UIViewController {
             "amount" : amountField.text!,
             "currency" : currency,
             "status" : status,
-            "date" : dateField.text!
+            "date" : dateField.text!,
+            "category" : categoryID
         ]
         
         print(TransactionDetails["type"]!)
@@ -64,6 +81,7 @@ class AddTransactionViewController: UIViewController {
         print(TransactionDetails["currency"]!)
         print(TransactionDetails["status"]!)
         print(TransactionDetails["date"]!)
+        print(TransactionDetails["category"]!)
         print("User ID: " + UserDetails.sharedInstance.getUID())
         
         AF.request(SERVER_ADDRESS, method: .post, parameters: TransactionDetails, encoding: JSONEncoding.default)
@@ -173,14 +191,110 @@ class AddTransactionViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // Get all spending categories from server
+    func getSpendingCategories() {
+        AF.request(SERVER_ADDRESS_ALL, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                print("SERVER RESPONSE")
+                print(response)
+                
+                let decoder = JSONDecoder()
+                
+                do {
+                    print("Decoding")
+                    let result = try decoder.decode([SpendingCategory].self, from: response.data!)
+                    
+                    print(result)
+                                        
+                    DispatchQueue.main.async {
+                        // Save result of request
+                        self.spendingCategories = result
+                        let addCatgeory = SpendingCategory(_id: "", name: "Add Category", colour: "")
+                        self.spendingCategories.append(addCatgeory)
+                    }
+               } catch {
+                    print(error)
+                }
+            }.resume()
     }
-    */
+    
+    // MARK: - Picker for selecting spending category
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return spendingCategories.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 30))
+            
+        label.text = spendingCategories[row].name
 
+        if(spendingCategories[row].name == "Add Category") {
+            label.textColor = #colorLiteral(red: 0, green: 0.5591806995, blue: 0.0437573206, alpha: 1)
+        }
+ 
+        label.sizeToFit()
+        
+        return label
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 45
+    }
+    
+    // Display category picker view when category text field is tapped
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        displayCategoryPicker()
+    }
+    
+    // Display a pop up picker view with all the spending categories
+    func displayCategoryPicker() {
+        
+        let vc = UIViewController()
+        vc.preferredContentSize = CGSize(width: screenWidth, height: screenHeight)
+        let categoryPicker = UIPickerView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+        categoryPicker.dataSource = self
+        categoryPicker.delegate = self
+        categoryPicker.selectRow(selectedRow, inComponent: 0, animated: false)
+        
+        vc.view.addSubview(categoryPicker)
+        categoryPicker.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
+        categoryPicker.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
+        
+        let alert = UIAlertController(title: "CATEGORY", message: "", preferredStyle: .actionSheet)
+        alert.popoverPresentationController?.sourceView = categoryField
+        alert.popoverPresentationController?.sourceRect = categoryField.bounds
+        alert.setValue(vc, forKey: "contentViewController")
+        
+        // 'Cancel' button
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
+            self.categoryField.endEditing(true)
+        }))
+        
+        // 'Select' button to confirm user's selection
+        alert.addAction(UIAlertAction(title: "Select", style: .default , handler: { (UIAlertAction) in
+            self.selectedRow = categoryPicker.selectedRow(inComponent: 0)
+            let selectedCategory = self.spendingCategories[self.selectedRow]
+            if(selectedCategory.name == "Add Category") {
+                self.performSegue(withIdentifier: "toAddCategory", sender: nil)
+            }
+            else {
+                self.categoryField.text = selectedCategory.name
+                self.categoryID = selectedCategory._id
+                self.categoryField.endEditing(true)
+            }
+        }))
+        
+        // 'Edit' button to allow user to edit, delete and add spending categories
+        alert.addAction(UIAlertAction(title: "Edit", style: .default , handler: { (UIAlertAction) in
+            self.performSegue(withIdentifier: "toSpendingCategories", sender: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }
