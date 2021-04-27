@@ -128,7 +128,7 @@ class TransactionEditViewController: UIViewController {
                 print(response.description)
                 
                 if (response.description != "success(\"OK\")") {
-                    print("Good response!")
+                    print("Bad response!")
                     self.handleValidationError(data: response.data!)
                 }
                 else {

@@ -24,6 +24,8 @@ class SavingSpaceCreateViewController: UIViewController {
     // Standard server address (with given route, in this case 'Create Saving Space')
     let SERVER_ADDRESS = "http://localhost:4000/savingSpace/create" //+ UserDetails.sharedInstance.getUID()
     
+    let SERVER_ADDRESS_REMINDER = "http://localhost:4000/reminder/create"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -113,30 +115,32 @@ class SavingSpaceCreateViewController: UIViewController {
     
     func createReminder() {
         
+        print("Creating reminder...")
+        
         let reminderDetails = [
-            "userID" : UserDetails.sharedInstance.getUID(),
             "associated" : true,
             "ID" : savingSpaceID,
-            "title" : "ehe",
+            "title" : descriptionField.text!,
             "type" : "GOAL",
-            "description" : "ehetenandayo",
+            "description" : categoryField.text!,
             "date" : dateField.text!
             
         ] as [String : Any]
         
-        AF.request(UserDetails.sharedInstance.getServerAddress() + "reminder/" + UserDetails.sharedInstance.getUID(), method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
+        AF.request(SERVER_ADDRESS_REMINDER, method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
             .responseString { response in
                 print(response)
                 
-                if (response.description == "success(\"OK\")") {
-                    print("Good response!")
-                    self.navigationController?.popViewController(animated: true)
+                DispatchQueue.main.async {
+                    if (response.description == "success(\"OK\")") {
+                        print("Good response!")
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    else {
+                        //self.handleValidationError(data: response.data!)
+                    }
                 }
-                else {
-                    self.handleValidationError(data: response.data!)
-                }
-                
-            }
+            }.resume()
     }
     
     func handleValidationError(data: Data) {
