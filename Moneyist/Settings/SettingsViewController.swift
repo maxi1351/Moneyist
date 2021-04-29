@@ -148,7 +148,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let alert = UIAlertController(title: "Warning", message: "Are you sure you want log out?", preferredStyle: .alert)
         
         // Controls what happens after the user presses YES
-        let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.default) {
+        let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.destructive) {
                 UIAlertAction in
                 NSLog("Yes Pressed")
             

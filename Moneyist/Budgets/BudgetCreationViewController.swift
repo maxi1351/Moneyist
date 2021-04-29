@@ -196,7 +196,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         let reminderDetails = [
             "userID" : UserDetails.sharedInstance.getUID(),
             "associated" : true,
-            "ID" : budgetID,
+            "budgetId" : budgetID,
             "title" : "ehe",
             "type" : "GOAL",
             "description" : "ehetenandayo",

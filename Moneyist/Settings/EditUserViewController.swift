@@ -67,6 +67,9 @@ class EditUserViewController: UIViewController {
             self.updateUserDetails(password: textField!.text!)
         }))
 
+        // Set tint color
+        alert.view.tintColor = UIColor.systemGreen
+        
         self.present(alert, animated: true, completion: nil)
         
         
@@ -91,9 +94,15 @@ class EditUserViewController: UIViewController {
         AF.request(SERVER_ADDRESS, method: .patch, parameters: userInfo, encoding: JSONEncoding.default)
             .responseString { response in
                 print(response)
+                
+                if (response.description == "success(\"OK\")") {
+                    print("Good response!")
+                    self.navigationController?.popViewController(animated: true)
+                }
+                else {
+                    self.handleValidationError(data: response.data!)
+                }
             }
-        
-        self.navigationController?.popViewController(animated: true)
     }
     
     func handleValidationError(data: Data) {
