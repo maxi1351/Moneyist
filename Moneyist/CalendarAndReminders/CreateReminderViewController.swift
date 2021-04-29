@@ -14,7 +14,6 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var descriptionField: UITextField!
     @IBOutlet weak var typeField: UITextField!
     @IBOutlet weak var dateField: UITextField!
-    @IBOutlet weak var timeField: UITextField!
     
     @IBAction func createReminderButton(_ sender: Any) {
         createReminder()
@@ -23,7 +22,7 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
     let datePicker = UIDatePicker()
     var reminderID = ""
 
-    let SERVER_ADDRESS = "http://localhost:4000/reminder/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/reminder/create" //+ UserDetails.sharedInstance.getUID()
     
     // Hold the reminder details
     var reminderDetails = [
@@ -55,32 +54,116 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         print("Reminder details = \(reminderDetails)")
         
-        /*struct ReminderID : Codable {
+        struct ReminderID : Codable {
             var reminderId: String?
-        }*/
-
+        }
         
+        var noErrors = true
+
         AF.request(SERVER_ADDRESS, method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
             .responseJSON { response in
                 
                 print(response)
                 
-              /*  let decoder = JSONDecoder()
+                let decoder = JSONDecoder()
                 
                 do {
                     let result = try decoder.decode(ReminderID.self, from: response.data!)
-                    self.reminderID = result.reminderId!
-                    print("Result ID = \(result.reminderId!)")
-                    print("Reminder Id = \(self.reminderID)")
-                    self.navigationController?.popViewController(animated: true)
+                    print("Result ID = \(result.reminderId ?? "ERROR")")
+                    
+                    let tempID = result.reminderId ?? "ERROR"
+                    
+                    if (tempID == "ERROR") {
+                        print("Data validation error!")
+                        // Handle the given validation error
+                        self.handleValidationError(data: response.data!)
+                        noErrors = false
+                    }
+                    else {
+                        self.reminderID = result.reminderId!
+                        print("Reminder Id = \(self.reminderID)")
+                        noErrors = true
+                    }
+                    
                 } catch {
                     print(error)
-                } */
+                }
                 
-                // Return to previous screen
-                self.navigationController?.popViewController(animated: true)
+                // Run only once data is collected from the server
+                DispatchQueue.main.async {
+                   
+                    if (noErrors) {
+                        // Return to previous screen
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    else {
+                        // Do nothing
+                    }
+                }
+            
             }
     }
+    
+    
+    func handleValidationError(data: Data) {
+        
+        struct error: Codable {
+            var msg: String
+        }
+        
+        struct errorValidation: Codable {
+            var errors: [error]
+            //var param: String
+        }
+        
+        //let errorsArray = [errorValidation]()
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            let result = try decoder.decode(errorValidation.self, from: data)
+            
+            /*for entry in result {
+                print(entry.msg)
+            }*/
+            print("ERRORS FOUND: ")
+            
+            var errorString = ""
+            
+            var count = 1
+            
+            for e in result.errors {
+                if (count == result.errors.count) {
+                    errorString += e.msg
+                } else {
+                    errorString += e.msg + "\n"
+                }
+                count += 1
+            }
+            
+            // Ask user if they are sure using an alert
+            let alert = UIAlertController(title: "Error", message: errorString, preferredStyle: .alert)
+            
+            // Controls what happens after the user presses YES
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                    UIAlertAction in
+                    NSLog("OK Pressed")
+               
+            }
+           
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
+            
+            alert.addAction(okAction)
+            
+            self.present(alert, animated: true)
+            
+            
+        } catch {
+            print(error)
+        }
+    }
+    
     
     // MARK: - Picker for selecting type of reminder
     

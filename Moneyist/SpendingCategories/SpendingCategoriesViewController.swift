@@ -11,12 +11,12 @@ import Alamofire
 class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var categoriesTable: UITableView!
-    
+   
     var spendingCategories = [SpendingCategory]()      // Store all categories
     var categoryID = ""                                // Store ID of selected category
     var selectedCategoryIndex = 0              // Store index of selected category
     
-    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all" //+ UserDetails.sharedInstance.getUID()
     let SERVER_ADDRESS_SPECIFIC = "http://localhost:4000/spendingCategory/"   // + categoryID
     
     // Store the colour name and the associated colour to be displayed to user
@@ -26,6 +26,31 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
         var name : String
         var colour : UIColor
     }
+    
+    @IBAction func deleteAllButton(_ sender: Any) {
+        // Ask user if they are sure using an alert
+        let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete all of your categories?\nTHIS ACTION IS IRREVERSIBLE.\nTHINK BEFORE YOU CLICK!", preferredStyle: .alert)
+        
+        // Controls what happens after the user presses YES
+        let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.destructive) {
+                UIAlertAction in
+                NSLog("Yes Pressed")
+            self.deleteAllCategories()
+                }
+        
+        // Controls what happens after the user presses NO
+        let noAction = UIAlertAction(title: "No", style: UIAlertAction.Style.cancel) {
+                UIAlertAction in
+                NSLog("No Pressed")
+                // Do nothing
+        }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        self.present(alert, animated: true)
+    }
+    
     
     // MARK: - Spending categories table view
 
@@ -134,6 +159,19 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
         self.reloadTable()
     }
     
+    func deleteAllCategories() {
+        AF.request(SERVER_ADDRESS_ALL, method: .delete, encoding: JSONEncoding.default)
+            .responseString { response in
+                print("Delete All Spending Categories Response:")
+                print(response)
+                
+                // Refresh data after deletion
+                self.spendingCategories.removeAll()
+                self.reloadTable()
+            }
+        print("All Spending Categories DELETED!")
+    }
+    
     
     // MARK: - View controller
     
@@ -149,6 +187,9 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = "Spending Categories"
+
         print(self.title! + " loaded!")
         
         getSpendingCategories()

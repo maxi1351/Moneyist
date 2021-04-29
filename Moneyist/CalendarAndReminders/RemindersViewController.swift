@@ -14,13 +14,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBAction func deleteAllButton(_ sender: Any) {
         // Ask user if they are sure using an alert
-        let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete all of your transactions?\nTHIS ACTION IS IRREVERSIBLE.\nTHINK BEFORE YOU CLICK!", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete all of your reminders?\nTHIS ACTION IS IRREVERSIBLE.\nTHINK BEFORE YOU CLICK!", preferredStyle: .alert)
         
         // Controls what happens after the user presses YES
         let yesAction = UIAlertAction(title: "Yes", style: UIAlertAction.Style.destructive) {
                 UIAlertAction in
                 NSLog("Yes Pressed")
-            //deleteAllReminders()
+            self.deleteAllReminders()
                 }
         
         
@@ -42,7 +42,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
     var reminders = [Reminder]()                          // All reminders from backend
     var groupedRemindersArray = [groupedReminders]()      // Reminders grouped by date
     
-    let SERVER_ADDRESS_ALL = "http://localhost:4000/reminder/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/reminder/all/" //+ UserDetails.sharedInstance.getUID()
     let SERVER_ADDRESS_SPECIFIC = "http://localhost:4000/reminder/"   // + reminderID
     
     // Store reminders associated with each date
@@ -95,8 +95,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
         
         cell.textLabel?.text = groupedRemindersArray[indexPath.section].associatedReminders[indexPath.row].title
         // Change cell style to 'Subtitle' in storyboard for detailedTextLabel
-        //cell.detailTextLabel?.text = groupedRemindersArray[indexPath.section].date
-        //cell.detailTextLabel?.textColor = UIColor.lightGray
+        cell.detailTextLabel?.text = groupedRemindersArray[indexPath.section].associatedReminders[indexPath.row].description ?? ""
+        cell.detailTextLabel?.textColor = UIColor.lightGray
         
         return cell
     }
@@ -161,11 +161,14 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
             .responseString { response in
                 print("Delete All Reminders Response:")
                 print(response)
+                
+                // Refresh data after deletion
+                self.groupedRemindersArray.removeAll()
+                self.reminders.removeAll()
+                self.reloadTable()
             }
         print("All Reminders DELETED!")
-        // Refresh data after deletion
-        self.reminders.removeAll()
-        self.reloadTable()
+       
     }
     
     // MARK: - Methods to sort and store reminders by date
@@ -234,6 +237,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Reminders"
+
         print(self.title! + " loaded!")
         print("Reminders -> \(reminders)")
         //groupByDate()

@@ -15,11 +15,13 @@ class SpendingCategoryAddViewController: UIViewController, UICollectionViewDeleg
     
     @IBAction func addCategoryButton(_ sender: Any) {
         createSpendingCategory()
+        // Return to previous screen
+        //self.navigationController?.popViewController(animated: true)
     }
   
     var colourSelected = ""             // Store name of selected colour
     
-    let SERVER_ADDRESS = "http://localhost:4000/spendingCategory/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/spendingCategory/create" //+ UserDetails.sharedInstance.getUID()
     
     // Hold the spending category details
     var spendingCategoryDetails = [
@@ -75,7 +77,7 @@ class SpendingCategoryAddViewController: UIViewController, UICollectionViewDeleg
             "colour" : colourSelected
         ]
         
-        print("Spending Category Details = \(spendingCategoryDetails)")
+        //print("Spending Category Details = \(spendingCategoryDetails)")
         
         AF.request(SERVER_ADDRESS, method: .post, parameters: spendingCategoryDetails, encoding: JSONEncoding.default)
             .responseJSON { response in

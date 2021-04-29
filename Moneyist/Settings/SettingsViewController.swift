@@ -29,7 +29,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         "mobileNumber" : ""
     ]
     
-    let tableValues = ["Edit Account Details", "Send Feedback", "Log Out", "Delete Account", "Edit Spending Categories"]
+    let tableValues = ["Edit Account Details", "Send Feedback", "Log Out", "Delete Account"]
     
     // Converts ISO Date string to Swift Date format
     func convertISOTime(date: String) -> Date {
@@ -72,9 +72,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             break
         case 3:
             deleteAccount()
-            break
-        case 4:
-            performSegue(withIdentifier: "toSpendingCategories", sender: nil)
             break
         default:
             break

@@ -21,7 +21,6 @@ class SpendingCategoryEditViewController: UIViewController, UICollectionViewDele
     var colourSelected = ""                             // Store name of colour selected
 
     let SERVER_ADDRESS_UPDATE = "http://localhost:4000/spendingCategory/update/"   // + categoryID
-    //let SERVER_ADDRESS_SPECIFIC = "http://localhost:4000/spendingCategory/"  // + categoryID
     
     // Hold the spending category details
     var spendingCategoryDetails = [

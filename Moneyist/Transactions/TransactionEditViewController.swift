@@ -35,7 +35,7 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
     // Standard server address (with given route, in this case 'Edit Transaction')
     let SERVER_ADDRESS = "http://localhost:4000/transaction/update/"
     // Server address to get all spending categories
-    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all" //+ UserDetails.sharedInstance.getUID()
     
     var TransactionDetails = [
         "type" : "",
@@ -413,7 +413,7 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
         }))
 
         self.present(alert, animated: true, completion: nil)
-
+        //pickerView.reloadAllComponents()
     }
    
 }

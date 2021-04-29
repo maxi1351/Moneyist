@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // Spending Category struct
 struct SpendingCategory : Codable {
@@ -14,3 +15,7 @@ struct SpendingCategory : Codable {
     public var colour: String
 }
 
+struct Colour {
+    public var name : String
+    public var colour : UIColor
+}

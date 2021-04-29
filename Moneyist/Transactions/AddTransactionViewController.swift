@@ -27,7 +27,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     // Standard server address (with given route, in this case 'Add Transaction')
     let SERVER_ADDRESS = "http://localhost:4000/transaction/add" //+ UserDetails.sharedInstance.getUID()
     // Server address to get all spending categories
-    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all" //+ UserDetails.sharedInstance.getUID()
     
     var TransactionDetails = [
         "type" : "",
@@ -56,6 +56,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
         // Display picker when category field pressed
         getSpendingCategories()
         categoryField.delegate = self
+        //showCategoryField()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +66,17 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBAction func addButtonPress(_ sender: UIButton) {
         addTransaction()
     }
+    
+   /* func showCategoryField() {
+        
+        if(type == "INCOME") {
+            categoryField.isHidden = true
+        }
+        
+        else {
+            categoryField.isHidden = false
+        }
+    } */
     
     func addTransaction() {
         TransactionDetails = [
@@ -221,6 +233,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
                 break;
         }
         
+        //showCategoryField()
         print("Type changed to: " + type)
     }
     

@@ -12,6 +12,7 @@ struct Reminder : Codable {
     public var title: String
     public var reminderId: String
     public var date: String
+    public var description : String?
 }
 
 /*struct ReminderID : Codable {

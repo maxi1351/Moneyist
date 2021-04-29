@@ -24,7 +24,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     var reminderID = ""                         // reminderID of selected reminder
     var weekDay = ""                            // Weekday of date selected on calendar
     
-    let SERVER_ADDRESS_ALL = "http://localhost:4000/reminder/all/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/reminder/all/" //+ UserDetails.sharedInstance.getUID()
     let SERVER_ADDRESS_SPECIFIC = "http://localhost:4000/reminder/"   // + reminderID
     
     struct CalendarDay {
@@ -231,8 +231,8 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     func getReminders() {
         
         timePeriod = [
-            "startDate": "2021/04/03",
-            "endDate": "2021/04/04"
+            "startDate": "2021/04/01",
+            "endDate": "2021/04/30"
         ]
         
         //parameters: timePeriod ,
@@ -400,6 +400,8 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Calendar"
+
         print(self.title! + " loaded!")
         //remindersButton.backgroundColor = #colorLiteral(red: 0.06458269067, green: 0.2881486304, blue: 0.1114761736, alpha: 1)
         remindersButton.layer.cornerRadius = 14
