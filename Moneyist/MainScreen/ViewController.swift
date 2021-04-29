@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     // Skips the entry of credentials
     @IBAction func autoLoginDebugPress(_ sender: UIButton) {
         usernameField.text = "sample99@yahoo.jp"
-        passwordField.text = "samplepass"
+        passwordField.text = "Sample_20"
         
         processUserDetails()
     }

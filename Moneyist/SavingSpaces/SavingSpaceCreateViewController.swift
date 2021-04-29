@@ -119,7 +119,7 @@ class SavingSpaceCreateViewController: UIViewController {
         
         let reminderDetails = [
             "associated" : true,
-            "ID" : savingSpaceID,
+            "savingSpaceId" : savingSpaceID,
             "title" : descriptionField.text!,
             "type" : "GOAL",
             "description" : categoryField.text!,
@@ -138,6 +138,20 @@ class SavingSpaceCreateViewController: UIViewController {
                     }
                     else {
                         //self.handleValidationError(data: response.data!)
+                        
+                        let alert = UIAlertController(title: "Error", message: "Could not create a reminder.", preferredStyle: .alert)
+                        
+                        // Controls what happens after the user presses YES
+                        let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) {
+                                UIAlertAction in
+                                NSLog("OK Pressed")
+                           
+                        }
+                       
+                        // Set tint color
+                        alert.view.tintColor = UIColor.systemGreen
+                        
+                        alert.addAction(okAction)
                     }
                 }
             }.resume()
