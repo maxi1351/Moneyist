@@ -15,17 +15,10 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
     var spendingCategories = [SpendingCategory]()      // Store all categories
     var categoryID = ""                                // Store ID of selected category
     var selectedCategoryIndex = 0              // Store index of selected category
+    let colours = UserDetails.sharedInstance.getColours()      // Get all spending category colours
     
-    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all" //+ UserDetails.sharedInstance.getUID()
-    let SERVER_ADDRESS_SPECIFIC = "http://localhost:4000/spendingCategory/"   // + categoryID
-    
-    // Store the colour name and the associated colour to be displayed to user
-    let colours: [Colour] = [Colour(name : "Red", colour : #colorLiteral(red: 0.672542908, green: 0.02437681218, blue: 0, alpha: 1)), Colour(name : "Pink", colour : #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)), Colour(name : "Purple", colour : #colorLiteral(red: 0.4643272758, green: 0.3070220053, blue: 0.7275875211, alpha: 1)), Colour(name : "Blue", colour : #colorLiteral(red: 0.2000421584, green: 0.6995770335, blue: 0.6809796691, alpha: 1)), Colour(name : "Dark Blue", colour : #colorLiteral(red: 0.06944768974, green: 0.02640548434, blue: 0.5723825901, alpha: 1)), Colour(name : "Green", colour : #colorLiteral(red: 0.5690675291, green: 0.8235294223, blue: 0.294384024, alpha: 1)), Colour(name : "Dark Green", colour : #colorLiteral(red: 0.06251720995, green: 0.44866765, blue: 0.1985127027, alpha: 1)), Colour(name : "Yellow", colour : #colorLiteral(red: 0.9764705896, green: 0.8267891201, blue: 0.0127835515, alpha: 1)), Colour(name : "Orange", colour : #colorLiteral(red: 0.8495022058, green: 0.4145209409, blue: 0.07371198884, alpha: 1)), Colour(name : "Grey", colour : #colorLiteral(red: 0.7645047307, green: 0.7686187625, blue: 0.772662282, alpha: 1)), Colour(name : "Lilac", colour : #colorLiteral(red: 0.8340004433, green: 0.75248796, blue: 0.9177663536, alpha: 1))]
-    
-    struct Colour {
-        var name : String
-        var colour : UIColor
-    }
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all"   // Get/delete all spending categories
+    let SERVER_ADDRESS_SPECIFIC = "http://localhost:4000/spendingCategory/"   // Delete specific spending category
     
     @IBAction func deleteAllButton(_ sender: Any) {
         // Ask user if they are sure using an alert
@@ -116,7 +109,7 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
         categoriesTable.reloadData()
     }
     
-    // MARK: - Get/send category details
+    // MARK: - Get/Delete Spending Categories
 
     // Get all spending categories from server
     func getSpendingCategories() {
@@ -145,7 +138,7 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
             }.resume()
     }
     
-    // Delete a category
+    // Delete a specific category
     func deleteSpecificCategory(index: IndexPath) {
         // Send reminder deletion request
         AF.request(self.SERVER_ADDRESS_SPECIFIC + spendingCategories[index.row]._id, method: .delete, encoding: JSONEncoding.default)
@@ -159,6 +152,7 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
         self.reloadTable()
     }
     
+    // Delete all spending categories
     func deleteAllCategories() {
         AF.request(SERVER_ADDRESS_ALL, method: .delete, encoding: JSONEncoding.default)
             .responseString { response in
@@ -189,7 +183,6 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
         super.viewDidLoad()
         
         self.title = "Spending Categories"
-
         print(self.title! + " loaded!")
         
         getSpendingCategories()
@@ -199,7 +192,7 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
     }
     
-    
+
     // MARK: - Navigation
     
    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

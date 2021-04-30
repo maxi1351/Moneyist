@@ -15,6 +15,7 @@ struct SpendingCategory : Codable {
     public var colour: String
 }
 
+// Spending category colour struct
 struct Colour {
     public var name : String
     public var colour : UIColor

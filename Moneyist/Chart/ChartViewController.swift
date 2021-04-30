@@ -9,66 +9,32 @@ import UIKit
 import Charts
 import Alamofire
 
-class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChartViewDelegate {
+class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, ChartViewDelegate {
     
     @IBOutlet var pieChart: PieChartView!
     @IBOutlet weak var barChart: BarChartView!
     @IBOutlet weak var chartTable: UITableView!
+    @IBOutlet weak var monthYearButton: UIButton!
     
-    @IBAction func chartSegment(_ sender: UISegmentedControl) {
-        
-        if(sender.selectedSegmentIndex == 0) {
-            chartType = "Pie Chart"
-            barChart.isHidden = true
-            pieChart.isHidden = false
-            getPieChartData()
-        }
-        
-        else if(sender.selectedSegmentIndex == 1) {
-            chartType = "Bar Chart"
-            pieChart.isHidden = true
-            barChart.isHidden = false
-            getBarChartData()
-        }
-    }
+    // Store data from server
+    var pieChartData = [PieChart]()                          // Pie chart data
+    var barChartData : BarChart? = nil                       // Bar chart data
+    var spendingCategories = [SpendingCategory]()            // All spending categories
+    var pieChartTableDetails = [ChartTableData]()            // Store data needed for pie chart table view
+    var barChartTableDetails = [ChartTableData]()            // Store data needed bar chart table view
     
-    // Store the colour name and the associated colour to be displayed to user
-    let colours: [Colour] = [Colour(name : "Red", colour : #colorLiteral(red: 0.672542908, green: 0.02437681218, blue: 0, alpha: 1)), Colour(name : "Pink", colour : #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)), Colour(name : "Purple", colour : #colorLiteral(red: 0.4643272758, green: 0.3070220053, blue: 0.7275875211, alpha: 1)), Colour(name : "Blue", colour : #colorLiteral(red: 0.2000421584, green: 0.6995770335, blue: 0.6809796691, alpha: 1)), Colour(name : "Dark Blue", colour : #colorLiteral(red: 0.06944768974, green: 0.02640548434, blue: 0.5723825901, alpha: 1)), Colour(name : "Green", colour : #colorLiteral(red: 0.5690675291, green: 0.8235294223, blue: 0.294384024, alpha: 1)), Colour(name : "Dark Green", colour : #colorLiteral(red: 0.06251720995, green: 0.44866765, blue: 0.1985127027, alpha: 1)), Colour(name : "Yellow", colour : #colorLiteral(red: 0.9764705896, green: 0.8267891201, blue: 0.0127835515, alpha: 1)), Colour(name : "Orange", colour : #colorLiteral(red: 0.8495022058, green: 0.4145209409, blue: 0.07371198884, alpha: 1)), Colour(name : "Grey", colour : #colorLiteral(red: 0.7645047307, green: 0.7686187625, blue: 0.772662282, alpha: 1)), Colour(name : "Lilac", colour : #colorLiteral(red: 0.8340004433, green: 0.75248796, blue: 0.9177663536, alpha: 1))]
+    let SERVER_ADDRESS_PIE_CHART = "http://localhost:4000/transaction/graph/pieChart"       // Get pie chart data
+    let SERVER_ADDRESS_BAR_CHART = "http://localhost:4000/transaction/graph/barChart"       // Get bar chart data
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all"                   // Get all spending categories
     
-    //var pieChartData = [PieChart]()          // Store pie chart data from server
-    var pieChartData : PieChart? = nil         // Store pie chart data from server
-    var barChartData : BarChart? = nil          // Store bar chart data from server
-    var spendingCategories = [SpendingCategory]()      // Store all categories
-    
-    //var transactions = [Transaction]()
+    let screenWidth = UIScreen.main.bounds.width - 10
+    let screenHeight = UIScreen.main.bounds.height / 2.5
     var chartType = "Pie Chart"
-    
-    // Server address to get pie chart data
-    let SERVER_ADDRESS_PIE_CHART = "http://localhost:4000/transaction/graph/pieChart"
-    // Server address to get bar chart data
-    let SERVER_ADDRESS_BAR_CHART = "http://localhost:4000/transaction/graph/barChart"
-    // Server address to get all spending categories
-    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all/" //+ UserDetails.sharedInstance.getUID()
-
-
-   /* struct PieChart : Codable {
-        var categoryId : String
-        var name : String
-        var amount : Int32
-    }*/
+    let months = ["--", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]                           // Months for picker view
+    let years = (1900...2200).map { String($0) }          // Years for picker view
+    var selectedDate = Date()                             // Today's date
+    var buttonTitle = ""
    
-    // Pie chart data received from server
-    /*struct PieChart : Codable {
-        var catgeory : String
-        var amount: String
-    }*/
-    
-    // Bar chart data received from server
-   /* struct BarChart : Codable {
-        var incomeAmount: Int32
-        var outcomeAmount: Int32
-    } */
-    
     // All data needed for chart
     struct ChartTableData {
         var name : String
@@ -77,50 +43,35 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         var color : UIColor
     }
     
-    struct PieChartPercentage{
-        var label : String
-        var value : Double
+    @IBAction func monthAndYearButton(_ sender: Any) {
+        monthYearButton.setTitle("", for: .normal)
+        displayMonthAndYearPicker()
     }
     
-    
-    var pieChartEntires = [PieChartDataEntry]()   // Store pie chart data entries
-    var pieChartTableDetails = [ChartTableData]()          // Store data needed for pie chart table view
-    var pieChartPercentages = [PieChartPercentage]()
-    var pieChartColours = [UIColor]()
-    var barChartEntries = [BarChartDataEntry]()   // Store bar chart data entries
-    var barChartTableDetails = [ChartTableData]()          // Store data needed bar chart table view
-    var barChartColors = [#colorLiteral(red: 0.4794762726, green: 0.7111433768, blue: 1, alpha: 1), #colorLiteral(red: 0.8048898964, green: 0.561850013, blue: 0.7715510006, alpha: 1)]                 // Colours for bar chart
-    
-    
-    let array = [PieChart]()                // CHANGE!!!
-
-    //****************************************************
-    
-    //var percentages = PieChartDataEntry(value: 0)
-    //var allPercentages = [BudgetPercentages]()
-    //let colors = [#colorLiteral(red: 0.03912452236, green: 0.3398694694, blue: 0.4359056056, alpha: 1), #colorLiteral(red: 0.153665185, green: 0.5830183625, blue: 0.4813076258, alpha: 1), #colorLiteral(red: 0.6497512167, green: 0.8048898964, blue: 0.1597088941, alpha: 1)]
-    //var selectedIndex = 0
-    let colorsArray = [#colorLiteral(red: 0.03912452236, green: 0.3398694694, blue: 0.4359056056, alpha: 1), #colorLiteral(red: 0.2000421584, green: 0.6995770335, blue: 0.6809796691, alpha: 1), #colorLiteral(red: 0.153665185, green: 0.5830183625, blue: 0.4813076258, alpha: 1), #colorLiteral(red: 0.175951435, green: 0.6201614255, blue: 0.2976064565, alpha: 1), #colorLiteral(red: 0.7415904999, green: 0.9133911133, blue: 0.1858743429, alpha: 1)]
-    
-   /* struct Budget {
-        var name : String
-        var amount : Double
+    @IBAction func nextButton(_ sender: Any) {
     }
     
-    struct BudgetPercentages {
-        var label : String
-        var value : Double
+    @IBAction func previousButton(_ sender: Any) {
     }
     
-    struct BudgetDetails {
-        var details : Budget
-        var percent : Double
-        var color : UIColor
-    }*/
-    
-    //****************************************************
-    
-    
+    @IBAction func chartSegment(_ sender: UISegmentedControl) {
+        
+        if(sender.selectedSegmentIndex == 0) {
+            chartTable.isHidden = true
+            chartType = "Pie Chart"
+            barChart.isHidden = true
+            pieChart.isHidden = true
+            getPieChartData()
+        }
+        
+        else if(sender.selectedSegmentIndex == 1) {
+            chartTable.isHidden = true
+            chartType = "Bar Chart"
+            pieChart.isHidden = true
+            barChart.isHidden = true
+            getBarChartData()
+        }
+    }
     
     // MARK: - Chart view
     
@@ -130,11 +81,6 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
             print("Selected index = \(index)")
         }
     } */
-    
-     /*var timePeriod = [
-         "startDate" : "",
-         "endDate" : ""
-     ]*/
     
     func handleValidationError(data: Data) {
         
@@ -148,8 +94,7 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
         //let errorsArray = [errorValidation]()
-        
-        
+
         let decoder = JSONDecoder()
         
         do {
@@ -218,10 +163,6 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         AF.request(SERVER_ADDRESS_PIE_CHART, method: .get, parameters: timePeriod, encoding: URLEncoding.default)
             .responseJSON { response in
-                print("1")
-                print(response.error as Any)
-                print("2")
-                print(response.data as Any)
                 print("SERVER RESPONSE PIE CHART")
                 print(response.description)
                 
@@ -229,15 +170,18 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 do {
                     print("Decoding")
-                    let result = try decoder.decode(PieChart.self, from: response.data!)
+                    let result = try decoder.decode([PieChart].self, from: response.data!)
                     
                     print(result)
                     
                     DispatchQueue.main.async {
                         // Save result of request
                         self.pieChartData = result
-                        self.setPieChartData()
+                        let dataSet = self.setPieChartData()
                         self.pieChartProperties()
+                        self.formatPieChartDataSet(dataSet: dataSet)
+                        self.pieChart.isHidden = false
+                        self.chartTable.isHidden = false
                         self.reloadTable()
                     }
                } catch {
@@ -270,12 +214,14 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         // Save result of request
                         self.barChartData = result
                         
-                        if(self.barChartData?.incomeAmount == 0 && self.barChartData?.outcomeAmount == 0) {
+                        /*if(self.barChartData?.incomeAmount == 0 && self.barChartData?.outcomeAmount == 0) {
                             self.barChart.isHidden = true
-                        }
+                        }*/
                         
                         self.setBarChartData()
                         self.barChartProperties()
+                        self.barChart.isHidden = false
+                        self.chartTable.isHidden = false
                         self.reloadTable()
                     }
                } catch {
@@ -284,104 +230,77 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }.resume()
     }
     
-    func setPieChartData() {
+    func setPieChartData() -> ChartDataSet {
         
+        let colours = UserDetails.sharedInstance.getColours()      // Get all spending category colours
+        var pieChartEntries = [PieChartDataEntry]()                // Store pie chart data entries
+        var pieChartColours = [UIColor]()                          // Store colours needed for pie chart
         var totalAmount = 0.0
         
         // Empty all arrays
-        pieChartEntires.removeAll()
         pieChartTableDetails.removeAll()
+        pieChartColours.removeAll()
         
-        // Replace 'array' with info from server
-        for transaction in array {
+        // Calculate sum of all categories
+        for transaction in pieChartData {
             totalAmount += Double(transaction.amount)
         }
         
-        // Replace 'array' with info from server
-        for (transaction, colour) in zip(array, colours) {
+        // Store data for pie chart and table
+        for transaction in pieChartData {
             let label = transaction.name
             let amount = transaction.amount
-            let percentage = (Double(amount) / totalAmount) * 100
+            let percentage = round((Double(amount) / totalAmount) * 100 * 10) / 10.0
             var colourName = ""
             var categoryColour = UIColor.clear
             
+            // Find category colour name from category id
             for category in spendingCategories {
                 if(transaction.categoryId == category._id) {
                     colourName = category.colour
                 }
             }
             
+            // Find category UIColour from colour name
             for colour in colours {
                 if(colourName == colour.name) {
                     categoryColour = colour.colour
                 }
             }
             
-            // Store data for chart
+            // Store data for pie chart
             let dataEntry = PieChartDataEntry(value: percentage, label: label)
-            pieChartEntires.append(dataEntry)
-            // Store data for table view
+            pieChartEntries.append(dataEntry)
+            
+            // Store data for pie chart table view
             let tableDetails = ChartTableData(name: label, amount: convertToDecimal(number: Int(amount)), percentage: String(percentage), color: categoryColour)
             pieChartTableDetails.append(tableDetails)
             pieChartColours.append(categoryColour)
         }
-
         
+        let chartDataSet = PieChartDataSet(entries: pieChartEntries, label: "")
+        let chartData = PieChartData(dataSet: chartDataSet)
+        pieChart.data = chartData
         
-       /* allPercentages.removeAll()
-        budgetDetails.removeAll()
+        // Store colours for pie chart
+        chartDataSet.colors = pieChartColours
         
-        
-        
-        // Test data
-        pieChart.chartDescription.text = ""
-        let data : [Budget] = [Budget(name : "Label 1", amount: 2500), Budget(name : "Label 2", amount: 1500), Budget(name : "Label 3", amount: 1000),]
-        
-        for item in data {
-            totalAmount += item.amount
-        }
-        
-        for (budget, color) in zip(data, colors) {
-            let label = budget.name
-            let percentage = round((budget.amount / totalAmount) * 100 * 10) / 10.0
-            let colour = color
-            
-            
-            let labelPercentage = BudgetPercentages(label: label, value: percentage)
-            allPercentages.append(labelPercentage)
-            let details = BudgetDetails(details: budget, percent: percentage, color: colour)
-            budgetDetails.append(details)
-        }
-        
-        pieChartEntires = allPercentages.map { PieChartDataEntry(value: $0.value, label: $0.label)}
-         */
-        
-        //print("Entries = \(entries)")
-        //print("All Spendings Categories = \(allSpendingCategories)")
+        return chartDataSet
     }
     
     //
     func pieChartProperties() {
-        // Disable rotation
-        pieChart.rotationEnabled = false
-        // Animate chart when view loads
-        pieChart.animate(xAxisDuration: 0.5, easingOption: .easeInOutCirc)
-        // Hide labels on chart
-        pieChart.drawEntryLabelsEnabled = false
-        // Display percentages on chart
-        pieChart.usePercentValuesEnabled = true
-        // Disable colours and labels at the bottom
-        pieChart.legend.enabled = false
-        // Set colour of hole to background colour of view
-        pieChart.holeColor = UIColor.systemBackground
-        // Adjust size of chart center
-        pieChart.holeRadiusPercent = CGFloat(0.52)
+        pieChart.rotationEnabled = false                                      // Disable rotation
+        pieChart.animate(xAxisDuration: 0.5, easingOption: .easeInOutCirc)    // Animate chart when view loads
+        pieChart.drawEntryLabelsEnabled = false                               // Hide labels on chart
+        pieChart.usePercentValuesEnabled = true                               // Display percentages on chart
+        pieChart.legend.enabled = false                                       // Disable colours and labels at the bottom
+        pieChart.holeColor = UIColor.systemBackground                         // Set colour of hole to background colour of view
+        pieChart.holeRadiusPercent = CGFloat(0.52)                            // Adjust size of chart center
         
-        // Display category in the center
-        //chartView.centerText = "£ " + String(Int(totalAmount))
-        // Make sure text fits within the center
-        //chartView.centerTextRadiusPercent = 0.95
-        
+        //chartView.centerText = "£ " + String(Int(totalAmount))              // Display category in the center
+        //chartView.centerTextRadiusPercent = 0.95                            // Make sure text fits within the center
+
         //chartView.centerAttributedText = String(Int(totalAmount))
         
         // When slice is tapped, category is displayed
@@ -392,27 +311,17 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //
     func formatPieChartDataSet(dataSet: ChartDataSet) {
         // Display value inside the center when slice is selected
-        // Disable values on chart
-        dataSet.drawValuesEnabled = false
+        
+        dataSet.drawValuesEnabled = false           // Disable values on chart
     }
     
-    
-    func updatePieChartData() -> ChartDataSet {
-        let chartDataSet = PieChartDataSet(entries: pieChartEntires, label: "")
-        let chartData = PieChartData(dataSet: chartDataSet)
-        
-        // From assets
-        //let colors = [UIColor(named: "iosColor"), UIColor(named: "macColor")]
-        chartDataSet.colors = pieChartColours
-        pieChart.data = chartData
-        
-        return chartDataSet
-    }
     
     func setBarChartData() {
         
-        // Empty all arrays
-        barChartEntries.removeAll()
+        let barChartColors = [#colorLiteral(red: 0.4409350055, green: 0.74609375, blue: 0.03125605582, alpha: 1), #colorLiteral(red: 0.6575858161, green: 0.03585042212, blue: 0.1424569237, alpha: 1)]                     // Colours for bar chart
+        var barChartEntries = [BarChartDataEntry]()       // Store bar chart data entries
+
+        // Empty array
         barChartTableDetails.removeAll()
         
         let income = Double(barChartData?.incomeAmount ?? 0)
@@ -422,23 +331,19 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let outcomeEntry = BarChartDataEntry(x: Double(2), y: expenses)
             barChartEntries.append(incomeEntry)
             barChartEntries.append(outcomeEntry)
-                
-        let barChartDataset = BarChartDataSet(entries: barChartEntries, label: "Amount")
-        //let dataSet = BarChartDataSet(value: [entry1, entry2], label: "")
-        let chartData = BarChartData(dataSet: barChartDataset)
         
-        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: ["Income", "Expenses"])
-
+        // Store data for bar chart
+        let barChartDataset = BarChartDataSet(entries: barChartEntries, label: "Amount")
+        let chartData = BarChartData(dataSet: barChartDataset)
         barChart.data = chartData
         
-        barChartDataset.colors = barChartColors
-        // Change bar width
-        chartData.barWidth = Double(0.3)
-        // Remove values above bars
-        barChartDataset.drawValuesEnabled = false
+        barChartDataset.colors = barChartColors             // Store colours for bar chart
+        chartData.barWidth = Double(0.4)                    // Change bar width
+        barChartDataset.drawValuesEnabled = false           // Remove values above bars
+        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: ["Income", "Expenses"])       // Label X axis
         
-        let total = income + expenses
         // Calculate percentages to 1 decimal place
+        let total = income + expenses
         let incomePercent = round((income / total) * 100 * 10) / 10.0
         let expensePercent = round((expenses / total) * 100 * 10) / 10.0
 
@@ -454,31 +359,28 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // Customise appearance of bar chart
     func barChartProperties() {
-        // Remove legend under the bar chart
-        barChart.legend.enabled = false
-        // Remove the right y axis
-        barChart.rightAxis.enabled = false
-        // Move x axis to the bottom of the bar chart
-        barChart.xAxis.labelPosition = .bottom
-        // Remove vertical grid lines
-        barChart.xAxis.drawGridLinesEnabled = false
-        //barChartView.leftAxis.drawGridLinesEnabled = false
+
+        barChart.legend.enabled = false                     // Remove legend under the bar chart
+        barChart.rightAxis.enabled = false                  // Remove the right y axis
+        barChart.xAxis.labelPosition = .bottom              // Move x axis to the bottom of the bar chart
+        barChart.xAxis.drawGridLinesEnabled = false         // Remove vertical grid lines
+        //barChart.leftAxis.drawGridLinesEnabled = false
+        
         
         // Change colour of horizontal grid lines, y axis and x axis
         let lightGrey = #colorLiteral(red: 0.7636238628, green: 0.8182056074, blue: 0.8185921308, alpha: 1)
-        barChart.leftAxis.gridColor = lightGrey
+        let grey = #colorLiteral(red: 0.8182362719, green: 0.8735225065, blue: 0.8735225065, alpha: 1)
+        barChart.leftAxis.gridColor = grey
         barChart.xAxis.axisLineColor = lightGrey
         barChart.leftAxis.axisLineColor = lightGrey
         
         // Remove axis lines
         barChart.leftAxis.drawAxisLineEnabled = false
-        barChart.xAxis.drawAxisLineEnabled = false
+        //barChart.xAxis.drawAxisLineEnabled = false
         
-        // Hide x axis labels
-        barChart.xAxis.drawLabelsEnabled = false
+        barChart.xAxis.drawLabelsEnabled = false                        // Hide x axis labels
+        barChart.animate(xAxisDuration: 0.0, yAxisDuration: 1.0)        // Animate chart when it loads
         
-        // Animate chart when it loads
-        barChart.animate(xAxisDuration: 0.0, yAxisDuration: 1.0)
         // Disable user interaction with chart
         barChart.doubleTapToZoomEnabled = false
         barChart.highlightPerTapEnabled = false
@@ -486,7 +388,6 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         // Change colour of x and y axis labels
         barChart.leftAxis.labelTextColor = #colorLiteral(red: 0.5184787889, green: 0.5184787889, blue: 0.5184787889, alpha: 1)
         barChart.xAxis.labelTextColor = #colorLiteral(red: 0.5184787889, green: 0.5184787889, blue: 0.5184787889, alpha: 1)
-        
         
         barChart.xAxis.granularityEnabled = true
         barChart.xAxis.granularity = 1.0
@@ -496,13 +397,13 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //chartView.xAxis.axisMaximum = 2.0
         barChart.xAxis.labelCount = 2
         barChart.fitBars = true
-        barChart.xAxis.spaceMin = 0.5
+        barChart.xAxis.spaceMin = 0.0
         
         barChart.xAxis.centerAxisLabelsEnabled = true
-                
-        //chartView.xAxis.labelPosition = .topInside
+        // barChart.xAxis.labelPosition = .topInside
     }
     
+    // Add commas to integer
     func convertToDecimal(number: Int) -> String {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -531,7 +432,6 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let valueString = String(pieChartTableDetails[indexPath.row].percentage)
             cell.percentLabel.text = valueString + " %"
             cell.colourLabel.backgroundColor = pieChartTableDetails[indexPath.row].color
-           
         }
         
         else if(chartType == "Bar Chart") {
@@ -541,50 +441,153 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.colourLabel.backgroundColor = barChartTableDetails[indexPath.row].color
         }
         
+        // Change colour label shape to circle
         cell.colourLabel.layer.cornerRadius = 6
         cell.colourLabel.layer.masksToBounds = true
         
         return cell
     }
     
+    // Refresh chart table
     func reloadTable() {
         chartTable.reloadData()
     }
     
+    
+    // MARK: - Month and Year Picker View
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        2
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        var rows = 0
+        
+        if(component == 0) { rows = months.count }
+        else { rows = years.count }
+        
+        return rows
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 30))
+        
+        if(component == 0) {
+            label.text = months[row]
+        }
+        else if(component == 1) {
+            label.text = years[row]
+        }
+
+        label.sizeToFit()
+        
+        return label
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 45
+    }
+    
+    // Display a pop up picker view with all the spending categories
+    func displayMonthAndYearPicker() {
+        
+        var selectedMonthRow = 0
+        var selectedYearRow = 121
+        var selectedMonth = ""
+        var selectedYear = ""
+        
+        let vc = UIViewController()
+        vc.preferredContentSize = CGSize(width: screenWidth, height: screenHeight)
+        let monthAndYearPicker = UIPickerView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+        monthAndYearPicker.dataSource = self
+        monthAndYearPicker.delegate = self
+        monthAndYearPicker.selectRow(selectedMonthRow, inComponent: 0, animated: false)
+        monthAndYearPicker.selectRow(selectedYearRow, inComponent: 1, animated: false)
+        
+        vc.view.addSubview(monthAndYearPicker)
+        monthAndYearPicker.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
+        monthAndYearPicker.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
+        
+        let alert = UIAlertController(title: "DATE", message: "", preferredStyle: .actionSheet)
+        alert.popoverPresentationController?.sourceView = monthYearButton
+        alert.popoverPresentationController?.sourceRect = monthYearButton.bounds
+        alert.setValue(vc, forKey: "contentViewController")
+        
+        // 'Cancel' button
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
+            self.monthYearButton.setTitle(self.buttonTitle, for: .normal)
+            self.monthYearButton.endEditing(true)
+        }))
+        
+        // 'Select' button to confirm user's selection
+        alert.addAction(UIAlertAction(title: "Select", style: .default , handler: { (UIAlertAction) in
+            selectedMonthRow = monthAndYearPicker.selectedRow(inComponent: 0)
+            selectedYearRow = monthAndYearPicker.selectedRow(inComponent: 1)
+            selectedMonth = self.months[selectedMonthRow]
+            selectedYear = self.years[selectedYearRow]
+                            
+            if(selectedMonth == "--") {
+                self.buttonTitle = selectedYear
+            }
+            else {
+                self.buttonTitle = selectedMonth + " " + selectedYear
+            }
+        
+            self.monthYearButton.setTitle(self.buttonTitle, for: .normal)
+            self.monthYearButton.endEditing(true)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func monthAndYear(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "LLLL YYYY"
+        
+        return dateFormatter.string(from: date)
+    }
+    
+    func convertMonthToDate(month: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "mm"
+        
+        return dateFormatter.date(from: month)!
+    }
+    
+    func getStartDate(date: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/mm/dd"
+        
+        return dateFormatter.date(from: date)!
+    }
+    
+    // MARK: - View controller
+
     override func viewWillAppear(_ animated: Bool) {
         print("Reloading Chart VC")
-        //setData()
-        //updateChartData()
+
+        getSpendingCategories()
         
         if(chartType == "Pie Chart") { getPieChartData() }
         else { getBarChartData() }
-        //getBarChartData()
     }
     
     
-    // MARK: - View controller
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.title = "Chart"
-
         print(self.title! + " loaded!")
-        /*let chart = PieChartView(frame: self.view.frame)
-        chart.delegate = self
-        setPieChartData()
-        let dataSet = updateChartData()
-        pieChartProperties()
-        formatPieChartDataSet(dataSet: dataSet)*/
+        getSpendingCategories()
+
+        // Set month & year button title
+        buttonTitle = monthAndYear(date: selectedDate)
+        monthYearButton.setTitle(buttonTitle, for: .normal)
         
         barChart.isHidden = true
+        chartTable.isUserInteractionEnabled = false
         
         if(chartType == "Pie Chart") { getPieChartData() }
         else { getBarChartData() }
-        //getBarChartData()
-        
-        //setBarChartData()
-        //customiseBarChart()
     }
 
 }

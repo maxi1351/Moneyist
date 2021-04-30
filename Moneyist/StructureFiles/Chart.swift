@@ -8,15 +8,9 @@
 import Foundation
 
 // Pie chart struct
-/*struct PieChart : Codable {
-    public var category : pieDetails
-}*/
-
-//struct pieDetails : Codable {
 struct PieChart : Codable {
     public var categoryId: String
-    public var name: String 
-    //public var category : Category
+    public var name: String
     public var amount: Int32
 }
 
@@ -24,9 +18,4 @@ struct PieChart : Codable {
 struct BarChart : Codable {
     public var incomeAmount: Int32
     public var outcomeAmount: Int32
-}
-
-struct Category : Codable {
-    public var id : String
-    public var name : String
 }

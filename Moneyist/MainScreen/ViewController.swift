@@ -31,11 +31,14 @@ class ViewController: UIViewController {
     // DEBUG!
     // Skips the entry of credentials
     @IBAction func autoLoginDebugPress(_ sender: UIButton) {
-        usernameField.text = "sample99@yahoo.jp"
-        passwordField.text = "Sample_20"
+        //usernameField.text = "sample99@yahoo.jp"
+        //passwordField.text = "Sample_20"
         
         //usernameField.text = "sample99@gmail.com"
         //passwordField.text = "Password_123"
+        
+        usernameField.text = "sample@gmail.com"
+        passwordField.text = "Pass_123"
 
         processUserDetails()
     }
