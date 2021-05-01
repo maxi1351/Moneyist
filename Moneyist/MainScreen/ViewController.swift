@@ -37,8 +37,11 @@ class ViewController: UIViewController {
         //usernameField.text = "sample99@gmail.com"
         //passwordField.text = "Password_123"
         
-        usernameField.text = "sample@gmail.com"
-        passwordField.text = "Pass_123"
+        /*usernameField.text = "sample@gmail.com"
+        passwordField.text = "Pass_123"*/
+        
+        usernameField.text = "jojo@yahoo.jp"
+        passwordField.text = "Sample_20"
 
         processUserDetails()
     }

@@ -12,7 +12,6 @@ class BudgetEditViewController: UIViewController {
 
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var initialAmountField: UITextField!
-    @IBOutlet weak var amountAfterExpensesField: UITextField!
     @IBOutlet weak var amountForNeedsField: UITextField!
     @IBOutlet weak var amountForWantsField: UITextField!
     @IBOutlet weak var savingsAndDebtsField: UITextField!
@@ -27,7 +26,6 @@ class BudgetEditViewController: UIViewController {
         "endDate" : "",
         "startDate" : "",
         "initialAmount" : 0,
-        "amountAfterExpenses" : 0,
         "amountForNeeds" : 0,
         "amountForWants" : 0,
         "savingsAndDebts" : 0,
@@ -64,12 +62,12 @@ class BudgetEditViewController: UIViewController {
         showDatePicker()
         showEndDatePicker()
         
-        currencyPrefixConfiguration(symbol: "€")
+        // Configure currency symbol prefix for text fields
+        currencyPrefixConfiguration()
         
         // Set values for for fields
         nameField.text = (budgetInfo["name"] as! String)
         initialAmountField.text = "\(budgetInfo["initialAmount"] ?? "ERROR")"
-        amountAfterExpensesField.text = "\(budgetInfo["amountAfterExpenses"] ?? "ERROR")"
         amountForNeedsField.text = "\(budgetInfo["amountForNeeds"] ?? "ERROR")"
         amountForWantsField.text = "\(budgetInfo["amountForWants"] ?? "ERROR")"
         savingsAndDebtsField.text = "\(budgetInfo["savingsAndDebts"] ?? "ERROR")"
@@ -96,7 +94,6 @@ class BudgetEditViewController: UIViewController {
             "endDate" : endDateField.text!,
             "startDate" : startDateField.text!,
             "initialAmount" : initialAmountField.text!,
-            "amountAfterExpenses" : amountAfterExpensesField.text!,
             "amountForNeeds" : amountForNeedsField.text!,
             "amountForWants" : amountForWantsField.text!,
             "savingsAndDebts" : savingsAndDebtsField.text!
@@ -108,7 +105,7 @@ class BudgetEditViewController: UIViewController {
                 print(response)
                 
                 
-                if (response.description != "success(\"OK\")") {
+                if (response.description == "success(\"OK\")") {
                     print("Good response!")
                     self.handleValidationError(data: response.data!)
                 }
@@ -176,6 +173,9 @@ class BudgetEditViewController: UIViewController {
                
             }
            
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
+            
             alert.addAction(okAction)
             
             self.present(alert, animated: true)
@@ -185,7 +185,10 @@ class BudgetEditViewController: UIViewController {
         }
     }
     
-    func currencyPrefixConfiguration(symbol: String) {
+    func currencyPrefixConfiguration() {
+        // Get currency symbol
+        let symbol = UserDetails.sharedInstance.getCurrencySymbol()
+        
         let prefix = UILabel()
         prefix.text = " " + symbol + " "
         prefix.sizeToFit()
@@ -212,8 +215,6 @@ class BudgetEditViewController: UIViewController {
         amountForWantsField.leftViewMode = .always
         amountForNeedsField.leftView = prefix3
         amountForNeedsField.leftViewMode = .always
-        amountAfterExpensesField.leftView = prefix4
-        amountAfterExpensesField.leftViewMode = .always
         savingsAndDebtsField.leftView = prefix5
         savingsAndDebtsField.leftViewMode = .always
     }

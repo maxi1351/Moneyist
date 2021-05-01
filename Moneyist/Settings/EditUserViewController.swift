@@ -15,6 +15,7 @@ class EditUserViewController: UIViewController {
     @IBOutlet weak var dobField: UITextField!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var mobileNumberField: UITextField!
+    @IBOutlet weak var currencySegment: UISegmentedControl!
     
     let SERVER_ADDRESS = "http://localhost:4000/user/profile/update" //+ UserDetails.sharedInstance.getUID()
     
@@ -27,7 +28,10 @@ class EditUserViewController: UIViewController {
         "dateOfBirth" : "",
         "email" : "",
         "mobileNumber" : "",
+        "currency" : ""
     ]
+    
+    var currency = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +51,40 @@ class EditUserViewController: UIViewController {
         
         emailField.text = userInfo["email"]
         mobileNumberField.text = userInfo["mobileNumber"]
+        
+        currency = userInfo["currency"]!
+        
+        switch (currency) {
+        case "GBP":
+            currencySegment.selectedSegmentIndex = 0
+            break
+        case "EUR":
+            currencySegment.selectedSegmentIndex = 1
+            break
+        default:
+            currencySegment.selectedSegmentIndex = 0
+            break
+        }
+        
     }
+    
+    @IBAction func selectedCurrencyChanged(_ sender: UISegmentedControl) {
+        
+        switch (currencySegment.selectedSegmentIndex) {
+        case 0:
+            currency = "GBP"
+            break
+        case 1:
+            currency = "EUR"
+            break
+        default:
+            currency = "EUR"
+            break
+        }
+        
+        print("Currency changed to: " + currency)
+    }
+    
     
     @IBAction func editButtonPress(_ sender: UIButton) {
         
@@ -83,12 +120,11 @@ class EditUserViewController: UIViewController {
             "dateOfBirth" : dobField.text!,
             "email" : emailField.text!,
             "mobileNumber" : mobileNumberField.text!,
+            "currency" : currency,
             "password" : password
         ]
         
         print(userInfo["password"]!)
-        
-        
         
         // Make a PATCH request with user details
         AF.request(SERVER_ADDRESS, method: .patch, parameters: userInfo, encoding: JSONEncoding.default)
@@ -97,6 +133,8 @@ class EditUserViewController: UIViewController {
                 
                 if (response.description == "success(\"OK\")") {
                     print("Good response!")
+                    //Update global currency
+                    UserDetails.sharedInstance.setCurrency(newCurrency: self.currency)
                     self.navigationController?.popViewController(animated: true)
                 }
                 else {

@@ -368,7 +368,10 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         numberFormatter.numberStyle = .decimal
         let formattedNumber = numberFormatter.string(from: NSNumber(value: tempNumber))
         
-        balanceLabel.text = "Income/Expense Balance: " + UserDetails.sharedInstance.getCurrencySymbol() + " " + formattedNumber!
+        balanceLabel.text = "Income/Expense Balance: " + formattedNumber!
+        
+        // DEBUG prints currecy
+        print(UserDetails.sharedInstance.getCurrencySymbol())
         
         print(months)
         

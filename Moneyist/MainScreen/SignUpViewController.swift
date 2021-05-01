@@ -18,6 +18,8 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var confirmPasswordField: UITextField!
     @IBOutlet weak var mobileNumberField: UITextField!
+    @IBOutlet weak var currencySegment: UISegmentedControl!
+    
 
     // Holds user details in dictionary format
     var userDetails = [
@@ -30,6 +32,8 @@ class SignUpViewController: UIViewController {
         "confirmPassword" : "",
         "currency" : ""
     ]
+    
+    var currency = "GBP"
     
     // Standard server address (with given route, in this case 'user/register')
     let SERVER_ADDRESS = "http://localhost:4000/auth/signup"
@@ -57,7 +61,7 @@ class SignUpViewController: UIViewController {
                 "mobileNumber" : mobileNumberField.text!,
                 "password" : passwordField.text!,
                 "confirmPassword" : confirmPasswordField.text!,
-                "currency" : "EUR"
+                "currency" : currency
                 ]
             
             // DEBUG
@@ -188,6 +192,20 @@ class SignUpViewController: UIViewController {
         
         performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
         
+    }
+    
+    
+    @IBAction func currencySegmentChanged(_ sender: UISegmentedControl) {
+        switch currencySegment.selectedSegmentIndex {
+            case 0:
+                currency = "GBP"
+            case 1:
+                currency = "EUR"
+            default:
+                break;
+        }
+        
+        print("Currency changed to: " + currency)
     }
     
     // Prepare segue to dashboard

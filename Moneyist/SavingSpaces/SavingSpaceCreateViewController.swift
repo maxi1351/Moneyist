@@ -119,7 +119,7 @@ class SavingSpaceCreateViewController: UIViewController {
         
         let reminderDetails = [
             "associated" : true,
-            "savingSpaceId" : savingSpaceID,
+            "ID" : savingSpaceID,
             "title" : descriptionField.text!,
             "type" : "GOAL",
             "description" : categoryField.text!,
@@ -132,7 +132,7 @@ class SavingSpaceCreateViewController: UIViewController {
                 print(response)
                 
                 DispatchQueue.main.async {
-                    if (response.description == "success(\"OK\")") {
+                    if (response.description == "success(\"Created\")") {
                         print("Good response!")
                         self.navigationController?.popViewController(animated: true)
                     }

@@ -137,7 +137,7 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
         ]
         
         struct TResponse: Codable {
-            var msg: String?
+            var transactionId: String?
         }
         
         // Make a PATCH request with transaction info
@@ -145,15 +145,32 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
             .responseString { response in
                 print(response.description)
                 
-                if (response.description != "success(\"OK\")") {
-                    print("Bad response!")
-                    self.handleValidationError(data: response.data!)
-                }
-                else {
-                    self.navigationController?.popViewController(animated: true)
+                let decoder = JSONDecoder()
+                
+                do {
+                    let result = try decoder.decode(TResponse.self, from: response.data!)
+                    print(result.transactionId ?? "ERROR")
+                  
+                    let tempID = result.transactionId ?? "ERROR"
+                    
+                    DispatchQueue.main.async {
+                        if (tempID == "ERROR") {
+                            print("Data validation error!")
+                            // Handle the given validation error
+                            self.handleValidationError(data: response.data!)
+                        }
+                        else {
+                            // Return to previous screen
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                    
+                    
+                } catch {
+                    print(error)
                 }
                 
-            }
+            }.resume()
         
     }
     

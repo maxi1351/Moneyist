@@ -135,6 +135,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     self.userInfo["dateOfBirth"] = result.dateOfBirth
                     self.userInfo["email"] = result.email
                     self.userInfo["mobileNumber"] = result.mobileNumber
+                    self.userInfo["currency"] = result.currency
                     
                 } catch {
                     print(error)
