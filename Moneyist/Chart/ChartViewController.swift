@@ -9,12 +9,13 @@ import UIKit
 import Charts
 import Alamofire
 
-class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, ChartViewDelegate {
+class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChartViewDelegate {
+    // UIPickerViewDelegate, UIPickerViewDataSource,
     
     @IBOutlet var pieChart: PieChartView!
     @IBOutlet weak var barChart: BarChartView!
     @IBOutlet weak var chartTable: UITableView!
-    @IBOutlet weak var monthYearButton: UIButton!
+    //@IBOutlet weak var monthAndYearLabel: UILabel!
     
     // Store data from server
     var pieChartData = [PieChart]()                          // Pie chart data
@@ -30,11 +31,20 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let screenWidth = UIScreen.main.bounds.width - 10
     let screenHeight = UIScreen.main.bounds.height / 2.5
     var chartType = "Pie Chart"
-    let months = ["--", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]                           // Months for picker view
+    var months = [Month(month: "00", monthName: "--")]    // Months for picker view
     let years = (1900...2200).map { String($0) }          // Years for picker view
-    var selectedDate = Date()                             // Today's date
-    var buttonTitle = ""
-   
+    let calendar = Calendar.current
+    
+   /* var selectedDate = Date()                             // Today's date
+    var monthly = true
+    var date = ""*/
+    
+    // Month name and number
+    struct Month {
+        var month : String
+        var monthName : String
+    }
+    
     // All data needed for chart
     struct ChartTableData {
         var name : String
@@ -43,32 +53,61 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         var color : UIColor
     }
     
-    @IBAction func monthAndYearButton(_ sender: Any) {
-        monthYearButton.setTitle("", for: .normal)
-        displayMonthAndYearPicker()
-    }
     
-    @IBAction func nextButton(_ sender: Any) {
+   /* @IBAction func nextButton(_ sender: Any) {
+        if(monthly == true) {
+            selectedDate = calendar.date(byAdding: .month, value: 1, to: selectedDate)!
+            monthAndYearLabel.text = getMonth(date: selectedDate, numberFormat: false) + " " + setLabelYear(date: selectedDate)
+            date = setLabelYear(date: selectedDate) + "/" + getMonth(date: selectedDate, numberFormat: true)
+        }
+        else {
+            selectedDate = calendar.date(byAdding: .year, value: 1, to: selectedDate)!
+            monthAndYearLabel.text = setLabelYear(date: selectedDate)
+            date = setLabelYear(date: selectedDate)
+        }
+        
+        print("Start Date = " + getStartDate())
+        print("End Date = " + getEndDate())
+        //displayChart()
     }
     
     @IBAction func previousButton(_ sender: Any) {
-    }
+        
+        if(monthly == true) {
+            selectedDate = calendar.date(byAdding: .month, value: -1, to: selectedDate)!
+            monthAndYearLabel.text = getMonth(date: selectedDate, numberFormat: false) + " " + setLabelYear(date: selectedDate)
+        }
+        else {
+            selectedDate = calendar.date(byAdding: .year, value: -1, to: selectedDate)!
+            monthAndYearLabel.text = getMonth(date: selectedDate, numberFormat: false) + " " + setLabelYear(date: selectedDate)
+        }
+        
+        print("Start Date = " + getStartDate())
+        print("End Date = " + getEndDate())
+        //displayChart()
+    }*/
     
     @IBAction func chartSegment(_ sender: UISegmentedControl) {
         
         if(sender.selectedSegmentIndex == 0) {
-            chartTable.isHidden = true
             chartType = "Pie Chart"
-            barChart.isHidden = true
-            pieChart.isHidden = true
-            getPieChartData()
         }
         
         else if(sender.selectedSegmentIndex == 1) {
-            chartTable.isHidden = true
             chartType = "Bar Chart"
-            pieChart.isHidden = true
-            barChart.isHidden = true
+        }
+        
+        chartTable.isHidden = true
+        barChart.isHidden = true
+        pieChart.isHidden = true
+        displayChart()
+    }
+    
+    func displayChart() {
+        if(chartType == "Pie Chart") {
+            getPieChartData()
+        }
+        else if(chartType == "Bar Chart") {
             getBarChartData()
         }
     }
@@ -131,17 +170,15 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func getSpendingCategories() {
         AF.request(SERVER_ADDRESS_ALL, encoding: JSONEncoding.default)
             .responseJSON { response in
-                print("SERVER RESPONSE")
-                print(response)
+                //print("SERVER RESPONSE")
+                //print(response)
                 
                 let decoder = JSONDecoder()
                 
                 do {
                     print("Decoding")
                     let result = try decoder.decode([SpendingCategory].self, from: response.data!)
-                    
-                    print(result)
-                    
+                                        
                     DispatchQueue.main.async {
                         // Save result of request
                         self.spendingCategories = result
@@ -157,21 +194,25 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // Get transactions associated with a category from server
     func getPieChartData() {
         
-        let timePeriod: Parameters = ["startDate": "2021/05/01", "endDate": "2021/06/01"]
+        /*let timePeriod : Parameters = [
+            "startDate": "2021/01/01",
+            "endDate": "2021/12/31"
+        ]*/
         
         //method: .get, parameters: timePeriod, encoding: URLEncoding.default
 
-        AF.request(SERVER_ADDRESS_PIE_CHART, method: .get, parameters: timePeriod, encoding: URLEncoding.default)
+        AF.request(SERVER_ADDRESS_PIE_CHART, method: .post, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print("SERVER RESPONSE PIE CHART")
-                print(response.description)
+                //print(response.description)
+                debugPrint(response)
                 
                 let decoder = JSONDecoder()
                 
                 do {
                     print("Decoding")
                     let result = try decoder.decode([PieChart].self, from: response.data!)
-                    
+                    print("Pie chart result")
                     print(result)
                     
                     DispatchQueue.main.async {
@@ -193,14 +234,14 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // Get income and expenses from server
     func getBarChartData() {
         
-        let timePeriod: Parameters = ["startDate": "1991/01/01", "endDate": "2001/01/01"]
+        //let timePeriod: Parameters = ["startDate": "1991/01/01", "endDate": "2001/01/01"]
         
         //method: .get, parameters: timePeriod, encoding: URLEncoding.default
 
-        AF.request(SERVER_ADDRESS_BAR_CHART, encoding: JSONEncoding.default)
+        AF.request(SERVER_ADDRESS_BAR_CHART, method: .post, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print("SERVER RESPONSE BAR CHART")
-                print(response)
+                debugPrint(response)
                 
                 let decoder = JSONDecoder()
                 
@@ -237,6 +278,8 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         var pieChartColours = [UIColor]()                          // Store colours needed for pie chart
         var totalAmount = 0.0
         
+        pieChartData.sort { $0.amount > $1.amount }         // Sort descendig order
+        
         // Empty all arrays
         pieChartTableDetails.removeAll()
         pieChartColours.removeAll()
@@ -268,6 +311,7 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
             }
             
+            guard percentage > 0 else { continue }
             // Store data for pie chart
             let dataEntry = PieChartDataEntry(value: percentage, label: label)
             pieChartEntries.append(dataEntry)
@@ -278,10 +322,13 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
             pieChartColours.append(categoryColour)
         }
         
+        //pieChartEntries.sort { $0.value > $1.value }
+        //pieChartTableDetails.sort { $0.percentage > $1.percentage }
+        
         let chartDataSet = PieChartDataSet(entries: pieChartEntries, label: "")
         let chartData = PieChartData(dataSet: chartDataSet)
         pieChart.data = chartData
-        
+                
         // Store colours for pie chart
         chartDataSet.colors = pieChartColours
         
@@ -297,6 +344,8 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         pieChart.legend.enabled = false                                       // Disable colours and labels at the bottom
         pieChart.holeColor = UIColor.systemBackground                         // Set colour of hole to background colour of view
         pieChart.holeRadiusPercent = CGFloat(0.52)                            // Adjust size of chart center
+        
+        pieChart.highlightPerTapEnabled = false         // Disabkle highlighting when tapped
         
         //chartView.centerText = "£ " + String(Int(totalAmount))              // Display category in the center
         //chartView.centerTextRadiusPercent = 0.95                            // Make sure text fits within the center
@@ -401,6 +450,8 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         barChart.xAxis.centerAxisLabelsEnabled = true
         // barChart.xAxis.labelPosition = .topInside
+        
+        barChart.leftAxis.axisMinimum = 0.0
     }
     
     // Add commas to integer
@@ -456,7 +507,7 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: - Month and Year Picker View
 
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+  /*  func numberOfComponents(in pickerView: UIPickerView) -> Int {
         2
     }
     
@@ -473,7 +524,7 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 30))
         
         if(component == 0) {
-            label.text = months[row]
+            label.text = months[row].monthName
         }
         else if(component == 1) {
             label.text = years[row]
@@ -488,10 +539,10 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return 45
     }
     
-    // Display a pop up picker view with all the spending categories
+    // Display a pop up picker view with months and years when user clicks on the month and year label
     func displayMonthAndYearPicker() {
         
-        var selectedMonthRow = 0
+        var selectedMonthRow = 5
         var selectedYearRow = 121
         var selectedMonth = ""
         var selectedYear = ""
@@ -509,56 +560,162 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         monthAndYearPicker.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
         
         let alert = UIAlertController(title: "DATE", message: "", preferredStyle: .actionSheet)
-        alert.popoverPresentationController?.sourceView = monthYearButton
-        alert.popoverPresentationController?.sourceRect = monthYearButton.bounds
+        alert.popoverPresentationController?.sourceView = monthAndYearLabel
+        alert.popoverPresentationController?.sourceRect = monthAndYearLabel.bounds
         alert.setValue(vc, forKey: "contentViewController")
         
         // 'Cancel' button
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
-            self.monthYearButton.setTitle(self.buttonTitle, for: .normal)
-            self.monthYearButton.endEditing(true)
+            self.monthAndYearLabel.endEditing(true)
         }))
         
         // 'Select' button to confirm user's selection
         alert.addAction(UIAlertAction(title: "Select", style: .default , handler: { (UIAlertAction) in
             selectedMonthRow = monthAndYearPicker.selectedRow(inComponent: 0)
             selectedYearRow = monthAndYearPicker.selectedRow(inComponent: 1)
-            selectedMonth = self.months[selectedMonthRow]
+            selectedMonth = self.months[selectedMonthRow].monthName
             selectedYear = self.years[selectedYearRow]
                             
             if(selectedMonth == "--") {
-                self.buttonTitle = selectedYear
+                self.monthAndYearLabel.text = selectedYear
+                self.monthly = false
+                self.date = selectedYear
+                print("Start Date = " + self.getStartDate())
+                print("End Date = " + self.getEndDate())
             }
             else {
-                self.buttonTitle = selectedMonth + " " + selectedYear
+                self.monthAndYearLabel.text = selectedMonth + " " + selectedYear
+                self.monthly = true
+                self.date = selectedYear + "/" + self.months[selectedMonthRow].month
+                print("Start Date = " + self.getStartDate())
+                print("End Date = " + self.getEndDate())
             }
-        
-            self.monthYearButton.setTitle(self.buttonTitle, for: .normal)
-            self.monthYearButton.endEditing(true)
+    
+            self.monthAndYearLabel.endEditing(true)
         }))
         
         self.present(alert, animated: true, completion: nil)
     }
     
-    func monthAndYear(date: Date) -> String {
+    // Display month and year inside label
+    func setLabelMonthAndYear(date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "LLLL YYYY"
+        dateFormatter.dateFormat = "LLLL yyyy"
         
         return dateFormatter.string(from: date)
     }
     
-    func convertMonthToDate(month: String) -> Date {
+    func getMonth(date: Date, numberFormat: Bool) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "mm"
+        if(numberFormat == false) {
+            dateFormatter.dateFormat = "LLLL"
+        }
+        else {
+            dateFormatter.dateFormat = "MM"
+        }
         
-        return dateFormatter.date(from: month)!
+        return dateFormatter.string(from: date)
     }
+    
+    // Display only year inside label
+    func setLabelYear(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy"
+        
+        return dateFormatter.string(from: date)
+    }
+    
+    // Total number of days in the month
+    func totalDaysInMonth() -> Int {
+        let days = calendar.range(of: .day, in: .month, for: selectedDate)
+        
+        return days!.count
+    }
+    
+    // Pass global var date as a parameter instead
+    // Change into a function that returns a dictionary of start and end date (timePeriod)
+    
+    func getStartDate() -> String {
+        var startDate = ""
+        
+        if(monthly == true) {
+            startDate = date + "/01"
+        }
+        else {
+            startDate = date + "/01/01"
+        }
+        
+        return startDate
+    }
+    
+    func getEndDate() -> String {
+        var endDate = ""
+        let startDate = getStartDate()
+        
+        if(monthly == true) {
+            //let lastDay = convertToDate(date: startDate)
+            endDate = date + "/" + String(totalDaysInMonth())
+        }
+        else {
+            endDate = date + "/12/31"
+        }
+        
+        return endDate
+    }
+    
+   /* func monthAndYear(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "LLLL YYYY"
+        
+        return dateFormatter.string(from: date)
+    }*/
+    
+    func convertToDate(date: String) -> String {
+        print("Start date parameter = \(date)")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        let convertedDate = dateFormatter.date(from: date)!
+        print("converted string to date = \(convertedDate)")
+        let days = calendar.range(of: .day, in: .month, for: convertedDate)
+        
+        return String(days!.count)
+    }
+    
     
     func getStartDate(date: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/mm/dd"
         
         return dateFormatter.date(from: date)!
+    }
+   
+    // MARK: - Month and Year Label
+    
+    func addTapToLabel() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFunction))
+        monthAndYearLabel.isUserInteractionEnabled = true
+        monthAndYearLabel.addGestureRecognizer(tap)
+    }
+    
+    @objc func tapFunction(sender: UITapGestureRecognizer) {
+        displayMonthAndYearPicker()
+    }*/
+    
+    // Create array with all the months in a year
+    func createMonthArray() {
+        
+        let allMonths = calendar.monthSymbols
+        
+        for i in 1...12 {
+            var j = "\(i)"
+            
+            if(i < 10) {
+                j = "0\(i)"
+            }
+            
+            let month = Month(month: j, monthName: allMonths[i-1])
+            months.append(month)
+        }
     }
     
     // MARK: - View controller
@@ -580,14 +737,29 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         getSpendingCategories()
 
         // Set month & year button title
-        buttonTitle = monthAndYear(date: selectedDate)
-        monthYearButton.setTitle(buttonTitle, for: .normal)
+        //monthAndYearLabel.text = setLabelMonthAndYear(date: selectedDate)
         
         barChart.isHidden = true
-        chartTable.isUserInteractionEnabled = false
         
         if(chartType == "Pie Chart") { getPieChartData() }
         else { getBarChartData() }
+        
+        //addTapToLabel()
+        
+        createMonthArray()
+        //testDate(date: "January")
+        
     }
-
+    
+    func testDate(date: String) {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "LLLL"
+        
+        formatter.dateFormat = "MM"
+        let result = formatter.string(from: formatter.date(from: date)!)
+        
+        print("Converted String to Date = " + result)
+    }
+    
 }

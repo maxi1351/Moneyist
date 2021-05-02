@@ -145,11 +145,11 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
             .responseString { response in
                 print("Delete Category Response:")
                 print(response)
+                
+                // Refresh data after deletion
+                self.getSpendingCategories()
             }
         print("Category DELETED!")
-        // Refresh data after deletion
-        self.getSpendingCategories()
-        self.reloadTable()
     }
     
     // Delete all spending categories
@@ -158,10 +158,10 @@ class SpendingCategoriesViewController: UIViewController, UITableViewDelegate, U
             .responseString { response in
                 print("Delete All Spending Categories Response:")
                 print(response)
-                
+
                 // Refresh data after deletion
                 self.spendingCategories.removeAll()
-                self.reloadTable()
+                //self.reloadTable()
             }
         print("All Spending Categories DELETED!")
     }

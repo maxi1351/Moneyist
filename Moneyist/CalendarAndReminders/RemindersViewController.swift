@@ -12,6 +12,19 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBOutlet weak var reminderTable: UITableView!
     
+    var reminderID = ""
+    var reminders = [Reminder]()                          // All reminders from backend
+    var groupedRemindersArray = [groupedReminders]()      // Reminders grouped by date
+    
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/reminder/all/" //+ UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_SPECIFIC = "http://localhost:4000/reminder/"   // + reminderID
+    
+    // Store reminders associated with each date
+    struct groupedReminders {
+        var date : String
+        var associatedReminders = [Reminder]()
+    }
+    
     @IBAction func deleteAllButton(_ sender: Any) {
         // Ask user if they are sure using an alert
         let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete all of your reminders?\nTHIS ACTION IS IRREVERSIBLE.\nTHINK BEFORE YOU CLICK!", preferredStyle: .alert)
@@ -38,25 +51,12 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
         self.present(alert, animated: true)
     }
     
-    var reminderID = ""
-    var reminders = [Reminder]()                          // All reminders from backend
-    var groupedRemindersArray = [groupedReminders]()      // Reminders grouped by date
-    
-    let SERVER_ADDRESS_ALL = "http://localhost:4000/reminder/all/" //+ UserDetails.sharedInstance.getUID()
-    let SERVER_ADDRESS_SPECIFIC = "http://localhost:4000/reminder/"   // + reminderID
-    
-    // Store reminders associated with each date
-    struct groupedReminders {
-        var date : String
-        var associatedReminders = [Reminder]()
-    }
-    
     func getReminders() {
         
         AF.request(SERVER_ADDRESS_ALL, encoding: JSONEncoding.default)
             .responseJSON { response in
                 
-                //print(response)
+                print("Response -> \(response)")
                 
                 let decoder = JSONDecoder()
                 
@@ -148,11 +148,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
             .responseString { response in
                 print("Delete Reminder Response:")
                 print(response)
+                
+                // Refresh data after deletion
+                self.getReminders()
             }
         print("Reminder DELETED!")
-        // Refresh data after deletion
-        self.getReminders()
-        self.reloadTable()
     }
     
     // Delete all reminders

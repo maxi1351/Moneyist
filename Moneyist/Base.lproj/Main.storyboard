@@ -790,8 +790,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8v-dD-QSb">
-                                <rect key="frame" x="329.5" y="102.5" width="14.5" height="22"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8v-dD-QSb">
+                                <rect key="frame" x="329.5" y="104" width="14.5" height="22"/>
                                 <state key="normal">
                                     <color key="titleColor" name="AccentColor"/>
                                     <imageReference key="image" image="chevron.right" catalog="system" symbolScale="large"/>
@@ -800,8 +800,8 @@
                                     <action selector="nextMonth:" destination="Zah-TV-4bh" eventType="touchUpInside" id="VGN-bM-XgC"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="geQ-3o-2gI">
-                                <rect key="frame" x="70" y="102.5" width="14.5" height="22"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="geQ-3o-2gI">
+                                <rect key="frame" x="70" y="104" width="14.5" height="22"/>
                                 <state key="normal">
                                     <color key="titleColor" name="AccentColor"/>
                                     <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
@@ -2263,17 +2263,17 @@ Saving Space</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EyO-m7-ZVs" customClass="PieChartView" customModule="Charts">
-                                <rect key="frame" x="20" y="204" width="374" height="320"/>
+                                <rect key="frame" x="20" y="173" width="374" height="317"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qey-F8-t3F" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="20" y="204" width="374" height="320"/>
+                                <rect key="frame" x="20" y="173" width="374" height="317"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="TJo-FN-KVk">
-                                <rect key="frame" x="0.0" y="524" width="414" height="289"/>
+                                <rect key="frame" x="0.0" y="498" width="414" height="315"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="separatorColor" systemColor="systemGray4Color"/>
@@ -2336,7 +2336,7 @@ Saving Space</string>
                                 </connections>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rRh-h1-2aW">
-                                <rect key="frame" x="94" y="162" width="226" height="32"/>
+                                <rect key="frame" x="94" y="110" width="226" height="32"/>
                                 <segments>
                                     <segment title="Pie Chart"/>
                                     <segment title="Bar Chart"/>
@@ -2346,48 +2346,12 @@ Saving Space</string>
                                     <action selector="statusSelectionChanged:" destination="MLn-M6-7Pr" eventType="valueChanged" id="BHJ-Sh-cZk"/>
                                 </connections>
                             </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ugx-03-JdL">
-                                <rect key="frame" x="329.5" y="110" width="14.5" height="22"/>
-                                <state key="normal">
-                                    <color key="titleColor" name="AccentColor"/>
-                                    <imageReference key="image" image="chevron.right" catalog="system" symbolScale="large"/>
-                                </state>
-                                <connections>
-                                    <action selector="nextButton:" destination="m1d-RP-Vbu" eventType="touchUpInside" id="24y-sG-S1U"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JMc-Bk-lB9">
-                                <rect key="frame" x="70" y="110" width="14.5" height="22"/>
-                                <state key="normal">
-                                    <color key="titleColor" name="AccentColor"/>
-                                    <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
-                                </state>
-                                <connections>
-                                    <action selector="previousButton:" destination="m1d-RP-Vbu" eventType="touchUpInside" id="yPf-74-QRQ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YlN-GB-MnB">
-                                <rect key="frame" x="117" y="100" width="180" height="42"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="September 2021">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="monthAndYearButton:" destination="m1d-RP-Vbu" eventType="touchUpInside" id="i32-4o-xZE"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qaq-Sm-ebe"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Ugx-03-JdL" firstAttribute="centerY" secondItem="YlN-GB-MnB" secondAttribute="centerY" id="28q-zD-nxX"/>
-                            <constraint firstItem="YlN-GB-MnB" firstAttribute="centerX" secondItem="qaq-Sm-ebe" secondAttribute="centerX" id="CJm-51-S48"/>
-                            <constraint firstItem="rRh-h1-2aW" firstAttribute="top" secondItem="YlN-GB-MnB" secondAttribute="bottom" constant="20" id="dJG-c5-Z0S"/>
-                            <constraint firstItem="JMc-Bk-lB9" firstAttribute="centerY" secondItem="YlN-GB-MnB" secondAttribute="centerY" id="mup-V7-OBb"/>
                             <constraint firstItem="rRh-h1-2aW" firstAttribute="leading" secondItem="qaq-Sm-ebe" secondAttribute="leading" constant="94" id="nDY-gf-giE"/>
-                            <constraint firstItem="JMc-Bk-lB9" firstAttribute="leading" secondItem="qaq-Sm-ebe" secondAttribute="leading" constant="70" id="nto-9b-ApM"/>
-                            <constraint firstItem="YlN-GB-MnB" firstAttribute="top" secondItem="qaq-Sm-ebe" secondAttribute="top" constant="12" id="sES-ul-eG1"/>
-                            <constraint firstItem="qaq-Sm-ebe" firstAttribute="trailing" secondItem="Ugx-03-JdL" secondAttribute="trailing" constant="70" id="uhQ-Vt-ZZY"/>
+                            <constraint firstItem="rRh-h1-2aW" firstAttribute="top" secondItem="qaq-Sm-ebe" secondAttribute="top" constant="22" id="r2H-Lw-kd4"/>
                             <constraint firstItem="qaq-Sm-ebe" firstAttribute="trailing" secondItem="rRh-h1-2aW" secondAttribute="trailing" constant="94" id="wp1-Gx-rJ4"/>
                         </constraints>
                     </view>
@@ -2395,13 +2359,12 @@ Saving Space</string>
                     <connections>
                         <outlet property="barChart" destination="qey-F8-t3F" id="Jj2-k6-fHc"/>
                         <outlet property="chartTable" destination="TJo-FN-KVk" id="YVS-yQ-rbx"/>
-                        <outlet property="monthYearButton" destination="YlN-GB-MnB" id="haF-H0-V37"/>
                         <outlet property="pieChart" destination="EyO-m7-ZVs" id="A5Y-oI-JRr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ey1-kT-JWI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2980" y="-913"/>
+            <point key="canvasLocation" x="2979.7101449275365" y="-913.39285714285711"/>
         </scene>
         <!--Welcome, UID-->
         <scene sceneID="t8l-B8-XAn">
@@ -2761,7 +2724,7 @@ Saving Space</string>
     <inferredMetricsTieBreakers>
         <segue reference="Agh-JC-gaV"/>
         <segue reference="PPx-za-JrO"/>
-        <segue reference="8EA-i7-dDx"/>
+        <segue reference="TeT-Wb-d2M"/>
         <segue reference="eSf-Ow-PEm"/>
         <segue reference="LfI-lQ-GjP"/>
         <segue reference="wtG-35-eJo"/>
@@ -2777,7 +2740,7 @@ Saving Space</string>
         <image name="dollarsign.circle.fill" catalog="system" width="128" height="121"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="trash.fill" catalog="system" width="32" height="32"/>
+        <image name="trash.fill" catalog="system" width="121" height="128"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">
             <color red="0.20399999618530273" green="0.77999997138977051" blue="0.34900000691413879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

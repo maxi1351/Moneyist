@@ -63,7 +63,7 @@ class CreateReminderViewController: UIViewController, UIPickerViewDelegate, UIPi
         AF.request(SERVER_ADDRESS, method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
             .responseJSON { response in
                 
-                print(response)
+                debugPrint(response)
                 
                 let decoder = JSONDecoder()
                 
