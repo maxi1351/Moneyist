@@ -10,7 +10,7 @@ import Alamofire
 
 class DashboardViewController: UITabBarController {
 
-    let SERVER_ADDRESS = "http://localhost:4000/user/details/" + UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/user/profile/" 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +46,7 @@ class DashboardViewController: UITabBarController {
     }
     
     func getUserDetails() {
+        print("TESTING DASHBOARD LOAD")
         AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
             .responseJSON { response in
                 
@@ -58,9 +59,9 @@ class DashboardViewController: UITabBarController {
                     let result = try decoder.decode(User.self, from: response.data!)
                     print(result.firstName)
                     
-                    self.title = "Welcome, " + result.firstName
+                    // Set global currency
+                    UserDetails.sharedInstance.setCurrency(newCurrency: result.currency)
 
-                    
                 } catch {
                     print(error)
                 }

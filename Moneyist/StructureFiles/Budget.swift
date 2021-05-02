@@ -9,7 +9,6 @@ import Foundation
 
 // Budget Struct
 struct Budget : Codable {
-    public var amountAfterExpenses: Int32
     public var amountForNeeds: Int32
     public var amountForWants: Int32
     public var endDate: String

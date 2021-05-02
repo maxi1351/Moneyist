@@ -36,7 +36,6 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
         "endDate" : "",
         "startDate" : "",
         "initialAmount" : 0,
-        "amountAfterExpenses" : 0,
         "amountForNeeds" : 0,
         "amountForWants" : 0,
         "savingsAndDebts" : 0,
@@ -44,9 +43,6 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
     
     // Holds the values needed for displaying the view
     var valuesArray: [Int32] = [0, 0, 0]
-    
-    // Determines currency symbol shown
-    var currencySymbol = "€" // €
     
     // Holds names of each table view section
     let sectionNames: [String] = ["Necessities", "Wants", "Savings and Debts"]
@@ -78,7 +74,7 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
         numberFormatter.numberStyle = .decimal
         let formattedNumber = numberFormatter.string(from: NSNumber(value: tempNumber))
         
-        cell.textLabel?.text = "\(currencySymbol) \(formattedNumber ?? "ERROR")"
+        cell.textLabel?.text = "\(UserDetails.sharedInstance.getCurrencySymbol()) \(formattedNumber ?? "ERROR")"
         cell.textLabel?.font = UIFont.systemFont(ofSize: 24.0)
         
         return cell
@@ -120,7 +116,7 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
         let formattedNumber = numberFormatter.string(from: NSNumber(value: tempTotal))
         
         // Change values of labels etc. in the current view
-        totalAmountText.text = currencySymbol + " \(formattedNumber ?? "ERROR")"
+        totalAmountText.text = UserDetails.sharedInstance.getCurrencySymbol() + " \(formattedNumber ?? "ERROR")"
         
         // Format the dates
         let tempStartDate = convertISOTime(date: budgetInfo["startDate"] as! String)
@@ -167,7 +163,6 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
                         self.budgetInfo["startDate"] = result.startDate
                         self.budgetInfo["endDate"] = result.endDate
                         self.budgetInfo["initialAmount"] = result.initialAmount
-                        self.budgetInfo["amountAfterExpenses"] = result.amountAfterExpenses
                         self.budgetInfo["amountForNeeds"] = result.amountForNeeds
                         self.budgetInfo["amountForWants"] = result.amountForWants
                         self.budgetInfo["savingsAndDebts"] = result.savingsAndDebts

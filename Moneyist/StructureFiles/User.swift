@@ -10,8 +10,8 @@ import Foundation
 class UserDetails {
     static let sharedInstance = UserDetails()
     private var uid = ""
-    private var currencySymbol = "€"
-    private var currency = "EUR"
+    private var currencySymbol = ""
+    private var currency = ""
     private let SERVER_ADDRESS = "http://localhost:4000/"
     
     // The colour names and the associated colours for spending categories and chart
@@ -53,6 +53,19 @@ class UserDetails {
     
     public func setCurrency(newCurrency: String) {
         currency = newCurrency
+        
+        switch (newCurrency) {
+        case "EUR":
+            currencySymbol = "€"
+            break
+        case "GBP":
+            currencySymbol = "£"
+            break
+        case "JPY":
+            currencySymbol = "JP¥"
+        default:
+            break
+        }
     }
     
     public func getServerAddress() -> String {

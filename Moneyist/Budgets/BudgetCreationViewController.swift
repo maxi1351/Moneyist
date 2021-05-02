@@ -12,7 +12,6 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var budgetNameField: UITextField!
     @IBOutlet weak var initialAmountField: UITextField!
-    @IBOutlet weak var amountAfterExpensesField: UITextField!
     @IBOutlet weak var startDateField: UITextField!
     @IBOutlet weak var endDateField: UITextField!
     @IBOutlet weak var createReminderSegment: UISegmentedControl!
@@ -32,10 +31,12 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     ] as [String : Any]
     
     // Holds budget ID
-    var budgetID = "60638600a4cd6506a63059fe"
+    var budgetID = ""
     
     // Server request is dependent on User ID
     let SERVER_ADDRESS = "http://localhost:4000/budget/create" //+ UserDetails.sharedInstance.getUID()
+    
+    let SERVER_ADDRESS_REMINDER = "http://localhost:4000/reminder/create"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +90,6 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
             "userID" : UserDetails.sharedInstance.getUID(),
             "name" : budgetNameField.text ?? "",
             "initialAmount" : Int(initialAmountField.text ?? "") ?? nil,
-            "amountAfterExpenses" : Int(amountAfterExpensesField.text ?? "") ?? nil,
             "startDate" : startDateField.text ?? "",
             "endDate" : endDateField.text ?? ""
         ]
@@ -194,18 +194,17 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         
         // TODO UPDATE!!!!!!!!!!!!!
         let reminderDetails = [
-            "userID" : UserDetails.sharedInstance.getUID(),
             "associated" : true,
-            "budgetId" : budgetID,
-            "title" : "ehe",
+            "ID" : budgetID,
+            "title" : budgetNameField.text!,
             "type" : "GOAL",
-            "description" : "ehetenandayo",
+            "description" : "Budget Plan Reminder",
             "date" : endDateField.text!
             
         ] as [String : Any]
         
-        AF.request(UserDetails.sharedInstance.getServerAddress() + "reminder/create" + UserDetails.sharedInstance.getUID(), method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
-            .responseJSON { response in
+        AF.request(SERVER_ADDRESS_REMINDER, method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
+            .responseString { response in
                 print(response)
                 
             }
@@ -231,6 +230,9 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
             
             //self.performSegue(withIdentifier: "unwindToBudgetVC", sender: self)
         }
+        
+        // Set tint color
+        alert.view.tintColor = UIColor.systemGreen
         
         alert.addAction(okAction)
         	

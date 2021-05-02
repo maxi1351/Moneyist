@@ -40,6 +40,9 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
         cell.detailTextLabel?.layer.cornerRadius = 10
         cell.detailTextLabel?.layer.masksToBounds = true
         
+        // Adjust font size if text is too long
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
+        
         // Cell right-side label
         let label = UILabel.init(frame: CGRect(x:0,y:0,width:200,height:20))
         label.font = UIFont(name: "HelveticaNeue-ThinItalic", size: 20.0)
