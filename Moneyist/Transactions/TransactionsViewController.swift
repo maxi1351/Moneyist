@@ -14,6 +14,19 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
     
+    // App tutorial view
+    @IBOutlet weak var tutorialView: UIView!
+    @IBOutlet weak var tabBarInformation: UITextView!
+    @IBOutlet weak var arrowImage: UIImageView!
+    @IBOutlet weak var arrowUpImage: UIImageView!
+    @IBOutlet weak var settingsInformation: UITextView!
+    @IBOutlet weak var welcomeLabel: UILabel!
+    @IBOutlet weak var welcomeTextLabel: UITextView!
+    @IBOutlet weak var tapLabel: UILabel!
+    @IBOutlet weak var tutorialProgressView: UIProgressView!
+    
+    var tap = 0
+    
     var selectedMonth = 1
     var selectedYear = 2021
     
@@ -597,6 +610,8 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         print(self.title! + " loaded!")
         
         getTransactions()
+        checkForFirstLaunch()
+        //displayTutorial()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -647,8 +662,93 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         alert.addAction(noAction)
         
         self.present(alert, animated: true)
-        
-        
-        
     }
+    
+    
+    // MARK: - App Tutorial
+
+    // Check if the user is launching the app for the first time
+    func checkForFirstLaunch() {
+        
+        let firstLaunch = UserDefaults.standard.bool(forKey: "firstLaunch")
+        
+        if(firstLaunch) {
+            print("Don't display app tutorial")
+        }
+        else {
+            print("Display app tutorial")
+            let timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(displayTutorial), userInfo: nil, repeats: false)
+            //displayTutorial()
+            UserDefaults.standard.set(true, forKey: "firstLaunch")
+        }
+    }
+    
+    // Display app tutorial
+    @objc func displayTutorial() {
+        welcomeLabel.text = "Welcome!"
+        welcomeTextLabel.text = "Let's get started with a quick tutorial"
+        tapLabel.text = "TAP TO CONTINUE"
+        tutorialView.isHidden = false
+        tutorialView.layer.backgroundColor = UIColor.black.cgColor
+        addTapToView()
+    }
+
+    func addTapToView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFunction))
+        tutorialView.addGestureRecognizer(tap)
+    }
+    
+    @objc func tapFunction(sender: UITapGestureRecognizer) {
+        
+        let viewHeight = tutorialView.frame.height / 1.15
+        let viewWidth = tutorialView.frame.width / 5
+        
+        tap = tap + 1
+        tutorialProgressView.progress += 1/6
+        
+        switch tap {
+        case 1:
+            tabBarInformation.isHidden = false
+            welcomeLabel.isHidden = true
+            welcomeTextLabel.isHidden = true
+            arrowImage.isHidden = false
+            tabBarInformation.text = "Transactions\n\nAdd, manage and view your income & expenses"
+            arrowImage.frame.origin = CGPoint(x: viewWidth * 0.1, y: viewHeight)
+            break
+        case 2:
+            tabBarInformation.text = "Saving Spaces\n\nAllocate money to saving spaces to meet your saving goals"
+            arrowImage.frame.origin = CGPoint(x: viewWidth * 1.1, y: viewHeight)
+            break
+        case 3:
+            tabBarInformation.text = "Charts\n\nGet a visual overview of your incoming and outgoing transactions"
+            arrowImage.frame.origin = CGPoint(x: viewWidth * 2.1, y: viewHeight)
+            break
+        case 4:
+            tabBarInformation.text = "Calendar and Reminders\n\nView and set reminders to help you make payments on time"
+            arrowImage.frame.origin = CGPoint(x: viewWidth * 3.1, y: viewHeight)
+            break
+        case 5:
+            tabBarInformation.text = "Budgets\n\nLimit your expenses and maximise your savings by following a budget plan"
+            arrowImage.frame.origin = CGPoint(x: viewWidth * 4.1, y: viewHeight)
+            break
+        case 6:
+            tabBarInformation.isHidden = true
+            arrowImage.isHidden = true
+            settingsInformation.isHidden = false
+            arrowUpImage.isHidden = false
+            settingsInformation.text = "Click here to edit your account details or drop us a feedback"
+            arrowUpImage.frame.origin = CGPoint(x: viewWidth * 4.2, y: 0)
+            tapLabel.text = "TAP TO FINISH"
+            break
+        default:
+            tutorialView.isHidden = true
+            break
+        }
+    }
+    
+    // User presses skip tutorial button
+    @IBAction func skipTutorialButton(_ sender: Any) {
+        tutorialView.isHidden = true
+    }
+    
 }

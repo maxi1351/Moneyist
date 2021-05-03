@@ -28,17 +28,12 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let SERVER_ADDRESS_BAR_CHART = "http://localhost:4000/transaction/graph/barChart"       // Get bar chart data
     let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all"                   // Get all spending categories
     
-    let screenWidth = UIScreen.main.bounds.width - 10
-    let screenHeight = UIScreen.main.bounds.height / 2.5
+    //let screenWidth = UIScreen.main.bounds.width - 10
+    //let screenHeight = UIScreen.main.bounds.height / 2.5
     var chartType = "Pie Chart"
-    var months = [Month(month: "00", monthName: "--")]    // Months for picker view
-    let years = (1900...2200).map { String($0) }          // Years for picker view
-    let calendar = Calendar.current
-    
-   /* var selectedDate = Date()                             // Today's date
-    var monthly = true
-    var date = ""*/
-    
+   // var months = [Month(month: "00", monthName: "--")]    // Months for picker view
+    //let years = (1900...2200).map { String($0) }          // Years for picker view
+   
     // Month name and number
     struct Month {
         var month : String
@@ -193,13 +188,6 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     // Get transactions associated with a category from server
     func getPieChartData() {
-        
-        /*let timePeriod : Parameters = [
-            "startDate": "2021/01/01",
-            "endDate": "2021/12/31"
-        ]*/
-        
-        //method: .get, parameters: timePeriod, encoding: URLEncoding.default
 
         AF.request(SERVER_ADDRESS_PIE_CHART, method: .post, encoding: JSONEncoding.default)
             .responseJSON { response in
@@ -702,8 +690,9 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }*/
     
     // Create array with all the months in a year
-    func createMonthArray() {
+    /*func createMonthArray() {
         
+        let calendar = Calendar.current
         let allMonths = calendar.monthSymbols
         
         for i in 1...12 {
@@ -716,7 +705,7 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let month = Month(month: j, monthName: allMonths[i-1])
             months.append(month)
         }
-    }
+    }*/
     
     // MARK: - View controller
 
@@ -746,7 +735,7 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         //addTapToLabel()
         
-        createMonthArray()
+        //createMonthArray()
         //testDate(date: "January")
         
     }
