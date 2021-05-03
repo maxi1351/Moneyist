@@ -651,16 +651,15 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     // Check if the user is launching the app for the first time
     func checkForFirstLaunch() {
         
-        let firstLaunch = UserDefaults.standard.bool(forKey: "firstLaunch")
+        let firstLaunch = UserDefaults.standard.bool(forKey: "isFirstLaunch")
         
-        if(firstLaunch) {
-            print("Don't display app tutorial")
-        }
-        else {
+        if(firstLaunch == true) {
             print("Display app tutorial")
             Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(displayTutorial), userInfo: nil, repeats: false)
-            //displayTutorial()
-            UserDefaults.standard.set(true, forKey: "firstLaunch")
+            UserDefaults.standard.set(false, forKey: "isFirstLaunch")
+        }
+        else {
+            print("Don't display app tutorial")
         }
     }
     

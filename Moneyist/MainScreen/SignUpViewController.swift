@@ -85,6 +85,7 @@ class SignUpViewController: UIViewController {
                     // Check response
                     if (response.description == "success(\"Created\")") {
                         print("Good response!")
+                        UserDefaults.standard.set(true, forKey: "isFirstLaunch")
                         
                         self.performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
                     }
@@ -162,7 +163,7 @@ class SignUpViewController: UIViewController {
         
         // Jump to dashboard
         performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
-        
+
     }
     
     // Handle currency change
