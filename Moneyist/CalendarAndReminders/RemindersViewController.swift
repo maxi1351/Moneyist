@@ -216,7 +216,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, UITableVie
     func convertReminderDate(date: String) -> String {
         let convertedDate = UserDetails.sharedInstance.convertISOTime(date: date)
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        //dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "EEEE d LLLL yyyy"
         let reminderDate = dateFormatter.string(from: convertedDate)
 

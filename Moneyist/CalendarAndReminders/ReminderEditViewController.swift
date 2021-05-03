@@ -80,7 +80,7 @@ class ReminderEditViewController: UIViewController, UIPickerViewDelegate, UIPick
     func setReminderDetails() {
         let convertedDate = UserDetails.sharedInstance.convertISOTime(date: (reminder?.date)!)
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        //dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "yyyy/MM/dd"
         
         dateField.text = dateFormatter.string(from: convertedDate)
@@ -177,18 +177,6 @@ class ReminderEditViewController: UIViewController, UIPickerViewDelegate, UIPick
         } catch {
             print(error)
         }
-    }
-    
-    
-    // Convert date from server to format suitable for user
-    func convertReminderDate(date: String) -> String {
-        let convertedDate = UserDetails.sharedInstance.convertISOTime(date: date)
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        dateFormatter.dateFormat = "d LLLL yyyy"
-        let reminderDate = dateFormatter.string(from: convertedDate)
-
-        return reminderDate
     }
     
     // MARK: - Picker for selecting type of reminder
