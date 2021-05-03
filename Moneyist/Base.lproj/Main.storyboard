@@ -2086,7 +2086,7 @@ Saving Space</string>
                                         <color key="tintColor" red="0.28807265773323459" green="0.64667665155440412" blue="0.11723412054933356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </imageView>
                                     <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="4" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xr1-zn-o5g">
-                                        <rect key="frame" x="23" y="470" width="368" height="135"/>
+                                        <rect key="frame" x="23" y="470" width="368" height="142"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2094,7 +2094,7 @@ Saving Space</string>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="5" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Am-8A-Esu">
-                                        <rect key="frame" x="85" y="78" width="321" height="72"/>
+                                        <rect key="frame" x="85" y="78" width="321" height="118"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

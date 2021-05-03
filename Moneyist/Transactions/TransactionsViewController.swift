@@ -670,16 +670,16 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     // Check if the user is launching the app for the first time
     func checkForFirstLaunch() {
         
-        let firstLaunch = UserDefaults.standard.bool(forKey: "firstLaunch")
+        let firstLaunch = UserDefaults.standard.bool(forKey: "launch1")
         
         if(firstLaunch) {
             print("Don't display app tutorial")
         }
         else {
             print("Display app tutorial")
-            let timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(displayTutorial), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(displayTutorial), userInfo: nil, repeats: false)
             //displayTutorial()
-            UserDefaults.standard.set(true, forKey: "firstLaunch")
+            UserDefaults.standard.set(true, forKey: "launch1")
         }
     }
     
@@ -712,7 +712,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
             welcomeLabel.isHidden = true
             welcomeTextLabel.isHidden = true
             arrowImage.isHidden = false
-            tabBarInformation.text = "Transactions\n\nAdd, manage and view your income & expenses"
+            tabBarInformation.text = "Transactions\n\nAdd, manage and view your income & expenditure"
             arrowImage.frame.origin = CGPoint(x: viewWidth * 0.1, y: viewHeight)
             break
         case 2:
@@ -736,7 +736,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
             arrowImage.isHidden = true
             settingsInformation.isHidden = false
             arrowUpImage.isHidden = false
-            settingsInformation.text = "Click here to edit your account details or drop us a feedback"
+            settingsInformation.text = "Settings\n\nClick here to manage your account or send feedback"
             arrowUpImage.frame.origin = CGPoint(x: viewWidth * 4.2, y: 0)
             tapLabel.text = "TAP TO FINISH"
             break
