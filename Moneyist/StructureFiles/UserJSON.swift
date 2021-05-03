@@ -8,7 +8,7 @@
 import Foundation
 
 
-// Budget Struct
+// User Data Struct
 struct User : Codable {
     public var _id: String
     public var mobileNumber: String

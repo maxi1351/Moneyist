@@ -15,8 +15,10 @@ class SavingSpaceEditViewController: UIViewController {
     @IBOutlet weak var amountField: UITextField!
     @IBOutlet weak var dateField: UITextField!
     
+    // Holds saving space ID
     var savingSpaceID = ""
     
+    // Holds saving space details
     var savingSpaceDetails = [
         "description" : "",
         "category" : "",
@@ -26,18 +28,20 @@ class SavingSpaceEditViewController: UIViewController {
     
     var datePicker = UIDatePicker()
     
+    // Holds server address used for updating a saving space
     let SERVER_ADDRESS = "http://localhost:4000/savingSpace/update/"
     
+    // When the view loads for the first time
     override func viewDidLoad() {
         super.viewDidLoad()
         
         hideKeyboard()
         showDatePicker()
         
+        // DEBUG
         print(savingSpaceID)
         
         // Set field values from previous view
-        
         descriptionField.text = savingSpaceDetails["description"]
         categoryField.text = savingSpaceDetails["category"]
         amountField.text = savingSpaceDetails["amount"]
@@ -50,7 +54,6 @@ class SavingSpaceEditViewController: UIViewController {
         dateField.text = formatter.string(from: tempDate)
         
         // Set currency symbol
-        
         let prefix = UILabel()
         prefix.text = " " + UserDetails.sharedInstance.getCurrencySymbol() + " "
         prefix.sizeToFit()
@@ -59,7 +62,10 @@ class SavingSpaceEditViewController: UIViewController {
         amountField.leftViewMode = .always
     }
     
+    // When the EDIT button is pressed
     @IBAction func editButtonPress(_ sender: UIButton) {
+        
+        // Set saving space details
         savingSpaceDetails = [
             "description" : descriptionField.text!,
             "category" : categoryField.text!,
@@ -121,16 +127,4 @@ class SavingSpaceEditViewController: UIViewController {
     @objc func cancelDatePicker(){
         self.view.endEditing(true)
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

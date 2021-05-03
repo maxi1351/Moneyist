@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 
 class DashboardViewController: UITabBarController {
-
+    
     let SERVER_ADDRESS = "http://localhost:4000/user/profile/" 
     
     override func viewDidLoad() {
@@ -20,33 +20,26 @@ class DashboardViewController: UITabBarController {
         
         self.title = "Dashboard"
         
-        //self.title = "Welcome, " + UserDetails.sharedInstance.getUID()
-        
+        // Initial dashboard setup
         getUserDetails()
-        
         buttonSetup()
-        
-        // Do any additional setup after loading the view.
     }
     
+    // Set up the settings button
     func buttonSetup() {
-        
-        // Set up the settings button
         let back = UIImage(systemName: "person.crop.circle.fill")
-        
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addTapped))
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: back, style: .plain, target: self, action: #selector(settingsMenuPressed))
         
         navigationItem.rightBarButtonItem?.tintColor = UIColor.white
     }
     
     @objc func settingsMenuPressed() {
-        
+        // Jump to settings screen
         performSegue(withIdentifier: "toSettings", sender: self)
     }
     
     func getUserDetails() {
-        print("TESTING DASHBOARD LOAD")
         AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
             .responseJSON { response in
                 
@@ -67,16 +60,4 @@ class DashboardViewController: UITabBarController {
                 }
             }
     }
-
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

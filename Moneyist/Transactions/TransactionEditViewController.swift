@@ -35,8 +35,9 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
     // Standard server address (with given route, in this case 'Edit Transaction')
     let SERVER_ADDRESS = "http://localhost:4000/transaction/update/"
     // Server address to get all spending categories
-    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all" //+ UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all"
     
+    // Holds transaction details
     var TransactionDetails = [
         "type" : "",
         "amount" : "",
@@ -54,8 +55,7 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print(transactionID)
-        
+        // Initial setup
         getSpendingCategories()
         categoryField.delegate = self
 
@@ -83,6 +83,7 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
         updateTransaction()
     }
     
+    // Update segment values
     func updateSelectorValues() {
         // Change currency
         switch currency {
@@ -125,8 +126,10 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
             
     }
     
+    // Send request to server to update the transaction
     func updateTransaction() {
         
+        // Retrieve transaction details
         TransactionDetails = [
             "type" : type,
             "amount" : amountField.text ?? "",
@@ -136,6 +139,7 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
             "category" : categoryID
         ]
         
+        // Response struct
         struct TResponse: Codable {
             var transactionId: String?
         }
@@ -145,12 +149,14 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
             .responseString { response in
                 print(response.description)
                 
+                // Decode the JSON response
                 let decoder = JSONDecoder()
                 
                 do {
                     let result = try decoder.decode(TResponse.self, from: response.data!)
                     print(result.transactionId ?? "ERROR")
                   
+                    // Attempt to retrieve the transaction ID
                     let tempID = result.transactionId ?? "ERROR"
                     
                     DispatchQueue.main.async {
@@ -174,6 +180,7 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
         
     }
     
+    // Error validation handling
     func handleValidationError(data: Data) {
         
         struct error: Codable {
@@ -182,20 +189,15 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
         
         struct errorValidation: Codable {
             var errors: [error]
-            //var param: String
         }
         
         let errorsArray = [errorValidation]()
-        
         
         let decoder = JSONDecoder()
         
         do {
             let result = try decoder.decode(errorValidation.self, from: data)
             
-            /*for entry in result {
-                print(entry.msg)
-            }*/
             print("ERRORS FOUND: ")
             
             var errorString = ""
@@ -233,6 +235,8 @@ class TransactionEditViewController: UIViewController, UIPickerViewDelegate, UIP
             print(error)
         }
     }
+    
+    // Handle segment value changes //
     
     @IBAction func currencySelectionChanged(_ sender: UISegmentedControl) {
         switch currencySelector.selectedSegmentIndex {

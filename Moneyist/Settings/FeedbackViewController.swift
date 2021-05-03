@@ -27,25 +27,13 @@ class FeedbackViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        // Set up textbox
         feedbackTextView.layer.borderWidth = 2
         feedbackTextView.layer.borderColor = UIColor.systemGreen.cgColor
 
-        
+        // Set star rating view settings
         ratingView.settings.filledColor = UIColor.orange
-        
-        // Alternate settings
-        /*ratingView.settings.filledBorderWidth = 2
-        ratingView.settings.emptyBorderWidth = 2
-        
-        ratingView.settings.filledBorderColor = UIColor.systemGreen
-        ratingView.settings.emptyBorderColor = UIColor.systemGreen
-        
-        ratingView.settings.filledColor = UIColor.systemGreen*/
-        
         ratingView.rating = 3
-        
-        
-        //setupCosmosView()
         
     }
     
@@ -66,26 +54,14 @@ class FeedbackViewController: UIViewController {
             "date" : formatter.string(from: date)
         ]
         
+        // Send feedback to server
         AF.request(SERVER_ADDRESS, method: .post, parameters: feedbackStruct, encoding: JSONEncoding.default)
             .responseJSON { response in
 
                 print(response)
             }
         
+        // Return to previous screen
         self.navigationController?.popViewController(animated: true)
     }
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

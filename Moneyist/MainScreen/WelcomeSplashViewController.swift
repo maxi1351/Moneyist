@@ -22,6 +22,8 @@ class WelcomeSplashViewController: UIViewController {
     }
     
     func getUserDetails() {
+        
+        // Send request to server to get user details
         AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
             .responseJSON { response in
                 
@@ -33,11 +35,12 @@ class WelcomeSplashViewController: UIViewController {
                 do {
                     let result = try decoder.decode(User.self, from: response.data!)
                     
+                    // Set the name label using data from server
                     self.nameLabel.text = result.firstName
                     
                     DispatchQueue.main.async {
                         
-                        // Wait 4 seconds
+                        // Wait 2 seconds
                         sleep(2)
                         print("Timer End Confirmation.")
                         
@@ -50,15 +53,4 @@ class WelcomeSplashViewController: UIViewController {
                 }
             }.resume()
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

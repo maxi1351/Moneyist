@@ -10,15 +10,13 @@ import Alamofire
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    
     @IBOutlet weak var nameField: UILabel!
     @IBOutlet weak var dateCreatedField: UILabel!
     
-    let SERVER_ADDRESS = "http://localhost:4000/user/profile/" //+ UserDetails.sharedInstance.getUID()
-    
-    let SERVER_ADDRESS_DELETE = "http://localhost:4000/user/delete/" //+ UserDetails.sharedInstance.getUID()
-    
-    let SERVER_ADDRESS_LOGOUT = "http://localhost:4000/auth/logout/" // GET
+    // Server addresses
+    let SERVER_ADDRESS = "http://localhost:4000/user/profile/"
+    let SERVER_ADDRESS_DELETE = "http://localhost:4000/user/delete/"
+    let SERVER_ADDRESS_LOGOUT = "http://localhost:4000/auth/logout/"
     
     // Holds user info
     var userInfo = [
@@ -29,6 +27,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         "mobileNumber" : ""
     ]
     
+    // Options in the table
     let tableValues = ["Edit Account Details", "Send Feedback", "Log Out", "Delete Account"]
     
     // Converts ISO Date string to Swift Date format
@@ -86,8 +85,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.title = "Settings"
         
         getUserDetails()
-        
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -99,13 +96,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "SettingsToEditUser") {
-            // Passes budget ID to next view
+            // Passes user info to next screen
             let destinationVC = segue.destination as! EditUserViewController
             destinationVC.userInfo = userInfo
         }
     }
     
+    // Gets the user details from the server
     func getUserDetails() {
+        // Send request to server
         AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
             .responseJSON { response in
                 
@@ -122,7 +121,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     // Convert time format
                     let tempDate = self.convertISOTime(date: result.createdAt)
-                    
                     let formatter = DateFormatter()
                     formatter.dateFormat = "d MMMM y"
                     
@@ -161,9 +159,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     
                 }
             
-            // TODO Fix return to login screen when user arrives from signup screen
-            // Goes back to root view controller
-            //self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            // Go back to previous screen
             self.performSegue(withIdentifier: "unwindToLogin", sender: self)
         }
         
@@ -183,6 +179,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    // Verify the user's credentials
     func verifyCredentialsForDeletion() {
         // Create alert to get password from user
         let alert = UIAlertController(title: "Please confirm your credentials.", message: "", preferredStyle: .alert)
@@ -216,10 +213,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                         print("Account deletion error!")
                         self.handleValidationError(data: response.data!)
                     }
-                    
-                    
-                    
-                    }
+
+                }
         }))
         
         alert.addAction(UIAlertAction(title: "Back", style: .default))
@@ -227,6 +222,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Delete account function
     func deleteAccount() {
         // Ask user if they are sure using an alert
         let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete your account?\nTHIS ACTION IS IRREVERSIBLE.\nTHINK BEFORE YOU CLICK!", preferredStyle: .alert)
@@ -254,6 +250,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alert, animated: true)
     }
     
+    // Error validation handling
     func handleValidationError(data: Data) {
         
         struct error: Codable {
@@ -262,7 +259,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         struct errorValidation: Codable {
             var errors: [error]
-            //var param: String
         }
         
         let errorsArray = [errorValidation]()
@@ -273,9 +269,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         do {
             let result = try decoder.decode(errorValidation.self, from: data)
             
-            /*for entry in result {
-                print(entry.msg)
-            }*/
             print("ERRORS FOUND: ")
             
             var errorString = ""

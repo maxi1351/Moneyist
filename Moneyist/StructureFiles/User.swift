@@ -7,6 +7,8 @@
 
 import Foundation
 
+// Holds what are basically 'global' variables that can be accessed throughout the app.
+
 class UserDetails {
     static let sharedInstance = UserDetails()
     private var uid = ""
@@ -26,6 +28,8 @@ class UserDetails {
         
         return formatter.date(from: date)!
     }
+    
+    // Getter / Setter Functions //
     
     public func getColours() -> [Colour] {
         return colours

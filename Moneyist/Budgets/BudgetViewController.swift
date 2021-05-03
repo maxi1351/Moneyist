@@ -10,27 +10,23 @@ import Alamofire
 
 class BudgetViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    
     @IBOutlet weak var budgetTable: UITableView!
     
     // Sort the requested budgets by date
     func sortBudgetsByDate() {
         var convertedArray: [Date] = []
 
+        // Set date format
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MM, yyyy"// yyyy-MM-dd"
+        dateFormatter.dateFormat = "dd MM, yyyy"
 
         for dat in budgetList {
             let date = dateFormatter.date(from: dat.endDate)!
-            //if let date = date {
             convertedArray.append(date)
-            //}
         }
         
         let ready = convertedArray.sorted(by: { $0.compare($1) == .orderedDescending })
-        
-        print(ready)
-        
+
         print("SORTING DONE")
     }
     
@@ -63,18 +59,10 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
         var name: String
     }
     
-    var budgetList: Array<BudgetGet> = []
-    
-    let SERVER_ADDRESS = "http://localhost:4000/budget/all/" //+ UserDetails.sharedInstance.getUID()
-    
-    let SERVER_ADDRESS_DELETE = "http://localhost:4000/budget/" // Followed by BudgetID
-    
+    let SERVER_ADDRESS = "http://localhost:4000/budget/all/"
+    let SERVER_ADDRESS_DELETE = "http://localhost:4000/budget/"
     var budgetID = ""
-    
-    // Handles data passed back from budget creation view
-    @IBAction func unwind( _ seg: UIStoryboardSegue) {
-        
-    }
+    var budgetList: Array<BudgetGet> = []
     
     // Proceed with caution!!! / DELETE ALL BUDGETS
     @IBAction func deleteAllButtonPress(_ sender: UIButton) {
@@ -226,7 +214,7 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
         
         print("Budget Count = " + String(budgetList.count))
         
-        // TODO Fix tiem sort
+        // Sort items
         budgetList = budgetList.sorted(by: {
             convertISOTime(date: $0.endDate).compare(convertISOTime(date: $1.endDate)) == .orderedDescending
         })
@@ -235,18 +223,6 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
     // Request budget info from server
     func getBudgets() {
         
-        budgetDetails = [
-            "userID" : UserDetails.sharedInstance.getUID(),
-            "name" : "AnotherOne",
-            "initialAmount" : 50000,
-            "amountAfterExpenses" : 50000,
-            "amountForNeeds" : 2000000,
-            "amountForWants" : 500000,
-            "savingsAndDebts" : 86000000,
-            "startDate" : "2021/03/29",
-            "endDate" : "2021/03/29"
-        ]
-
         AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
             .responseJSON { response in
 
@@ -256,20 +232,14 @@ class BudgetViewController: UIViewController, UITableViewDataSource, UITableView
                 let decoder = JSONDecoder()
 
                 do {
-                    //print("Pass 1")
                     let result = try decoder.decode([BudgetGet].self, from: response.data!)
-                    
-                    // PUT IN TRY/CATCH!
-                    //print(result[0])
-                    
+                   
                     DispatchQueue.main.async {
-                        //print("main.async")
                         
                         self.budgetList = result
                         
                         for b in self.budgetList {
-                            //print("ENTRY: ")
-                            //print(b.budgetId)
+                            
                         }
                         self.budgetTable.reloadData()
                         

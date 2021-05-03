@@ -50,13 +50,8 @@ class BudgetEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         NotificationCenter.default.addObserver(self, selector: Selector(("backgroundNofification:")), name: UIApplication.willEnterForegroundNotification, object: nil);
         
-        // Get data from server
-        refresh()
-        
-
         // Virtual keyboard setup
         hideKeyboard()
         showDatePicker()
@@ -83,12 +78,9 @@ class BudgetEditViewController: UIViewController {
         endDateField.text = (formatter.string(from: tempEndDate))
     }
     
-    func refresh() {
-        
-    }
-    
     @IBAction func editButtonPress(_ sender: UIButton) {
         
+        // Set budget information to be patched server-side
         budgetInfo = [
             "name" : nameField.text!,
             "endDate" : endDateField.text!,
@@ -104,61 +96,44 @@ class BudgetEditViewController: UIViewController {
             .responseString { response in
                 print(response)
                 
-                
+                // Check response from server
                 if (response.description == "success(\"OK\")") {
                     print("Good response!")
                     self.handleValidationError(data: response.data!)
                 }
                 else {
+                    // Go to previous screen
                     self.navigationController?.popViewController(animated: true)
                 }
-                //self.navigationController?.popViewController(animated: true)
-                
-                // Attempt to decode JSON data
-                /*let decoder = JSONDecoder()
-                
-                do {
-                    let result = try decoder.decode(Budget.self, from: response.data!)
-                    
-                    // Async function which runs after all data is pulled from server
-                    DispatchQueue.main.async {
-                        
-                        
-                    }
-                    
-                } catch {
-                    print(error)
-                }
-                */
-            }//.resume() // Used to resume app function after Async
+            }
     }
     
+    // Error handling
     func handleValidationError(data: Data) {
         
         struct error: Codable {
             var msg: String
         }
         
+        // Array of errors
         struct errorValidation: Codable {
             var errors: [error]
-            //var param: String
         }
         
         let errorsArray = [errorValidation]()
         
         
+        // Decode errors
         let decoder = JSONDecoder()
         
         do {
             let result = try decoder.decode(errorValidation.self, from: data)
             
-            /*for entry in result {
-                print(entry.msg)
-            }*/
             print("ERRORS FOUND: ")
             
             var errorString = ""
             
+            // Append error string
             for e in result.errors {
                 errorString += e.msg + "\n"
             }
@@ -185,6 +160,7 @@ class BudgetEditViewController: UIViewController {
         }
     }
     
+    // Add currency symbol to the text fields
     func currencyPrefixConfiguration() {
         // Get currency symbol
         let symbol = UserDetails.sharedInstance.getCurrencySymbol()
@@ -307,16 +283,4 @@ class BudgetEditViewController: UIViewController {
     @objc func cancelEndDatePicker(){
         self.view.endEditing(true)
     }
-
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

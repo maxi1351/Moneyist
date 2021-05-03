@@ -34,15 +34,12 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     var budgetID = ""
     
     // Server request is dependent on User ID
-    let SERVER_ADDRESS = "http://localhost:4000/budget/create" //+ UserDetails.sharedInstance.getUID()
-    
+    let SERVER_ADDRESS = "http://localhost:4000/budget/create"
     let SERVER_ADDRESS_REMINDER = "http://localhost:4000/reminder/create"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboard()
-        print(UserDetails.sharedInstance.getUID())
-        
         
         // Change back button color
         self.navigationController!.navigationBar.tintColor = UIColor.white
@@ -52,6 +49,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         showEndDatePicker()
     }
     
+    // When a new view is loaded
     override func viewWillDisappear(_ animated: Bool) {
             super.viewWillDisappear(animated)
 
@@ -67,7 +65,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         createBudget()
     }
     
-    
+    // Segment controls
     @IBAction func createReminderSegmentChanged(_ sender: UISegmentedControl) {
         switch createReminderSegment.selectedSegmentIndex {
             case 0:
@@ -94,6 +92,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
             "endDate" : endDateField.text ?? ""
         ]
         
+        // Decode JSON data
         struct BudgetGet : Codable {
             var budgetId: String?
         }
@@ -162,10 +161,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         
         do {
             let result = try decoder.decode(errorValidation.self, from: data)
-            
-            /*for entry in result {
-                print(entry.msg)
-            }*/
+        
             print("ERRORS FOUND: ")
             
             for e in result.errors {
@@ -192,7 +188,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     
     func createReminder() {
         
-        // TODO UPDATE!!!!!!!!!!!!!
+        // Set the reminder details
         let reminderDetails = [
             "associated" : true,
             "ID" : budgetID,
@@ -203,6 +199,7 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
             
         ] as [String : Any]
         
+        // Tell the server to create the reminder
         AF.request(SERVER_ADDRESS_REMINDER, method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
             .responseString { response in
                 print(response)
@@ -211,8 +208,6 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
     }
     
     func finishCreation() {
-        print("Created!") // Debug
-        
         
         // Show confirmation popup
         let alert = UIAlertController(title: "Success!", message: "Your new budget has been created successfully!", preferredStyle: .alert)
@@ -224,11 +219,6 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
             
             
             self.navigationController?.popViewController(animated: true)
-            
-            // Go back to budget screen
-            //self.parent!.performSegue(withIdentifier: "BudgetToDetail", sender: nil)
-            
-            //self.performSegue(withIdentifier: "unwindToBudgetVC", sender: self)
         }
         
         // Set tint color
@@ -237,22 +227,17 @@ class BudgetCreationViewController: UIViewController, UITextFieldDelegate {
         alert.addAction(okAction)
         	
         self.present(alert, animated: true)
-        
-       
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         // Passes budget ID to next view
-        //let destinationVC = segue.destination as! BudgetDetailViewController
-            //destinationVC.budgetID = budgetID
-        
         let destinationVC = segue.destination as! BudgetViewController
         destinationVC.budgetID = budgetID
         destinationVC.performSegue(withIdentifier: "BudgetToDetail", sender: nil)
     }
     
-    // Start date picker functions
+    // Start date picker functions //
     
     // Handles date input
     func showDatePicker() {

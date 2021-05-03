@@ -18,6 +18,7 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
     // Delete a certain saving space
     let SERVER_ADDRESS_DELETE = "http://localhost:4000/savingSpace/" // + ssID
     
+    // Holds all saving spaces
     var savingSpaceList: [SavingSpace] = []
     
     // Selected Saving Space
@@ -94,8 +95,6 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
                             self.getSavingSpaces()
                         }
                     }.resume()
-                
-                
             }
             
             // Controls what happens after the user presses NO
@@ -115,9 +114,10 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    // Prepares to jump to Edit screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "SavingSpaceToEdit") {
-            // Passes budget ID to next view
+            // Passes saving space details to next view
             let destinationVC = segue.destination as! SavingSpaceEditViewController
             destinationVC.savingSpaceID = selectedSpace!._id
             destinationVC.savingSpaceDetails["category"] = selectedSpace!.category
@@ -127,7 +127,7 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    
+    // When view loads up for the first time
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -137,9 +137,9 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
         
         getSavingSpaces()
         
-        // Do any additional setup after loading the view.
     }
     
+    // When the view appears
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -147,12 +147,12 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
         getSavingSpaces()
     }
     
-    
+    // When the create button is pressed
     @IBAction func createButtonPress(_ sender: UIButton) {
         performSegue(withIdentifier: "savingSpacesToAdd", sender: nil)
     }
     
-    
+    // When the DELETE ALL button is pressed (trash can)
     @IBAction func deleteAllButtonPress(_ sender: UIButton) {
         // Ask user if they are sure using an alert
         let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete all of your saving spaces?\nTHIS ACTION IS IRREVERSIBLE.\nTHINK BEFORE YOU CLICK!", preferredStyle: .alert)
@@ -188,7 +188,7 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
         self.present(alert, animated: true)
     }
     
-
+    // Get all saving spaces from the server
     func getSavingSpaces() {
         
         AF.request(SERVER_ADDRESS, encoding: JSONEncoding.default)
@@ -196,18 +196,15 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
 
                 print(response)
                 
+                // Decode JSON data response
                 let decoder = JSONDecoder()
 
                 do {
-                    //print("Pass 1")
                     let result = try decoder.decode([SavingSpace].self, from: response.data!)
                     
                     DispatchQueue.main.async {
-                        
+                        // Obtain the list of saving spaces
                         self.savingSpaceList = result
-                        
-                        //print(result[1].description)
-                        
                         self.refresh()
                     }
                 } catch {
@@ -217,6 +214,7 @@ class SavingSpaceViewController: UIViewController, UITableViewDelegate, UITableV
 
     }
     
+    // Refresh the table
     func refresh() {
         savingSpaceTable.reloadData()
     }

@@ -189,7 +189,7 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // Get transactions associated with a category from server
     func getPieChartData() {
 
-        AF.request(SERVER_ADDRESS_PIE_CHART, method: .post, encoding: JSONEncoding.default)
+        AF.request(SERVER_ADDRESS_PIE_CHART, method: .get, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print("SERVER RESPONSE PIE CHART")
                 print(response)
@@ -222,7 +222,7 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // Get income and expenses from server
     func getBarChartData() {
         
-        AF.request(SERVER_ADDRESS_BAR_CHART, method: .post, encoding: JSONEncoding.default)
+        AF.request(SERVER_ADDRESS_BAR_CHART, method: .get, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print("SERVER RESPONSE BAR CHART")
                 print(response)

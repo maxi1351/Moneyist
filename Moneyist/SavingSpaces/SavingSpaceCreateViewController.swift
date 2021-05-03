@@ -18,25 +18,26 @@ class SavingSpaceCreateViewController: UIViewController {
     
     var datePicker = UIDatePicker()
     
+    // Checks whether a reminder is to be created
     var createReminderBool = true
+    
+    // Holds the saving space ID
     var savingSpaceID = ""
     
     // Standard server address (with given route, in this case 'Create Saving Space')
-    let SERVER_ADDRESS = "http://localhost:4000/savingSpace/create" //+ UserDetails.sharedInstance.getUID()
-    
+    let SERVER_ADDRESS = "http://localhost:4000/savingSpace/create"
     let SERVER_ADDRESS_REMINDER = "http://localhost:4000/reminder/create"
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         showDatePicker()
-        
-        // Do any additional setup after loading the view.
     }
     
-    
+    // When the CREATE button is pressed
     @IBAction func createButtonPressed(_ sender: Any) {
         
+        // Obtain saving space details
         let savingSpaceDetails = [
             "category" : categoryField.text!,
             "amount" : amountField.text!,
@@ -44,32 +45,40 @@ class SavingSpaceCreateViewController: UIViewController {
             "endDate" : dateField.text!
         ]
         
+        // Response struct
         struct SSIDGet : Codable {
             var savingSpaceId: String?
         }
         
+        // Checks if any errors are present
         var noErrors = true
         
+        // Request the creation of a new saving space through the server
         AF.request(SERVER_ADDRESS, method: .post, parameters: savingSpaceDetails, encoding: JSONEncoding.default)
             .responseString { response in
             
                 print(response)
                 
+                // Decode JSON response
                 let decoder = JSONDecoder()
                 
                 do {
                     let result = try decoder.decode(SSIDGet.self, from: response.data!)
                     
+                    // Check if valid saving space ID is obtained
                     print(result.savingSpaceId ?? "ERROR")
                     
                     let tempID = result.savingSpaceId ?? "ERROR"
                     
+                    // Handle potential error
                     if (tempID == "ERROR") {
                         print("Data validation error!")
                         noErrors = false
                     }
                     else {
                         noErrors = true
+                        
+                        // Assing new saving space ID
                         self.savingSpaceID = result.savingSpaceId!
                     }
                     
@@ -99,7 +108,7 @@ class SavingSpaceCreateViewController: UIViewController {
             }.resume()
     }
     
-    
+    // When the reminder segment value is changed
     @IBAction func createReminderSegmentPressed(_ sender: UISegmentedControl) {
         switch createReminderSegment.selectedSegmentIndex {
             case 0:
@@ -113,10 +122,12 @@ class SavingSpaceCreateViewController: UIViewController {
         print("Reminder bool changed to: " + String(createReminderBool))
     }
     
+    // Request the server to create a new reminder
     func createReminder() {
         
         print("Creating reminder...")
         
+        // Set reminder details
         let reminderDetails = [
             "associated" : true,
             "ID" : savingSpaceID,
@@ -127,17 +138,19 @@ class SavingSpaceCreateViewController: UIViewController {
             
         ] as [String : Any]
         
+        // Send request to server
         AF.request(SERVER_ADDRESS_REMINDER, method: .post, parameters: reminderDetails, encoding: JSONEncoding.default)
             .responseString { response in
                 print(response)
                 
                 DispatchQueue.main.async {
+                    
+                    // Check for positive response
                     if (response.description == "success(\"Created\")") {
                         print("Good response!")
                         self.navigationController?.popViewController(animated: true)
                     }
-                    else {
-                        //self.handleValidationError(data: response.data!)
+                    else { // Else handle errors
                         
                         let alert = UIAlertController(title: "Error", message: "Could not create a reminder.", preferredStyle: .alert)
                         
@@ -157,6 +170,7 @@ class SavingSpaceCreateViewController: UIViewController {
             }.resume()
     }
     
+    // Error validation handling
     func handleValidationError(data: Data) {
         
         struct error: Codable {
@@ -165,20 +179,15 @@ class SavingSpaceCreateViewController: UIViewController {
         
         struct errorValidation: Codable {
             var errors: [error]
-            //var param: String
         }
         
         let errorsArray = [errorValidation]()
-        
         
         let decoder = JSONDecoder()
         
         do {
             let result = try decoder.decode(errorValidation.self, from: data)
             
-            /*for entry in result {
-                print(entry.msg)
-            }*/
             print("ERRORS FOUND: ")
             
             var errorString = ""
@@ -261,15 +270,4 @@ class SavingSpaceCreateViewController: UIViewController {
     @objc func cancelDatePicker(){
         self.view.endEditing(true)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

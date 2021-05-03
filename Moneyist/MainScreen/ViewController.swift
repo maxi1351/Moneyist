@@ -46,16 +46,16 @@ class ViewController: UIViewController {
         processUserDetails()
     }
     
+    // Used for other view controllers to unwind to this one
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) { }
+    
+    // Stores login details
     var loginDetails = [
         "username" : "",
         "password" : ""
     ]
     
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-
-    }
-    
-    // Standard server address (with given route, in this case 'Add Transaction')
+    // Standard server address (with given route, in this case 'Login')
     let SERVER_ADDRESS = "http://localhost:4000/auth/login"
     
     @IBAction func forgotPassButtonClick(_ sender: Any) {
@@ -69,24 +69,19 @@ class ViewController: UIViewController {
     
     func processUserDetails() {
         
+        // Get user details
         loginDetails = [
             "username" : usernameField.text!,
             "password" : passwordField.text!
         ]
-        
-        print(loginDetails["username"]!)
-        print(loginDetails["password"]!)
-        
+       
         // Struct for decoding JSON data
         struct UserData: Codable { var userId: String }
         
-        //fetchTheCookies()
-        
+        // Send request to server
         AF.request(SERVER_ADDRESS, method: .post, parameters: loginDetails, encoding: JSONEncoding.default)
             .responseString { response in
                 print(response)
-                
-                //self.loginUser()
                 
                 // Check for positive response
                 if (response.description == "success(\"OK\")") {
@@ -103,6 +98,7 @@ class ViewController: UIViewController {
  
     }
     
+    // Error validation handling
     func handleValidationError(data: Data) {
         
         struct error: Codable {
@@ -111,26 +107,21 @@ class ViewController: UIViewController {
         
         struct errorValidation: Codable {
             var errors: [error]
-            //var param: String
         }
         
         let errorsArray = [errorValidation]()
-        
         
         let decoder = JSONDecoder()
         
         do {
             let result = try decoder.decode(errorValidation.self, from: data)
             
-            /*for entry in result {
-                print(entry.msg)
-            }*/
             print("ERRORS FOUND: ")
             
             var errorString = ""
             
             for e in result.errors {
-                errorString += "\n" + e.msg //+ "\n"
+                errorString += "\n" + e.msg 
             }
             
             // Ask user if they are sure using an alert
@@ -142,6 +133,9 @@ class ViewController: UIViewController {
                     NSLog("OK Pressed")
                
             }
+            
+            // Set tint color
+            alert.view.tintColor = UIColor.systemGreen
            
             alert.addAction(okAction)
             
@@ -159,6 +153,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func SignUpButtonClick(_ sender: Any) {
+        // Jump to signup screen
         performSegue(withIdentifier: "ToSignUpVC", sender: nil)
     }
     
@@ -170,16 +165,12 @@ class ViewController: UIViewController {
         // Change back button color
         self.navigationController!.navigationBar.tintColor = UIColor.white
         
-        print("Loading Complete.")
-        
+        // Set correct date format
         let e = "2021-03-21T00:00:00.00Z"
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-
-        print(formatter.date(from: e))
-       
     }
 }
 

@@ -37,7 +37,6 @@ class SignUpViewController: UIViewController {
     
     // Standard server address (with given route, in this case 'user/register')
     let SERVER_ADDRESS = "http://localhost:4000/auth/signup"
-    
     let SERVER_ADDRESS_LOGIN = "http://localhost:4000/auth/login"
     
     // Date picker declaration
@@ -64,25 +63,6 @@ class SignUpViewController: UIViewController {
                 "currency" : currency
                 ]
             
-            // DEBUG
-            /*userDetails = [
-                "firstName" : "Jin",
-                "surname" : "Kazama",
-                "dateOfBirth" : "1975/06/25",
-                "email" : "jin@tekken.jp",
-                "mobileNumber" : "36657384512",
-                "password" : passwordField.text!,
-                "confirmPassword" : confirmPasswordField.text!
-                ]*/
-            
-            // Password validation
-            /*if (passwordField.text! == confirmPasswordField.text!) {
-                userDetails["passwordHash"] = passwordField.text!
-            }
-            else {
-                userDetails["passwordHash"] = "badvalidation"
-            }*/
-            
             // Struct for decoding JSON data
             struct UserData: Codable { var userId: String; }
             
@@ -93,8 +73,6 @@ class SignUpViewController: UIViewController {
                 var value: String
             }
             
-            // TODO Fix errors/validation
-            
             // Request the creation of a new account
             AF.request(SERVER_ADDRESS, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
                 .responseString { response in
@@ -103,22 +81,22 @@ class SignUpViewController: UIViewController {
                     let decoder = JSONDecoder()
                     
                     print(response)
-                                     
+                              
+                    // Check response
                     if (response.description == "success(\"Created\")") {
                         print("Good response!")
-                        //self.loginUser()
+                        
                         self.performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
                     }
                     else {
                         self.handleValidationError(data: response.data!)
                     }
                     
-                    
                 }
-            
         }
     }
     
+    // Error validation handling
     func handleValidationError(data: Data) {
         
         struct error: Codable {
@@ -127,7 +105,6 @@ class SignUpViewController: UIViewController {
         
         struct errorValidation: Codable {
             var errors: [error]
-            //var param: String
         }
         
         let errorsArray = [errorValidation]()
@@ -138,9 +115,6 @@ class SignUpViewController: UIViewController {
         do {
             let result = try decoder.decode(errorValidation.self, from: data)
             
-            /*for entry in result {
-                print(entry.msg)
-            }*/
             print("ERRORS FOUND: ")
             
             var errorString = ""
@@ -181,20 +155,17 @@ class SignUpViewController: UIViewController {
     // Function that logs in the user with the given userID (UID)
     func loginUser(uid: String) {
         
-        /*
-         FILL OUT LOGIN CODE HERE ONCE SERVER TEAM IS DONE WITH THEIR WORK
-         */
-        
         // Set UID for rest of app
         UserDetails.sharedInstance.setUID(id: uid)
         
         self.navigationController?.navigationController?.popViewController(animated: true)
         
+        // Jump to dashboard
         performSegue(withIdentifier: "toDashboardFromSignup", sender: nil)
         
     }
     
-    
+    // Handle currency change
     @IBAction func currencySegmentChanged(_ sender: UISegmentedControl) {
         switch currencySegment.selectedSegmentIndex {
             case 0:
@@ -210,11 +181,8 @@ class SignUpViewController: UIViewController {
     
     // Prepare segue to dashboard
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
         
         if (segue.identifier == "toDashboardFromSignup") {
-            
             // If destination VC is transactions view
             if let target = segue.destination as? TransactionsViewController {
                 print("Segue test")
@@ -256,7 +224,7 @@ class SignUpViewController: UIViewController {
         return true
     }
     
-    // Error handler using iOS popups
+    // Error handler using iOS popups (OLD)
     func showError(title: String, message: String) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -317,7 +285,6 @@ class SignUpViewController: UIViewController {
         
         // Change back button color
         self.navigationController!.navigationBar.tintColor = UIColor.white
-        
         
         // Make sure the DOB text field shows a date picker and not a keyboard
         showDatePicker()

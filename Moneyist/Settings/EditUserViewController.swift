@@ -17,7 +17,7 @@ class EditUserViewController: UIViewController {
     @IBOutlet weak var mobileNumberField: UITextField!
     @IBOutlet weak var currencySegment: UISegmentedControl!
     
-    let SERVER_ADDRESS = "http://localhost:4000/user/profile/update" //+ UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/user/profile/update"
     
     let datePicker = UIDatePicker()
     
@@ -49,11 +49,13 @@ class EditUserViewController: UIViewController {
         formatter.dateFormat = "yyyy/MM/dd"
         dobField.text = formatter.string(from: tempDate)
         
+        // Populate text fields
         emailField.text = userInfo["email"]
         mobileNumberField.text = userInfo["mobileNumber"]
         
         currency = userInfo["currency"]!
         
+        // Set currency
         switch (currency) {
         case "GBP":
             currencySegment.selectedSegmentIndex = 0
@@ -68,6 +70,7 @@ class EditUserViewController: UIViewController {
         
     }
     
+    // Set selected currency based off segment data
     @IBAction func selectedCurrencyChanged(_ sender: UISegmentedControl) {
         
         switch (currencySegment.selectedSegmentIndex) {
@@ -114,6 +117,7 @@ class EditUserViewController: UIViewController {
     
     func updateUserDetails(password: String) {
         
+        // Set user details
         userInfo = [
             "firstName" : firstNameField.text!,
             "surname" : surnameField.text!,
@@ -123,8 +127,6 @@ class EditUserViewController: UIViewController {
             "currency" : currency,
             "password" : password
         ]
-        
-        print(userInfo["password"]!)
         
         // Make a PATCH request with user details
         AF.request(SERVER_ADDRESS, method: .patch, parameters: userInfo, encoding: JSONEncoding.default)
@@ -143,6 +145,7 @@ class EditUserViewController: UIViewController {
             }
     }
     
+    // Error validation handling
     func handleValidationError(data: Data) {
         
         struct error: Codable {
@@ -151,20 +154,15 @@ class EditUserViewController: UIViewController {
         
         struct errorValidation: Codable {
             var errors: [error]
-            //var param: String
         }
         
         let errorsArray = [errorValidation]()
-        
         
         let decoder = JSONDecoder()
         
         do {
             let result = try decoder.decode(errorValidation.self, from: data)
             
-            /*for entry in result {
-                print(entry.msg)
-            }*/
             print("ERRORS FOUND: ")
             
             var errorString = ""
@@ -246,16 +244,4 @@ class EditUserViewController: UIViewController {
     @objc func cancelDatePicker(){
         self.view.endEditing(true)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

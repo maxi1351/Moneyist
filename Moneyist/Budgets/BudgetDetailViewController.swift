@@ -12,7 +12,6 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBOutlet weak var totalAmountText: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-
     @IBOutlet weak var detailTable: UITableView!
     
     // Converts ISO Date string to Swift Date format
@@ -25,9 +24,7 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
         return formatter.date(from: date)!
     }
     
-    let SERVER_ADDRESS = "http://localhost:4000/budget/" // Add BudgetID when working with this variable!!!!
-    
-    // Budget ID
+    let SERVER_ADDRESS = "http://localhost:4000/budget/"
     var budgetID = ""
     
     // Holds budget info
@@ -74,6 +71,7 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
         numberFormatter.numberStyle = .decimal
         let formattedNumber = numberFormatter.string(from: NSNumber(value: tempNumber))
         
+        // Set text label
         cell.textLabel?.text = "\(UserDetails.sharedInstance.getCurrencySymbol()) \(formattedNumber ?? "ERROR")"
         cell.textLabel?.font = UIFont.systemFont(ofSize: 24.0)
         
@@ -97,12 +95,15 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func editButtonPress(_ sender: UIButton) {
+        // Jump to edit screen
         performSegue(withIdentifier: "toBudgetEdit", sender: nil)
     }
     
+    // Prepare to jump to edit screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! BudgetEditViewController
         
+        // Pass data to next screen
         destinationVC.budgetInfo = budgetInfo
         destinationVC.budgetID = budgetID
     }
@@ -111,6 +112,7 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
         
         let tempTotal = budgetInfo["initialAmount"] as! Int32
         
+        // Number fomatting
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         let formattedNumber = numberFormatter.string(from: NSNumber(value: tempTotal))
@@ -131,14 +133,13 @@ class BudgetDetailViewController: UIViewController, UITableViewDelegate, UITable
         // Set view title as name of budget
         self.title = "\(budgetInfo["name"] ?? "Budget")"
         
+        // Set values
         let needs = budgetInfo["amountForNeeds"] as! Int32
         let wants = budgetInfo["amountForWants"] as! Int32
         let savingsdebts = budgetInfo["savingsAndDebts"] as! Int32
         
         // Set the values
         valuesArray = [needs, wants, savingsdebts]
-        
-        print("NANI!?")
         
         // Reload table
         detailTable.reloadData()

@@ -25,10 +25,11 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     var status = "CONFIRMED"
     
     // Standard server address (with given route, in this case 'Add Transaction')
-    let SERVER_ADDRESS = "http://localhost:4000/transaction/add" //+ UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS = "http://localhost:4000/transaction/add"
     // Server address to get all spending categories
-    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all" //+ UserDetails.sharedInstance.getUID()
+    let SERVER_ADDRESS_ALL = "http://localhost:4000/spendingCategory/all"
     
+    // Hold transaction details
     var TransactionDetails = [
         "type" : "",
         "amount" : "",
@@ -43,7 +44,8 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
     let screenWidth = UIScreen.main.bounds.width - 10
     let screenHeight = UIScreen.main.bounds.height / 2.5
     var selectedRow = 0
-        
+    
+    // When the view loads for the first time
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,6 +61,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
         //showCategoryField()
     }
     
+    // When the view appears
     override func viewWillAppear(_ animated: Bool) {
         getSpendingCategories()
     }
@@ -78,6 +81,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
     } */
     
+    // Request the server to add a transaction
     func addTransaction() {
         TransactionDetails = [
             "type" : type,
@@ -88,35 +92,39 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
             "category" : categoryID
         ]
         
+        // DEBUG
         print(TransactionDetails["type"]!)
         print(TransactionDetails["amount"]!)
         print(TransactionDetails["currency"]!)
         print(TransactionDetails["status"]!)
         print(TransactionDetails["date"]!)
         print(TransactionDetails["category"]!)
-        print("User ID: " + UserDetails.sharedInstance.getUID())
         
+        // Response struct
         struct TGet : Codable {
             var transactionId: String?
         }
         
+        // Checks for errors
         var noErrors = true
         
+        // Send request to server
         AF.request(SERVER_ADDRESS, method: .post, parameters: TransactionDetails, encoding: JSONEncoding.default)
             .responseJSON { response in
-                //print(response)
-
-                print("Server Response:")
+               
                 print(response)
                 
+                // Decode JSON response data
                 let decoder = JSONDecoder()
                 
                 do {
                     let result = try decoder.decode(TGet.self, from: response.data!)
                     print(result.transactionId ?? "ERROR")
                     
+                    // Check if a valid transaction ID was returned
                     let tempID = result.transactionId ?? "ERROR"
                     
+                    // Handle errors
                     if (tempID == "ERROR") {
                         print("Data validation error!")
                         // Handle the given validation error
@@ -126,8 +134,7 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
                     else {
                         noErrors = true
                     }
-                    
-                    //self.finishCreation()
+                   
                 } catch {
                     print(error)
                 }
@@ -143,12 +150,10 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
                         // Do nothing
                     }
                 }
-                
-                
-                
             }
     }
     
+    // Error validation handling
     func handleValidationError(data: Data) {
         
         struct error: Codable {
@@ -157,20 +162,15 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         struct errorValidation: Codable {
             var errors: [error]
-            //var param: String
         }
         
         let errorsArray = [errorValidation]()
-        
         
         let decoder = JSONDecoder()
         
         do {
             let result = try decoder.decode(errorValidation.self, from: data)
-            
-            /*for entry in result {
-                print(entry.msg)
-            }*/
+          
             print("ERRORS FOUND: ")
             
             var errorString = ""
@@ -208,6 +208,8 @@ class AddTransactionViewController: UIViewController, UIPickerViewDelegate, UIPi
             print(error)
         }
     }
+    
+    // Handle segment value changes //
     
     @IBAction func currencySelectionChanged(_ sender: UISegmentedControl) {
         
