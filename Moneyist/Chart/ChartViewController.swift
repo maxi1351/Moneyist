@@ -192,9 +192,9 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
         AF.request(SERVER_ADDRESS_PIE_CHART, method: .post, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print("SERVER RESPONSE PIE CHART")
-                //print(response.description)
-                debugPrint(response)
-                
+                print(response)
+                //debugPrint(response)
+
                 let decoder = JSONDecoder()
                 
                 do {
@@ -222,14 +222,10 @@ class ChartViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // Get income and expenses from server
     func getBarChartData() {
         
-        //let timePeriod: Parameters = ["startDate": "1991/01/01", "endDate": "2001/01/01"]
-        
-        //method: .get, parameters: timePeriod, encoding: URLEncoding.default
-
         AF.request(SERVER_ADDRESS_BAR_CHART, method: .post, encoding: JSONEncoding.default)
             .responseJSON { response in
                 print("SERVER RESPONSE BAR CHART")
-                debugPrint(response)
+                print(response)
                 
                 let decoder = JSONDecoder()
                 

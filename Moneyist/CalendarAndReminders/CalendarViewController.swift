@@ -218,7 +218,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     func convertReminderDate(date: String) -> String {
         let convertedDate = UserDetails.sharedInstance.convertISOTime(date: date)
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        //dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "d LLLL yyyy"
         let reminderDate = dateFormatter.string(from: convertedDate)
 
